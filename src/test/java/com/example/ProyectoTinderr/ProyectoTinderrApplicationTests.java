@@ -1,13 +1,16 @@
-package com.example.ProyectoTinderr;
+package com.example.ProyectoTinderr; 
+
+import com.mycompany.itsonconnect.ItsonConnectApplication; 
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+
+@SpringBootTest(classes = ItsonConnectApplication.class) 
 class ProyectoTinderrApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

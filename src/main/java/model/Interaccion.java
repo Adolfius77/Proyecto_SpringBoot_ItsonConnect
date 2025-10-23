@@ -7,6 +7,8 @@ package model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,8 +16,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.security.Timestamp;
+import java.util.Date;
 
 /**
  *
@@ -44,15 +48,17 @@ public class Interaccion implements Serializable {
     private Estudiante receptor;
     
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoInteraccion tipo; 
     
     @Column(name = "fecha_hora",nullable = false)
-    private Timestamp fechaHora;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaHora;
 
     public Interaccion() {
     }
 
-    public Interaccion(Long id, Estudiante emisor, Estudiante receptor, TipoInteraccion tipo, Timestamp fechaHora) {
+    public Interaccion(Long id, Estudiante emisor, Estudiante receptor, TipoInteraccion tipo, Date fechaHora) {
         this.id = id;
         this.emisor = emisor;
         this.receptor = receptor;
@@ -92,13 +98,14 @@ public class Interaccion implements Serializable {
         this.tipo = tipo;
     }
 
-    public Timestamp getFechaHora() {
+    public Date getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Timestamp fechaHora) {
+    public void setFechaHora(Date fechaHora) {
         this.fechaHora = fechaHora;
     }
+    
     
     
     

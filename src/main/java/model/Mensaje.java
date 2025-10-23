@@ -4,7 +4,6 @@
  */
 package model;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,8 +12,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.security.Timestamp;
+import java.util.Date;
 
 /**
  *
@@ -27,8 +28,12 @@ public class Mensaje implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false, length = 1000)
+    private String contenido;
+
     @Column(name = "fecha_hora", nullable = false)
-    private Timestamp fechaHora;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaHora;
 
     @ManyToOne
     @JoinColumn(name = "id_emisor")
@@ -41,7 +46,9 @@ public class Mensaje implements Serializable {
     public Mensaje() {
     }
 
-    public Mensaje(Timestamp fechaHora, Estudiante emisor, Match match) {
+    public Mensaje(Long id, String contenido, Date fechaHora, Estudiante emisor, Match match) {
+        this.id = id;
+        this.contenido = contenido;
         this.fechaHora = fechaHora;
         this.emisor = emisor;
         this.match = match;
@@ -55,11 +62,19 @@ public class Mensaje implements Serializable {
         this.id = id;
     }
 
-    public Timestamp getFechaHora() {
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public Date getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Timestamp fechaHora) {
+    public void setFechaHora(Date fechaHora) {
         this.fechaHora = fechaHora;
     }
 
@@ -78,9 +93,5 @@ public class Mensaje implements Serializable {
     public void setMatch(Match match) {
         this.match = match;
     }
-    
-    
-   
-   
-   
+
 }

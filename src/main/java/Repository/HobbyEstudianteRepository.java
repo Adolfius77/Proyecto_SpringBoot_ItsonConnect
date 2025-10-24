@@ -1,4 +1,4 @@
-package com.mycompany.itsonconnect.repository;
+package Repository;
 
 import model.Estudiante;
 import model.Hobby;

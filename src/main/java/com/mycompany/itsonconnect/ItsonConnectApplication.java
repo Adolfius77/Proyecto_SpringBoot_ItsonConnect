@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 public class ItsonConnectApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(ItsonConnectApplication.class, args);
     }
 

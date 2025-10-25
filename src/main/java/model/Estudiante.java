@@ -163,6 +163,12 @@ public class Estudiante implements Serializable {
     public void setMensajes(Set<Mensaje> mensajes) {
         this.mensajes = mensajes;
     }
+
+    public Estudiante(Long id) {
+        this.id = id;
+    }
+    
+    
     
     
     

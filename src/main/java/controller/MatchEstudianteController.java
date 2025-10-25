@@ -17,6 +17,8 @@ import service.IMatchEstudianteService;
  *
  * @author jorge
  */
+@RestController
+@RequestMapping("/match_estudiantes")
 public class MatchEstudianteController {
     private final IMatchEstudianteService matchEstudianteService;
 
@@ -24,7 +26,6 @@ public class MatchEstudianteController {
         this.matchEstudianteService = matchEstudianteService;
     }
 
-    // ------------------- Convertidores -------------------
     private MatchEstudianteDTO toDTO(MatchEstudiante me) {
         if (me == null) return null;
         MatchEstudianteDTO dto = new MatchEstudianteDTO();

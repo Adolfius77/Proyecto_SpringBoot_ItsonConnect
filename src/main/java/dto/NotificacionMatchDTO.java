@@ -1,4 +1,4 @@
-package DTOS;
+package dto;
 
 public class NotificacionMatchDTO {
     private Long matchId;

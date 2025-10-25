@@ -1,6 +1,6 @@
-package Controllers;
+package controller;
 
-import DTOS.ChatMensajeDTO;
+import dto.ChatMensajeDTO;
 import model.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;

@@ -1,6 +1,6 @@
 package service;
 
-import DTOS.ChatMensajeDTO;
+import dto.ChatMensajeDTO;
 import model.Mensaje;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package DTOS;
+package dto;
 
 public class ChatMensajeDTO {
     private String contenido;

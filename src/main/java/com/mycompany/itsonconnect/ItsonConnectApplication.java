@@ -2,17 +2,19 @@ package com.mycompany.itsonconnect;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan; 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
     "com.mycompany.itsonconnect",
     "controller",
-    "service", 
+    "service",
     "Config"
 })
-@EntityScan(basePackages = {"model", "com.mycompany.itsonconnect"}) 
+@EnableJpaRepositories(basePackages = "Repository")
+@EntityScan(basePackages = "model")
 public class ItsonConnectApplication {
 
     public static void main(String[] args) {

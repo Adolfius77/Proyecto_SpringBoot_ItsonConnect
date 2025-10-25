@@ -22,15 +22,12 @@ import service.impl.EstudianteServiceImpl; // <-- Importa la implementación que
 @RequestMapping("/api/estudiantes")
 public class EstudianteController {
 
-    // Inyectamos la clase de implementación para poder usar el método .login()
     private final EstudianteServiceImpl estudianteService;
     
     @Autowired
     public EstudianteController(EstudianteServiceImpl estudianteService) {
         this.estudianteService = estudianteService;
     }
-
-    // --- MÉTODOS PRIVADOS DE CONVERSIÓN ---
 
     private EstudianteDTO toDTO(Estudiante e) {
         if (e == null) {
@@ -42,8 +39,6 @@ public class EstudianteController {
         dto.setApPaterno(e.getApPaterno());
         dto.setApMaterno(e.getApMaterno());
         dto.setCorreo(e.getCorreo());
-        // No devuelvas la contraseña en el DTO por seguridad
-        // dto.setPassword(e.getPassword()); 
         dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
         return dto;
     }

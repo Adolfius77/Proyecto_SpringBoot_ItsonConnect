@@ -10,15 +10,18 @@ import service.IHobbyService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author jorge
  */
+@RestController
+@RequestMapping("api/hobbies")
 public class HobbyController {
     
     private final IHobbyService hobbyService;
-
+    @Autowired
     public HobbyController(IHobbyService hobbyService) {
         this.hobbyService = hobbyService;
     }
@@ -75,5 +78,6 @@ public class HobbyController {
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) throws Exception {
         hobbyService.eliminarHobby(id);
+        
     }
 }

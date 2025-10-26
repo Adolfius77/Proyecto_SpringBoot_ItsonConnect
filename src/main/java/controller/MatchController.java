@@ -62,7 +62,7 @@ public class MatchController {
                 .collect(Collectors.toList());
     }
     @GetMapping("/{id}")
-    public MatchDTO obtenerPorId(@PathVariable Long id) {
+    public MatchDTO obtenerPorId(@PathVariable Long id) throws Exception {
         return toDTO(matchService.obtenerMatch(id));
     }
 

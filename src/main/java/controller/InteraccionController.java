@@ -33,7 +33,7 @@ public class InteraccionController {
     }
 
     @GetMapping("/{id}")
-    public InteraccionDTO obtenerPorId(@PathVariable Long id) {
+    public InteraccionDTO obtenerPorId(@PathVariable Long id) throws Exception {
         return toDTO(interaccionService.obtenerInteraccion(id));
     }
 

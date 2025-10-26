@@ -14,7 +14,7 @@ import model.Interaccion;
 public interface IInteraccionService {
     
     Interaccion crearInteraccion(Interaccion interaccion) throws Exception;
-    Interaccion obtenerInteraccion(Long id);
+    Interaccion obtenerInteraccion(Long id) throws Exception;
     Interaccion actualizarInteraccion(Interaccion interaccion) throws Exception;
     void eliminarInteraccion(Long id) throws Exception;
     List<Interaccion> listarInteracciones(int limit);

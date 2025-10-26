@@ -13,7 +13,7 @@ import model.Match;
  */
 public interface IMatchService {
     Match crearMatch(Match match) throws Exception;
-    Match obtenerMatch(Long id);
+    Match obtenerMatch(Long id) throws Exception;
     Match actualizarMatch(Match match) throws Exception;
     void eliminarMatch(Long id) throws Exception;
     List<Match> listarMatches(int limit);

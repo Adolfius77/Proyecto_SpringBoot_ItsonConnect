@@ -11,15 +11,19 @@ import java.util.Set;
 import model.Estudiante;
 import model.Match;
 import model.MatchEstudiante;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import service.IMatchService;
 
 /**
  *
  * @author luisb
  */
+@Service
 public class MatchServiceImpl implements IMatchService{
+    @Autowired
     MatchRepository matchRepository;
     
     @Override

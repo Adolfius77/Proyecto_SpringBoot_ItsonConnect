@@ -13,7 +13,7 @@ import model.MatchEstudiante;
  */
 public interface IMatchEstudianteService {
     MatchEstudiante crearMatchEstudiante(MatchEstudiante matchEstudiante) throws Exception;
-    MatchEstudiante obtenerMatchEstudiante(Long id);
+    MatchEstudiante obtenerMatchEstudiante(Long id) throws Exception;
     MatchEstudiante actualizarMatchEstudiante(MatchEstudiante matchEstudiante) throws Exception;
     void eliminarMatchEstudiante(Long id) throws Exception;
     List<MatchEstudiante> listarMatchEstudiantes(int limit);

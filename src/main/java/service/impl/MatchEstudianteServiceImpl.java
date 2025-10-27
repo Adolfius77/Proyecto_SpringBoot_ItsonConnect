@@ -39,7 +39,7 @@ public class MatchEstudianteServiceImpl implements IMatchEstudianteService {
          if (matchEstudiante.isPresent()) {
             return matchEstudiante.get();
         } else {
-            throw new Exception("No se encontró el matchEstudiante con id " + id);
+            throw new Exception("No se encontro el matchEstudiante con id " + id);
         }
         
     }
@@ -49,7 +49,7 @@ public class MatchEstudianteServiceImpl implements IMatchEstudianteService {
         Optional<MatchEstudiante> existenteOpt = matchEstudianteRepository.findById(matchEstudiante.getId());
         
         MatchEstudiante existente = existenteOpt.orElseThrow(
-            () -> new Exception("No se encontró la matchEstudiante con id " + matchEstudiante.getId())
+            () -> new Exception("No se encontro la matchEstudiante con id " + matchEstudiante.getId())
         );
         existente.setEstudiante(matchEstudiante.getEstudiante());
         existente.setMatch(matchEstudiante.getMatch());
@@ -61,7 +61,7 @@ public class MatchEstudianteServiceImpl implements IMatchEstudianteService {
         Optional<MatchEstudiante> existenteOpt = matchEstudianteRepository.findById(id);
         
         MatchEstudiante existente = existenteOpt.orElseThrow(
-            () -> new Exception("No se encontró la matchEstudiante con id " + id)
+            () -> new Exception("No se encontro la matchEstudiante con id " + id)
         );
         
         matchEstudianteRepository.delete(existente);

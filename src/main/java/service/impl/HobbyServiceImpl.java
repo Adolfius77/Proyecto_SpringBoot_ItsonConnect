@@ -17,7 +17,6 @@ import service.IHobbyService;
  * @author adoil
  */
 @Service
-
 public class HobbyServiceImpl implements IHobbyService {
 
     @Autowired

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.impl.EstudianteServiceImpl; // <-- Importa la implementación que tiene el login
+import service.impl.EstudianteServiceImpl;
 
 /**
  *

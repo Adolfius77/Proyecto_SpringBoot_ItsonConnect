@@ -61,7 +61,7 @@ public class MatchEstudianteController {
 
     // obtine un estudiante por id
     @GetMapping("/{id}")
-    public MatchEstudianteDTO obtenerPorId(@PathVariable Long id) {
+    public MatchEstudianteDTO obtenerPorId(@PathVariable Long id) throws Exception {
         return toDTO(matchEstudianteService.obtenerMatchEstudiante(id));
     }
 

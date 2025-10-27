@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dto.HobbyDTO;
@@ -11,26 +7,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-/**
- *
- * @author jorge
- */
 @RestController
-@RequestMapping("api/hobbies")
+@RequestMapping("/api/hobbies")
 public class HobbyController {
-    
+
     private final IHobbyService hobbyService;
     @Autowired
     public HobbyController(IHobbyService hobbyService) {
         this.hobbyService = hobbyService;
     }
 
-    // ------------------- Convertidores -------------------
+    //Convertidores
     private HobbyDTO toDTO(Hobby hobby) {
-        if (hobby == null) {
-            return null;
-        }
+        if (hobby == null) return null;
         HobbyDTO dto = new HobbyDTO();
         dto.setId(hobby.getId());
         dto.setNombre(hobby.getNombre());
@@ -39,9 +31,7 @@ public class HobbyController {
     }
 
     private Hobby toEntity(HobbyDTO dto) {
-        if (dto == null) {
-            return null;
-        }
+        if (dto == null) return null;
         Hobby hobby = new Hobby();
         hobby.setId(dto.getId());
         hobby.setNombre(dto.getNombre());
@@ -49,6 +39,7 @@ public class HobbyController {
         return hobby;
     }
 
+    //Endpoints
     @GetMapping
     public List<HobbyDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
         return hobbyService.listarHobbies(limit)
@@ -58,26 +49,43 @@ public class HobbyController {
     }
 
     @GetMapping("/{id}")
-    public HobbyDTO obtenerPorId(@PathVariable Long id) {
-        return toDTO(hobbyService.obtenerHobby(id));
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        Hobby hobby = hobbyService.obtenerHobby(id);
+        if (hobby == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body("Hobby no encontrado con id: " + id);
+        }
+        return ResponseEntity.ok(toDTO(hobby));
     }
 
     @PostMapping
-    public HobbyDTO registrar(@RequestBody HobbyDTO dto) throws Exception {
-        Hobby hobby = hobbyService.crearHobby(toEntity(dto));
-        return toDTO(hobby);
+    public ResponseEntity<?> registrar(@RequestBody HobbyDTO dto) {
+        try {
+            Hobby hobby = hobbyService.crearHobby(toEntity(dto));
+            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(hobby));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public HobbyDTO actualizar(@PathVariable Long id, @RequestBody HobbyDTO dto) throws Exception {
-        dto.setId(id);
-        Hobby hobby = hobbyService.actualizarHobby(toEntity(dto));
-        return toDTO(hobby);
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody HobbyDTO dto) {
+        try {
+            dto.setId(id);
+            Hobby hobby = hobbyService.actualizarHobby(toEntity(dto));
+            return ResponseEntity.ok(toDTO(hobby));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) throws Exception {
-        hobbyService.eliminarHobby(id);
-        
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        try {
+            hobbyService.eliminarHobby(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }

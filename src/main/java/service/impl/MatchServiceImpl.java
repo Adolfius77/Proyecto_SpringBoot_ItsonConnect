@@ -63,7 +63,7 @@ public class MatchServiceImpl implements IMatchService{
        if(existente.isPresent()) {
            return existente.get();
        } else {
-           throw new Exception("No se encontró el match con id " + id);
+           throw new Exception("No se encontro el match con id " + id);
        }
     }
 
@@ -72,7 +72,7 @@ public class MatchServiceImpl implements IMatchService{
         Optional<Match> existenteOpt = matchRepository.findById(match.getId());
         
         Match existente = existenteOpt.orElseThrow(
-            () -> new Exception("No se encontró la interacción con id " + match.getId())
+            () -> new Exception("No se encontro la interaccion con id " + match.getId())
         );
         
         existente.setFecha(match.getFecha());
@@ -87,7 +87,7 @@ public class MatchServiceImpl implements IMatchService{
         Optional<Match> existenteOpt = matchRepository.findById(id);
         
         Match existente = existenteOpt.orElseThrow(
-            () -> new Exception("No se encontró la interacción con id " + id)
+            () -> new Exception("No se encontro la interacción con id " + id)
         );
         
         matchRepository.delete(existente);

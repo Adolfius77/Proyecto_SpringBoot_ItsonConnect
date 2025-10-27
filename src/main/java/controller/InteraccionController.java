@@ -1,62 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dto.InteraccionDTO;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.Estudiante;
 import model.Interaccion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.IInteraccionService;
 
-/**
- *
- * @author jorge
- */
-
 @RestController
-@RequestMapping("/interacciones")
+@RequestMapping("/api/interacciones")
 public class InteraccionController {
+
     @Autowired
     private IInteraccionService interaccionService;
 
-    @GetMapping
-    public List<InteraccionDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
-        return interaccionService.listarInteracciones(limit)
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/{id}")
-    public InteraccionDTO obtenerPorId(@PathVariable Long id) throws Exception {
-        return toDTO(interaccionService.obtenerInteraccion(id));
-    }
-
-
-    @PostMapping
-    public InteraccionDTO crear(@RequestBody InteraccionDTO dto) throws Exception {
-        Interaccion interaccion = toEntity(dto);
-        return toDTO(interaccionService.crearInteraccion(interaccion));
-    }
-
-    @PutMapping("/{id}")
-    public InteraccionDTO actualizar(@PathVariable Long id, @RequestBody InteraccionDTO dto) throws Exception {
-        dto.setId(id);
-        Interaccion interaccion = toEntity(dto);
-        return toDTO(interaccionService.actualizarInteraccion(interaccion));
-    }
-
-    @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) throws Exception {
-        interaccionService.eliminarInteraccion(id);
-    }
-
-    private InteraccionDTO toDTO(Interaccion interaccion) {
+    //Convertidores
+     private InteraccionDTO toDTO(Interaccion interaccion) {
         if (interaccion == null) return null;
         return new InteraccionDTO(
                 interaccion.getId(),
@@ -66,16 +30,74 @@ public class InteraccionController {
                 interaccion.getFechaHora()
         );
     }
-    
-    //para q funcione el metodo debe haber un contructor en el model estudiante con solo el id evitamos consulta a base de datos
+
     private Interaccion toEntity(InteraccionDTO dto) {
         if (dto == null) return null;
         Interaccion interaccion = new Interaccion();
         interaccion.setId(dto.getId());
-        interaccion.setEmisor(dto.getEmisorId() != null ? new Estudiante(dto.getEmisorId()) : null);
-        interaccion.setReceptor(dto.getReceptorId() != null ? new Estudiante(dto.getReceptorId()) : null);
-        interaccion.setTipo(Interaccion.TipoInteraccion.valueOf(dto.getTipo()));
+        if(dto.getEmisorId() != null) interaccion.setEmisor(new Estudiante(dto.getEmisorId()));
+        if(dto.getReceptorId() != null) interaccion.setReceptor(new Estudiante(dto.getReceptorId()));
+        if(dto.getTipo() != null) {
+             try {
+                 interaccion.setTipo(Interaccion.TipoInteraccion.valueOf(dto.getTipo().toUpperCase()));
+             } catch (IllegalArgumentException e) {
+                 System.err.println("Tipo de interacción invalido recibido: " + dto.getTipo());
+             }
+        }
         interaccion.setFechaHora(dto.getFechaHora());
         return interaccion;
+    }
+
+    //Endpoints
+    @GetMapping
+    public List<InteraccionDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
+        return interaccionService.listarInteracciones(limit)
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+       try {
+            Interaccion interaccion = interaccionService.obtenerInteraccion(id);
+            return ResponseEntity.ok(toDTO(interaccion));
+        } catch (Exception e) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> crear(@RequestBody InteraccionDTO dto) {
+       try {
+            Interaccion interaccion = toEntity(dto);
+            Interaccion creada = interaccionService.crearInteraccion(interaccion);
+          
+            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(creada));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody InteraccionDTO dto) {
+        try {
+            dto.setId(id);
+            Interaccion interaccion = toEntity(dto);
+            Interaccion actualizada = interaccionService.actualizarInteraccion(interaccion);
+            return ResponseEntity.ok(toDTO(actualizada));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        try {
+            interaccionService.eliminarInteraccion(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }

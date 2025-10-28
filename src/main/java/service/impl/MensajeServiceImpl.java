@@ -69,5 +69,4 @@ public class MensajeServiceImpl implements IMensajeService {
         match.setId(idMatch);
         return mensajeRepository.findByMatchOrderByFechaHoraAsc(match, PageRequest.of(0, limit));
     }
-
 }

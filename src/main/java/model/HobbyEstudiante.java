@@ -22,11 +22,11 @@ public class HobbyEstudiante implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "estudiante_id")
     private Estudiante estudiante;
-    
+
     @ManyToOne
     @JoinColumn(name = "hobby_id")
     private Hobby hobby;
@@ -63,7 +63,4 @@ public class HobbyEstudiante implements Serializable {
     public void setHobby(Hobby hobby) {
         this.hobby = hobby;
     }
-    
-    
-    
 }

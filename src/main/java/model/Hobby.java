@@ -26,13 +26,13 @@ public class Hobby implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Column(nullable = false)
     private String nombre;
-    
+
     @Column(nullable = false)
-    private String descripcion; 
-    
+    private String descripcion;
+
     @OneToMany(mappedBy = "hobby", cascade = CascadeType.ALL)
     private Set<HobbyEstudiante> hobby;
 
@@ -77,6 +77,4 @@ public class Hobby implements Serializable {
     public void setHobby(Set<HobbyEstudiante> hobby) {
         this.hobby = hobby;
     }
-    
-    
 }

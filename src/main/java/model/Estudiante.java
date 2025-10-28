@@ -1,14 +1,14 @@
 package model;
 
-import jakarta.persistence.Basic; 
+import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType; 
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob; 
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
@@ -40,23 +40,22 @@ public class Estudiante implements Serializable {
     @Column(nullable = false)
     private String apMaterno;
 
-    @Column(nullable = false, unique = true) 
+    @Column(nullable = false, unique = true)
     private String correo;
 
     @Column(nullable = false)
     private String password;
 
-    @Lob 
-    @Basic(fetch = FetchType.LAZY) 
-    @Column(name = "foto", columnDefinition="LONGBLOB") 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "foto", columnDefinition = "LONGBLOB")
     private byte[] foto;
-    
 
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
-    private Set<Interaccion> interaccionesEnviadas; 
+    private Set<Interaccion> interaccionesEnviadas;
 
     @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL)
-    private Set<Interaccion> interaccionesRecibidas; 
+    private Set<Interaccion> interaccionesRecibidas;
 
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
     private Set<HobbyEstudiante> hobbies;
@@ -65,9 +64,7 @@ public class Estudiante implements Serializable {
     private Set<MatchEstudiante> matchEstudiantes;
 
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
-    private Set<Mensaje> mensajesEnviados; 
-
-    // --- CONSTRUCTORES ---
+    private Set<Mensaje> mensajesEnviados;
 
     public Estudiante() {
     }
@@ -91,8 +88,6 @@ public class Estudiante implements Serializable {
         this.matchEstudiantes = new HashSet<>();
         this.mensajesEnviados = new HashSet<>();
     }
-
-
 
     public Long getId() {
         return id;
@@ -158,7 +153,6 @@ public class Estudiante implements Serializable {
         this.foto = foto;
     }
 
-
     public Set<Interaccion> getInteraccionesEnviadas() {
         return interaccionesEnviadas;
     }
@@ -199,7 +193,6 @@ public class Estudiante implements Serializable {
         this.mensajesEnviados = mensajesEnviados;
     }
 
-
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
@@ -207,19 +200,23 @@ public class Estudiante implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         Estudiante that = (Estudiante) obj;
         return id != null && id.equals(that.id);
     }
 
     @Override
     public String toString() {
-        return "Estudiante{" +
-               "id=" + id +
-               ", nombre='" + nombre + '\'' +
-               ", correo='" + correo + '\'' +
-               // No incluyas la foto (byte[]) en toString
-               '}';
+        return "Estudiante{"
+                + "id=" + id
+                + ", nombre='" + nombre + '\''
+                + ", correo='" + correo + '\''
+                + 
+                '}';
     }
 }

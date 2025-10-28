@@ -57,10 +57,10 @@ public class EstudianteController {
         return e;
     }
 
-    // --- ENDPOINTS PÚBLICOS DEL API ---
+    // --- ENDPOINTS PUBLICOS DEL API ---
 
     /**
-     * Obtiene todos los estudiantes con un límite.
+     * Obtiene todos los estudiantes con un limite.
      */
     @GetMapping
     public List<EstudianteDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
@@ -137,7 +137,7 @@ public class EstudianteController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody EstudianteDTO dto) {
         try {
-            // Llama al método de login eficiente del servicio
+            // Llama al metodo de login eficiente del servicio
             Estudiante e = estudianteService.login(dto.getCorreo(), dto.getPassword());
             return ResponseEntity.ok(toDTO(e));
         } catch (Exception e) {

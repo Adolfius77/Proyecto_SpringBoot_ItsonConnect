@@ -75,4 +75,10 @@ public class EstudianteDTO {
     public void setFechaRegistro(String fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    @Override
+    public String toString() {
+        return "EstudianteDTO{" + "id=" + id + ", nombre=" + nombre + ", apPaterno=" + apPaterno + ", apMaterno=" + apMaterno + ", correo=" + correo + ", password=" + password + ", fechaRegistro=" + fechaRegistro + '}';
+    }
+    
 }

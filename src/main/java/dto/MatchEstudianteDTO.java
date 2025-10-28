@@ -39,4 +39,10 @@ public class MatchEstudianteDTO {
     public void setMatchId(Long matchId) {
         this.matchId = matchId;
     }
+
+    @Override
+    public String toString() {
+        return "MatchEstudianteDTO{" + "id=" + id + ", estudianteId=" + estudianteId + ", matchId=" + matchId + '}';
+    }
+    
 }

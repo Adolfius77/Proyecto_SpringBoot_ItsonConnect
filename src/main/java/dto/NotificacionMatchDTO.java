@@ -40,4 +40,10 @@ public class NotificacionMatchDTO {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
+
+    @Override
+    public String toString() {
+        return "NotificacionMatchDTO{" + "matchId=" + matchId + ", otroUsuario=" + otroUsuario + ", otroUsuarioNombre=" + otroUsuarioNombre + ", mensaje=" + mensaje + '}';
+    }
+    
 }

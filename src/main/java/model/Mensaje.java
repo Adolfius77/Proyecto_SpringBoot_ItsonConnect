@@ -93,5 +93,4 @@ public class Mensaje implements Serializable {
     public void setMatch(Match match) {
         this.match = match;
     }
-
 }

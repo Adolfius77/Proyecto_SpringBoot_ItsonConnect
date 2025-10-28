@@ -87,7 +87,7 @@ public class MatchServiceImpl implements IMatchService{
         Optional<Match> existenteOpt = matchRepository.findById(id);
         
         Match existente = existenteOpt.orElseThrow(
-            () -> new Exception("No se encontro la interacción con id " + id)
+            () -> new Exception("No se encontro la interaccion con id " + id)
         );
         
         matchRepository.delete(existente);

@@ -41,5 +41,10 @@ public class MatchDTO {
     public void setParticipanteIds(List<Long> estudiantesID) {
         this.estudiantesId = estudiantesId;
     }
+
+    @Override
+    public String toString() {
+        return "MatchDTO{" + "id=" + id + ", fecha=" + fecha + ", estudiantesId=" + estudiantesId + '}';
+    }
     
 }

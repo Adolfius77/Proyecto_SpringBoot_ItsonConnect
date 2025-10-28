@@ -1,33 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dto.MatchEstudianteDTO;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.stream.Collectors;
 import model.Estudiante;
 import model.Match;
 import model.MatchEstudiante;
 import service.IMatchEstudianteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- *
- * @author jorge
- */
 @RestController
-@RequestMapping("/match_estudiantes")
+@RequestMapping("/api/match_estudiantes")
 public class MatchEstudianteController {
+
     private final IMatchEstudianteService matchEstudianteService;
 
+    @Autowired
     public MatchEstudianteController(IMatchEstudianteService matchEstudianteService) {
         this.matchEstudianteService = matchEstudianteService;
     }
 
+    //Convertidores
     private MatchEstudianteDTO toDTO(MatchEstudiante me) {
-        if (me == null) return null;
+        if (me == null) {
+            return null;
+        }
         MatchEstudianteDTO dto = new MatchEstudianteDTO();
         dto.setId(me.getId());
         dto.setEstudianteId(me.getEstudiante() != null ? me.getEstudiante().getId() : null);
@@ -36,21 +36,22 @@ public class MatchEstudianteController {
     }
 
     private MatchEstudiante toEntity(MatchEstudianteDTO dto) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
         MatchEstudiante me = new MatchEstudiante();
-        me.setId(dto.getId());    
-        Estudiante estudiante = new Estudiante();// solo asignamos entidades por el id, sin traer realaciones
-        estudiante.setId(dto.getEstudianteId());
-        me.setEstudiante(estudiante);
-
-        Match match = new Match();
-        match.setId(dto.getMatchId());
-        me.setMatch(match);
-
+        me.setId(dto.getId());
+        if (dto.getEstudianteId() != null) {
+            me.setEstudiante(new Estudiante(dto.getEstudianteId()));
+        }
+        if (dto.getMatchId() != null) {
+            me.setMatch(new Match());
+            me.getMatch().setId(dto.getMatchId());
+        }
         return me;
     }
 
-    // saca todos los matchestudiante y mete limite por defecto de 100
+    //Endpoints
     @GetMapping
     public List<MatchEstudianteDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
         return matchEstudianteService.listarMatchEstudiantes(limit)
@@ -59,31 +60,46 @@ public class MatchEstudianteController {
                 .collect(Collectors.toList());
     }
 
-    // obtine un estudiante por id
     @GetMapping("/{id}")
-    public MatchEstudianteDTO obtenerPorId(@PathVariable Long id) throws Exception {
-        return toDTO(matchEstudianteService.obtenerMatchEstudiante(id));
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        try {
+            MatchEstudiante me = matchEstudianteService.obtenerMatchEstudiante(id);
+            return ResponseEntity.ok(toDTO(me));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
-    // crea el match estudiante
     @PostMapping
-    public MatchEstudianteDTO registrar(@RequestBody MatchEstudianteDTO dto) throws Exception {
-        MatchEstudiante me = matchEstudianteService.crearMatchEstudiante(toEntity(dto));
-        return toDTO(me);
+    public ResponseEntity<?> registrar(@RequestBody MatchEstudianteDTO dto) {
+        try {
+            MatchEstudiante me = toEntity(dto);
+            MatchEstudiante creado = matchEstudianteService.crearMatchEstudiante(me);
+            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(creado));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
-    //actualiza el match
     @PutMapping("/{id}")
-    public MatchEstudianteDTO actualizar(@PathVariable Long id, @RequestBody MatchEstudianteDTO dto) throws Exception {
-        dto.setId(id);
-        MatchEstudiante me = matchEstudianteService.actualizarMatchEstudiante(toEntity(dto));
-        return toDTO(me);
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody MatchEstudianteDTO dto) {
+        try {
+            dto.setId(id);
+            MatchEstudiante me = toEntity(dto);
+            MatchEstudiante actualizado = matchEstudianteService.actualizarMatchEstudiante(me);
+            return ResponseEntity.ok(toDTO(actualizado));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
-    // elimina un matchEstudiante por id
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) throws Exception {
-        matchEstudianteService.eliminarMatchEstudiante(id);
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        try {
+            matchEstudianteService.eliminarMatchEstudiante(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
-
 }

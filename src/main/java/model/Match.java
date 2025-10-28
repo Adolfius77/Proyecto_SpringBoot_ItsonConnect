@@ -29,13 +29,13 @@ public class Match implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MatchEstudiante> participantes;
-    
-    @Column(nullable = false)    
+
+    @Column(nullable = false)
     private Date fecha;
-    
+
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
     private Set<Mensaje> mensajes;
 
@@ -80,7 +80,4 @@ public class Match implements Serializable {
     public void setMensajes(Set<Mensaje> mensajes) {
         this.mensajes = mensajes;
     }
-    
-    
-    
 }

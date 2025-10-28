@@ -40,4 +40,10 @@ public class ChatMensajeDTO {
     public void setMatchId(Long matchId) {
         this.matchId = matchId;
     }
+
+    @Override
+    public String toString() {
+        return "ChatMensajeDTO{" + "contenido=" + contenido + ", emisorId=" + emisorId + ", emisorNombre=" + emisorNombre + ", matchId=" + matchId + '}';
+    }
+    
 }

@@ -4,7 +4,6 @@
  */
 package model;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,24 +33,24 @@ public class Interaccion implements Serializable {
         SUPERLIKE,
         PASS,
     }
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_emisor")
     private Estudiante emisor;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_receptor")
     private Estudiante receptor;
-    
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TipoInteraccion tipo; 
-    
-    @Column(name = "fecha_hora",nullable = false)
+    private TipoInteraccion tipo;
+
+    @Column(name = "fecha_hora", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaHora;
 
@@ -105,8 +104,4 @@ public class Interaccion implements Serializable {
     public void setFechaHora(Date fechaHora) {
         this.fechaHora = fechaHora;
     }
-    
-    
-    
-    
-    }
+}

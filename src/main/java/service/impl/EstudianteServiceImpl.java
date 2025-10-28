@@ -29,7 +29,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
     @Override
     public Estudiante crearEstudiante(Estudiante estudiante) throws Exception {
         if (estudianteRepository.findByCorreo(estudiante.getCorreo()).isPresent()) {
-            throw new Exception("El correo ya está registrado");
+            throw new Exception("El correo ya esta registrado");
         }
         estudiante.setFechaRegistro(new Date());
         return estudianteRepository.save(estudiante);

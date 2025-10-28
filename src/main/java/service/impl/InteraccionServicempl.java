@@ -112,13 +112,13 @@ public class InteraccionServicempl implements IInteraccionService {
     @Override
     public Interaccion obtenerInteraccion(Long id) throws Exception {
         return interaccionRepository.findById(id)
-                .orElseThrow(() -> new Exception("No se encontro la interacción con id " + id));
+                .orElseThrow(() -> new Exception("No se encontro la interaccion con id " + id));
     }
 
     @Override
     @Transactional
     public Interaccion actualizarInteraccion(Interaccion interaccion) throws Exception {
-        Interaccion existente = obtenerInteraccion(interaccion.getId()); // Reusa obtener para validar existencia
+        Interaccion existente = obtenerInteraccion(interaccion.getId()); 
 
         // Validacion: Fecha no futura
         if (interaccion.getFechaHora() != null && interaccion.getFechaHora().after(new Date())) {
@@ -137,7 +137,7 @@ public class InteraccionServicempl implements IInteraccionService {
     @Transactional
     public void eliminarInteraccion(Long id) throws Exception {
         if (!interaccionRepository.existsById(id)) {
-            throw new Exception("No se encontro la interacción con id " + id);
+            throw new Exception("No se encontro la interaccion con id " + id);
         }
         interaccionRepository.deleteById(id);
     }

@@ -2,10 +2,10 @@ package Repository;
 
 import model.Estudiante;
 import model.Interaccion;
-import model.Interaccion.TipoInteraccion; // Importa el Enum
+import model.Interaccion.TipoInteraccion; 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param; // Importa Param
+import org.springframework.data.repository.query.Param; 
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
@@ -17,8 +17,8 @@ public interface InteraccionRepository extends JpaRepository<Interaccion, Long> 
     Optional<Interaccion> buscarLikeOSuperlike(
             @Param("emisor") Estudiante emisor, 
             @Param("receptor") Estudiante receptor,
-            @Param("likeType") TipoInteraccion likeType, // Parámetro para LIKE
-            @Param("superlikeType") TipoInteraccion superlikeType // Parámetro para SUPERLIKE
+            @Param("likeType") TipoInteraccion likeType, // Parametro para LIKE
+            @Param("superlikeType") TipoInteraccion superlikeType // Parametro para SUPERLIKE
     );
 
     

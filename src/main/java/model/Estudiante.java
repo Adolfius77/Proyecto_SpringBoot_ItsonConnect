@@ -1,15 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
+import jakarta.persistence.Basic; 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType; 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob; 
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
@@ -28,41 +27,56 @@ public class Estudiante implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Column(name = "fecha_registro", nullable = false)
     private Date fechaRegistro;
-    
+
     @Column(nullable = false)
     private String nombre;
-    
+
     @Column(nullable = false)
     private String apPaterno;
-    
+
     @Column(nullable = false)
     private String apMaterno;
-    
-    @Column(nullable = false)
+
+    @Column(nullable = false, unique = true) 
     private String correo;
-    
+
     @Column(nullable = false)
     private String password;
+
+    @Lob 
+    @Basic(fetch = FetchType.LAZY) 
+    @Column(name = "foto", columnDefinition="LONGBLOB") 
+    private byte[] foto;
     
+
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
-    private Set<Interaccion> interacciones;
-    
+    private Set<Interaccion> interaccionesEnviadas; 
+
+    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL)
+    private Set<Interaccion> interaccionesRecibidas; 
+
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
     private Set<HobbyEstudiante> hobbies;
-    
+
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MatchEstudiante> matchEstudiantes;
-    
+
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
-    private Set<Mensaje> mensajes;
+    private Set<Mensaje> mensajesEnviados; 
+
+    // --- CONSTRUCTORES ---
 
     public Estudiante() {
     }
 
-    public Estudiante(Long id, Date fechaRegistro, String nombre, String apPaterno, String apMaterno, String correo, String password, Set<Interaccion> interacciones, Set<HobbyEstudiante> hobbies, Set<MatchEstudiante> matchEstudiantes, Set<Mensaje> mensajes) {
+    public Estudiante(Long id) {
+        this.id = id;
+    }
+
+    public Estudiante(Long id, Date fechaRegistro, String nombre, String apPaterno, String apMaterno, String correo, String password, byte[] foto /*, otros sets si los necesitas inicializar */) {
         this.id = id;
         this.fechaRegistro = fechaRegistro;
         this.nombre = nombre;
@@ -70,11 +84,15 @@ public class Estudiante implements Serializable {
         this.apMaterno = apMaterno;
         this.correo = correo;
         this.password = password;
-        this.interacciones = interacciones;
-        this.hobbies = hobbies;
-        this.matchEstudiantes = matchEstudiantes;
-        this.mensajes = mensajes;
+        this.foto = foto;
+        this.interaccionesEnviadas = new HashSet<>();
+        this.interaccionesRecibidas = new HashSet<>();
+        this.hobbies = new HashSet<>();
+        this.matchEstudiantes = new HashSet<>();
+        this.mensajesEnviados = new HashSet<>();
     }
+
+
 
     public Long getId() {
         return id;
@@ -132,12 +150,29 @@ public class Estudiante implements Serializable {
         this.password = password;
     }
 
-    public Set<Interaccion> getInteracciones() {
-        return interacciones;
+    public byte[] getFoto() {
+        return foto;
     }
 
-    public void setInteracciones(Set<Interaccion> interacciones) {
-        this.interacciones = interacciones;
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+
+    public Set<Interaccion> getInteraccionesEnviadas() {
+        return interaccionesEnviadas;
+    }
+
+    public void setInteraccionesEnviadas(Set<Interaccion> interaccionesEnviadas) {
+        this.interaccionesEnviadas = interaccionesEnviadas;
+    }
+
+    public Set<Interaccion> getInteraccionesRecibidas() {
+        return interaccionesRecibidas;
+    }
+
+    public void setInteraccionesRecibidas(Set<Interaccion> interaccionesRecibidas) {
+        this.interaccionesRecibidas = interaccionesRecibidas;
     }
 
     public Set<HobbyEstudiante> getHobbies() {
@@ -156,20 +191,35 @@ public class Estudiante implements Serializable {
         this.matchEstudiantes = matchEstudiantes;
     }
 
-    public Set<Mensaje> getMensajes() {
-        return mensajes;
+    public Set<Mensaje> getMensajesEnviados() {
+        return mensajesEnviados;
     }
 
-    public void setMensajes(Set<Mensaje> mensajes) {
-        this.mensajes = mensajes;
+    public void setMensajesEnviados(Set<Mensaje> mensajesEnviados) {
+        this.mensajesEnviados = mensajesEnviados;
     }
 
-    public Estudiante(Long id) {
-        this.id = id;
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Estudiante that = (Estudiante) obj;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Estudiante{" +
+               "id=" + id +
+               ", nombre='" + nombre + '\'' +
+               ", correo='" + correo + '\'' +
+               // No incluyas la foto (byte[]) en toString
+               '}';
+    }
 }

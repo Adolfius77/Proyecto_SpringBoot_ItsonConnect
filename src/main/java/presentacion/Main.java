@@ -34,8 +34,8 @@ public class Main extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        botonCircular1 = new presentacion.botonCircular();
-        botonCircular2 = new presentacion.botonCircular();
+        btnIniciarSesion = new presentacion.botonCircular();
+        btnRegistrase = new presentacion.botonCircular();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -53,30 +53,35 @@ public class Main extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Connect");
 
-        botonCircular1.setBackground(new java.awt.Color(179, 204, 255));
-        botonCircular1.setForeground(new java.awt.Color(0, 0, 0));
-        botonCircular1.setText("Iniciar Sesion");
-        botonCircular1.setBorderColor(new java.awt.Color(255, 255, 255));
-        botonCircular1.setColor(new java.awt.Color(179, 204, 255));
-        botonCircular1.setColorClick(new java.awt.Color(102, 204, 255));
-        botonCircular1.setColorOver(new java.awt.Color(102, 153, 255));
-        botonCircular1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        botonCircular1.setRadius(50);
-        botonCircular1.addActionListener(new java.awt.event.ActionListener() {
+        btnIniciarSesion.setBackground(new java.awt.Color(179, 204, 255));
+        btnIniciarSesion.setForeground(new java.awt.Color(0, 0, 0));
+        btnIniciarSesion.setText("Iniciar Sesion");
+        btnIniciarSesion.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnIniciarSesion.setColor(new java.awt.Color(179, 204, 255));
+        btnIniciarSesion.setColorClick(new java.awt.Color(102, 204, 255));
+        btnIniciarSesion.setColorOver(new java.awt.Color(102, 153, 255));
+        btnIniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        btnIniciarSesion.setRadius(50);
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCircular1ActionPerformed(evt);
+                btnIniciarSesionActionPerformed(evt);
             }
         });
 
-        botonCircular2.setBackground(new java.awt.Color(102, 204, 255));
-        botonCircular2.setForeground(new java.awt.Color(255, 255, 255));
-        botonCircular2.setText("Registrarse");
-        botonCircular2.setBorderColor(new java.awt.Color(255, 255, 255));
-        botonCircular2.setColor(new java.awt.Color(102, 204, 255));
-        botonCircular2.setColorClick(new java.awt.Color(102, 204, 255));
-        botonCircular2.setColorOver(new java.awt.Color(102, 153, 255));
-        botonCircular2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        botonCircular2.setRadius(50);
+        btnRegistrase.setBackground(new java.awt.Color(102, 204, 255));
+        btnRegistrase.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrase.setText("Registrarse");
+        btnRegistrase.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnRegistrase.setColor(new java.awt.Color(102, 204, 255));
+        btnRegistrase.setColorClick(new java.awt.Color(102, 204, 255));
+        btnRegistrase.setColorOver(new java.awt.Color(102, 153, 255));
+        btnRegistrase.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        btnRegistrase.setRadius(50);
+        btnRegistrase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistraseActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
@@ -98,8 +103,8 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(327, 327, 327)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnRegistrase, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(304, 304, 304)
                         .addComponent(jLabel4))
@@ -121,9 +126,9 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(25, 25, 25)
-                .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegistrase, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jLabel4)
                 .addContainerGap(108, Short.MAX_VALUE))
@@ -143,9 +148,18 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonCircular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonCircular1ActionPerformed
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        IniciarSesionFrm iniciarSesion = new IniciarSesionFrm();
+        iniciarSesion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void btnRegistraseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistraseActionPerformed
+        RegistrarFrm registro = new RegistrarFrm();
+        registro.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnRegistraseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,8 +187,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presentacion.botonCircular botonCircular1;
-    private presentacion.botonCircular botonCircular2;
+    private presentacion.botonCircular btnIniciarSesion;
+    private presentacion.botonCircular btnRegistrase;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

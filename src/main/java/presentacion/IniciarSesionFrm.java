@@ -32,10 +32,12 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         textFieldRedondo1 = new presentacion.TextFieldRedondo();
+        jLabel7 = new javax.swing.JLabel();
+        panelRedondo1 = new presentacion.PanelRedondo();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        panelRedondo1 = new presentacion.PanelRedondo();
-        jLabel7 = new javax.swing.JLabel();
+        panelRedondo2 = new presentacion.PanelRedondo();
+        jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -46,7 +48,7 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
         textFieldRedondo3 = new presentacion.TextFieldRedondo();
         botonCircular1 = new presentacion.botonCircular();
         jLabel6 = new javax.swing.JLabel();
-        botonCircular2 = new presentacion.botonCircular();
+        btnCrearCuenta = new presentacion.botonCircular();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -64,30 +66,45 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
         textFieldRedondo1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true));
         textFieldRedondo1.setText("textFieldRedondo1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logooo.png"))); // NOI18N
 
         panelRedondo1.setBackground(new java.awt.Color(234, 231, 225));
         panelRedondo1.setRadius(30);
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logooo.png"))); // NOI18N
 
         javax.swing.GroupLayout panelRedondo1Layout = new javax.swing.GroupLayout(panelRedondo1);
         panelRedondo1.setLayout(panelRedondo1Layout);
         panelRedondo1Layout.setHorizontalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRedondo1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+            .addGap(0, 454, Short.MAX_VALUE)
         );
         panelRedondo1Layout.setVerticalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRedondo1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+            .addGap(0, 464, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+
+        panelRedondo2.setBackground(new java.awt.Color(234, 231, 225));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logooo.png"))); // NOI18N
+
+        javax.swing.GroupLayout panelRedondo2Layout = new javax.swing.GroupLayout(panelRedondo2);
+        panelRedondo2.setLayout(panelRedondo2Layout);
+        panelRedondo2Layout.setHorizontalGroup(
+            panelRedondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondo2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+        panelRedondo2Layout.setVerticalGroup(
+            panelRedondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondo2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -95,16 +112,16 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -115,7 +132,7 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Bienvenido de vuelta Potro!");
+        jLabel2.setText("¡Bienvenido de vuelta Potro!");
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 2, 13)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
@@ -149,17 +166,17 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("No tienes una cuenta crea una aqui mismo");
+        jLabel6.setText("¿No tienes una cuenta? Crea una aqui mismo. ");
 
-        botonCircular2.setForeground(new java.awt.Color(30, 115, 179));
-        botonCircular2.setText("Crear ahorra");
-        botonCircular2.setBorderColor(new java.awt.Color(255, 255, 255));
-        botonCircular2.setColorClick(new java.awt.Color(255, 255, 255));
-        botonCircular2.setColorOver(new java.awt.Color(153, 255, 255));
-        botonCircular2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        botonCircular2.addActionListener(new java.awt.event.ActionListener() {
+        btnCrearCuenta.setForeground(new java.awt.Color(30, 115, 179));
+        btnCrearCuenta.setText("Crear ahora");
+        btnCrearCuenta.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnCrearCuenta.setColorClick(new java.awt.Color(255, 255, 255));
+        btnCrearCuenta.setColorOver(new java.awt.Color(153, 255, 255));
+        btnCrearCuenta.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCircular2ActionPerformed(evt);
+                btnCrearCuentaActionPerformed(evt);
             }
         });
 
@@ -196,8 +213,8 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(138, 138, 138))))
+                        .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(126, 126, 126))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,8 +238,8 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -260,9 +277,11 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonCircular1ActionPerformed
 
-    private void botonCircular2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonCircular2ActionPerformed
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+        RegistrarFrm regi = new RegistrarFrm();
+        regi.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,7 +310,7 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private presentacion.botonCircular botonCircular1;
-    private presentacion.botonCircular botonCircular2;
+    private presentacion.botonCircular btnCrearCuenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -299,12 +318,14 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
     private presentacion.PanelRedondo panelRedondo1;
+    private presentacion.PanelRedondo panelRedondo2;
     private presentacion.TextFieldRedondo textFieldRedondo1;
     private presentacion.TextFieldRedondo textFieldRedondo2;
     private presentacion.TextFieldRedondo textFieldRedondo3;

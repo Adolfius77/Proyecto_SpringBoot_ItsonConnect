@@ -59,8 +59,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="botonCircular2" min="-2" pref="252" max="-2" attributes="0"/>
-                              <Component id="botonCircular1" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
+                              <Component id="btnRegistrase" min="-2" pref="252" max="-2" attributes="0"/>
+                              <Component id="btnIniciarSesion" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -90,9 +90,9 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="botonCircular2" min="-2" pref="41" max="-2" attributes="0"/>
+                  <Component id="btnRegistrase" min="-2" pref="41" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="botonCircular1" min="-2" pref="41" max="-2" attributes="0"/>
+                  <Component id="btnIniciarSesion" min="-2" pref="41" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="108" max="32767" attributes="0"/>
@@ -123,7 +123,7 @@
             <Property name="text" type="java.lang.String" value="Connect"/>
           </Properties>
         </Component>
-        <Component class="presentacion.botonCircular" name="botonCircular1">
+        <Component class="presentacion.botonCircular" name="btnIniciarSesion">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="cc" red="b3" type="rgb"/>
@@ -150,10 +150,10 @@
             <Property name="radius" type="int" value="50"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCircular1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIniciarSesionActionPerformed"/>
           </Events>
         </Component>
-        <Component class="presentacion.botonCircular" name="botonCircular2">
+        <Component class="presentacion.botonCircular" name="btnRegistrase">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="cc" red="66" type="rgb"/>
@@ -179,6 +179,9 @@
             </Property>
             <Property name="radius" type="int" value="50"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistraseActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>

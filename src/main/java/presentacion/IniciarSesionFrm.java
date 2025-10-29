@@ -34,11 +34,18 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         panelRedondo1 = new presentacion.PanelRedondo();
+        jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        textFieldRedondo2 = new presentacion.TextFieldRedondo();
+        jLabel5 = new javax.swing.JLabel();
+        textFieldRedondo3 = new presentacion.TextFieldRedondo();
+        botonCircular1 = new presentacion.botonCircular();
+        jLabel6 = new javax.swing.JLabel();
+        botonCircular2 = new presentacion.botonCircular();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -63,15 +70,23 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
         panelRedondo1.setBackground(new java.awt.Color(234, 231, 225));
         panelRedondo1.setRadius(30);
 
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logooo.png"))); // NOI18N
+
         javax.swing.GroupLayout panelRedondo1Layout = new javax.swing.GroupLayout(panelRedondo1);
         panelRedondo1.setLayout(panelRedondo1Layout);
         panelRedondo1Layout.setHorizontalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 454, Short.MAX_VALUE)
+            .addGroup(panelRedondo1Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         panelRedondo1Layout.setVerticalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGroup(panelRedondo1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -107,27 +122,78 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Correo institucional:");
+        jLabel4.setText("Contraseña:");
+
+        textFieldRedondo2.setRadius(45);
+
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Correo institucional:");
+
+        textFieldRedondo3.setRadius(45);
+
+        botonCircular1.setBackground(new java.awt.Color(30, 115, 179));
+        botonCircular1.setForeground(new java.awt.Color(255, 255, 255));
+        botonCircular1.setText("Iniciar Sesion");
+        botonCircular1.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular1.setColor(new java.awt.Color(30, 115, 179));
+        botonCircular1.setColorClick(new java.awt.Color(30, 115, 179));
+        botonCircular1.setColorOver(new java.awt.Color(0, 255, 255));
+        botonCircular1.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
+        botonCircular1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("no tienes una cuenta crea una aqui mismo");
+
+        botonCircular2.setForeground(new java.awt.Color(30, 115, 179));
+        botonCircular2.setText("Crear ahorra");
+        botonCircular2.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular2.setColorClick(new java.awt.Color(255, 255, 255));
+        botonCircular2.setColorOver(new java.awt.Color(153, 255, 255));
+        botonCircular2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        botonCircular2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(200, 200, 200))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textFieldRedondo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textFieldRedondo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonCircular1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 88, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(86, 86, 86))))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
+                        .addGap(106, 106, 106)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                        .addGap(219, 219, 219)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,8 +204,20 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addGap(42, 42, 42)
+                .addGap(31, 31, 31)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textFieldRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textFieldRedondo3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -174,6 +252,14 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonCircular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular1ActionPerformed
+
+    private void botonCircular2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -200,10 +286,15 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private presentacion.botonCircular botonCircular1;
+    private presentacion.botonCircular botonCircular2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -211,5 +302,7 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private presentacion.PanelRedondo panelRedondo1;
     private presentacion.TextFieldRedondo textFieldRedondo1;
+    private presentacion.TextFieldRedondo textFieldRedondo2;
+    private presentacion.TextFieldRedondo textFieldRedondo3;
     // End of variables declaration//GEN-END:variables
 }

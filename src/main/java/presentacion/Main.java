@@ -107,7 +107,7 @@ public class Main extends javax.swing.JFrame {
                         .addGap(383, 383, 383)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(309, 309, 309)
+                        .addGap(315, 315, 315)
                         .addComponent(jLabel1)))
                 .addContainerGap(261, Short.MAX_VALUE))
         );

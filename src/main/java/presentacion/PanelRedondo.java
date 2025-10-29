@@ -11,73 +11,86 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 
 /**
- * Un JPanel personalizado que tiene esquinas redondeadas.
+ * Un JPanel personalizado que tiene esquinas redondeadas y un borde.
  * @author adoil (¡y Asistente de programación!)
  */
 public class PanelRedondo extends JPanel {
 
-    /**
-     * El radio (curvatura) de las esquinas.
-     * Un valor más alto lo hace más redondo.
-     */
     private int radius;
+    private Color borderColor; // --- NUEVO --- Variable para el color del borde
 
     /**
      * Constructor.
-     * Establece un radio por defecto y hace el panel transparente.
      */
     public PanelRedondo() {
-        super(); // Llama al constructor de JPanel
+        super();
         this.radius = 20; // Un radio por defecto de 20
+        this.borderColor = Color.BLACK; // --- NUEVO --- Color de borde por defecto
         
-        // ¡¡ESTA ES LA LÍNEA MÁS IMPORTANTE!!
         // Hacemos que el JPanel no pinte su fondo rectangular por defecto.
-        // Si no hacemos esto, veremos un rectángulo con esquinas redondeadas encima.
         setOpaque(false);
     }
 
-    // --- Getter y Setter para el radio ---
+    // --- Getters y Setters ---
 
     public int getRadius() {
         return radius;
     }
 
-    /**
-     * Establece un nuevo radio para las esquinas.
-     * @param radius El nuevo radio (ej. 20, 30, 50...)
-     */
     public void setRadius(int radius) {
         this.radius = radius;
-        repaint(); // Pide al panel que se vuelva a dibujar con el nuevo radio
+        repaint(); // Pide al panel que se vuelva a dibujar
     }
 
+    // --- NUEVO --- Getters y Setters para el color del borde
+    
+    public Color getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(Color borderColor) {
+        this.borderColor = borderColor;
+        repaint(); // Vuelve a dibujar si cambia el color del borde
+    }
+    
     /**
-     * Este es el método donde ocurre la magia del dibujo.
-     * Se llama automáticamente cada vez que el panel necesita pintarse.
+     * Dibuja el fondo redondeado del panel.
      */
     @Override
     protected void paintComponent(Graphics g) {
-        // Primero, llamamos al método original de JPanel
-        // Esto es crucial para que los componentes *dentro* de este panel se dibujen
+        // Llamamos al super.paintComponent() para que dibuje 
+        // correctamente cualquier componente HIJO dentro de este panel.
         super.paintComponent(g); 
         
         Graphics2D g2 = (Graphics2D) g;
-        
-        // Activamos el Antialiasing para bordes suaves
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Usamos el color de fondo que el usuario haya establecido (ej. con setBackground)
+        // Dibuja el RELLENO (fondo)
         g2.setColor(getBackground());
-        
-        // Dibujamos el rectángulo redondeado
-        // Usamos las dimensiones completas del panel
         g2.fillRoundRect(
-                0,                // Coordenada X (esquina superior izquierda)
-                0,                // Coordenada Y (esquina superior izquierda)
-                getWidth(),       // Ancho del panel
-                getHeight(),      // Alto del panel
-                radius,           // Radio (curva) del ancho de la esquina
-                radius            // Radio (curva) del alto de la esquina
+                0, 0, // Posición
+                getWidth(), // Ancho
+                getHeight(), // Alto
+                radius, radius // Radio
         );
+    }
+
+    /**
+     * --- NUEVO ---
+     * Dibuja el borde redondeado del panel.
+     * Este método se llama DESPUÉS de paintComponent.
+     */
+    @Override
+    protected void paintBorder(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // 1. Establece el color del borde
+        g2.setColor(getBorderColor()); 
+        
+        // 2. Dibuja el CONTORNO (borde)
+        // Se resta 1 al ancho y alto para que el borde de 1px
+        // quede completamente dentro de los límites del componente.
+        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
     }
 }

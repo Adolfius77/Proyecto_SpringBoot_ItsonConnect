@@ -4,6 +4,8 @@
  */
 package presentacion;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adoil
@@ -273,7 +275,16 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        // TODO add your handling code here:
+        try {
+            String correo = txtCorreoInstitucional.getText();
+            String password = new String(passwordTxt.getPassword());
+            
+            if (correo.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Correo y contraseña no pueden estar vacios.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed

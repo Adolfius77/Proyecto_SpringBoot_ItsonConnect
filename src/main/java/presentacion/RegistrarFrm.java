@@ -4,15 +4,30 @@
  */
 package presentacion;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.EstudianteDTO;
+import java.awt.Image;
+import java.io.File;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import static org.hibernate.internal.CoreLogging.logger;
+import static org.hibernate.internal.HEMLogging.logger;
+
 /**
  *
  * @author USER
  */
 public class RegistrarFrm extends javax.swing.JFrame {
-
-    /**
-     * Creates new form RegistrarFrm
-     */
+private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistrarFrm.class.getName());
+    private byte[] fotoBytes;
+    
     public RegistrarFrm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -212,6 +227,11 @@ public class RegistrarFrm extends javax.swing.JFrame {
         btnCrearCuenta.setColorClick(new java.awt.Color(102, 255, 255));
         btnCrearCuenta.setColorOver(new java.awt.Color(153, 255, 255));
         btnCrearCuenta.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCuentaActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -266,6 +286,11 @@ public class RegistrarFrm extends javax.swing.JFrame {
         btnAgregarFoto.setColorClick(new java.awt.Color(30, 115, 179));
         btnAgregarFoto.setColorOver(new java.awt.Color(0, 204, 204));
         btnAgregarFoto.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnAgregarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarFotoActionPerformed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
@@ -513,6 +538,89 @@ public class RegistrarFrm extends javax.swing.JFrame {
     private void checkCantarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkCantarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkCantarActionPerformed
+
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+        try {
+            String nombre = txtNombre.getText();
+            String apPaterno = txtApellidoPaterno.getText();
+            String apMaterno = txtApellidoMaterno.getText();
+            String correo = txtCorreoInstituto.getText();
+            String password = new String(passConfirmarContra.getPassword());
+            String confirmPass = new String(passConfirmarContra.getPassword());
+            
+            if (nombre.isEmpty() || apPaterno.isEmpty() || correo.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nombre, Apellido Paterno, Correo y Contraseña son obligatorios.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!password.equals(confirmPass)) {
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            //aqui crea los dto y los convierte a json
+            EstudianteDTO nuevoEstudiante = new EstudianteDTO();
+            nuevoEstudiante.setNombre(nombre);
+            nuevoEstudiante.setApPaterno(apPaterno);
+            nuevoEstudiante.setApMaterno(apMaterno);
+            nuevoEstudiante.setCorreo(correo);
+            nuevoEstudiante.setPassword(password);
+            
+            ObjectMapper objectMapper = new ObjectMapper();
+            String requestBody = objectMapper.writeValueAsString(nuevoEstudiante);
+            
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/api/estudiantes")) 
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .header("Content-Type", "application/json")
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            if(response.statusCode()== 201){ //201 significa creado
+                JOptionPane.showMessageDialog(this, "¡Cuenta creada exitosamente! Ahora inicia sesion.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                
+                IniciarSesionFrm loginFrm = new IniciarSesionFrm();
+                loginFrm.setVisible(true);
+                this.dispose();
+            }else{
+                String errorMessage = response.body();
+                JOptionPane.showMessageDialog(this, "Error: " + errorMessage, "Fallo de Registro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al registrar", e);
+            JOptionPane.showMessageDialog(this, "Error de conexión con el servidor: " + e.getMessage(), "Error de Conexin", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
+
+    private void btnAgregarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFotoActionPerformed
+       JFileChooser fileChooser = new JFileChooser();
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes (JPG, PNG, GIF)", "jpg", "png", "gif");
+        fileChooser.setFileFilter(filter);
+
+        int resultado = fileChooser.showOpenDialog(this);
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            try {
+                File archivoSeleccionado = fileChooser.getSelectedFile();
+                
+             
+                this.fotoBytes = Files.readAllBytes(archivoSeleccionado.toPath());
+                
+          
+                ImageIcon icon = new ImageIcon(archivoSeleccionado.getAbsolutePath());
+               
+                Image imagen = icon.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH);
+                lblImagen.setIcon(new ImageIcon(imagen));
+                
+                JOptionPane.showMessageDialog(this, "Foto cargada exitosamente.");
+                
+            } catch (Exception e) {
+                logger.log(java.util.logging.Level.SEVERE, "Error al leer la imagen", e);
+                JOptionPane.showMessageDialog(this, "Error al cargar la foto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                this.fotoBytes = null; 
+            }
+        }
+    }//GEN-LAST:event_btnAgregarFotoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -20,20 +20,17 @@ import service.IEstudianteService;
 @Service
 public class EstudianteServiceImpl implements IEstudianteService {
 
-    @Autowired 
+    @Autowired
     private EstudianteRepository estudianteRepository;
-    
+
     @Autowired
     private HobbyRepository hobbyRepository;
-    
+
     @Autowired
     private HobbyEstudianteRepository hobbyEstudianteRepository;
 
-    /**
-     * Lógica de Login con validaciones de campos.
-     */
     public Estudiante login(String correo, String password) throws Exception {
-       
+
         if (correo == null || correo.isBlank()) {
             throw new Exception("El correo es obligatorio.");
         }
@@ -41,9 +38,8 @@ public class EstudianteServiceImpl implements IEstudianteService {
             throw new Exception("La contraseña es obligatoria.");
         }
 
-        
         Estudiante estudiante = estudianteRepository.findByCorreo(correo)
-                .orElseThrow(() -> new Exception("Correo o contraseña incorrectos")); // Mensaje genérico por seguridad
+                .orElseThrow(() -> new Exception("Correo o contraseña incorrectos"));
 
         if (!estudiante.getPassword().equals(password)) {
             throw new Exception("Correo o contraseña incorrectos");
@@ -52,12 +48,9 @@ public class EstudianteServiceImpl implements IEstudianteService {
     }
 
     @Override
-    @Transactional // Asegura que todo se guarde (Estudiante y Hobbies) o nada
+    @Transactional
     public Estudiante crearEstudiante(Estudiante estudiante, Set<String> hobbyNames) throws Exception {
-        
-        
-        
-       
+
         if (estudiante.getNombre() == null || estudiante.getNombre().isBlank()) {
             throw new Exception("El nombre es obligatorio.");
         }
@@ -71,8 +64,14 @@ public class EstudianteServiceImpl implements IEstudianteService {
             throw new Exception("La contraseña es obligatoria.");
         }
 
+        // 2. Validar formato de correo (simple)
         if (!estudiante.getCorreo().contains("@") || !estudiante.getCorreo().contains(".")) {
             throw new Exception("El formato del correo no es válido.");
+        }
+
+        String correo = estudiante.getCorreo().toLowerCase();
+        if (!correo.endsWith("@itson.edu.mx") && !correo.endsWith("@itson.mx")) {
+            throw new Exception("Debe ser un correo institucional (@itson.edu.mx o @itson.mx).");
         }
 
         if (estudiante.getPassword().length() < 8) {
@@ -82,27 +81,25 @@ public class EstudianteServiceImpl implements IEstudianteService {
         if (estudianteRepository.findByCorreo(estudiante.getCorreo()).isPresent()) {
             throw new Exception("El correo '" + estudiante.getCorreo() + "' ya está registrado.");
         }
-        
-       
-        
+
         estudiante.setFechaRegistro(new Date());
         Estudiante estudianteGuardado = estudianteRepository.save(estudiante);
 
         if (hobbyNames != null && !hobbyNames.isEmpty()) {
             for (String nombreHobby : hobbyNames) {
                 Hobby hobby = hobbyRepository.findByNombre(nombreHobby).orElse(null);
-                
+
                 if (hobby != null) {
                     HobbyEstudiante hobbyEstudiante = new HobbyEstudiante();
                     hobbyEstudiante.setEstudiante(estudianteGuardado);
                     hobbyEstudiante.setHobby(hobby);
-                    hobbyEstudianteRepository.save(hobbyEstudiante); // Guarda la relación
+                    hobbyEstudianteRepository.save(hobbyEstudiante);
                 } else {
                     System.err.println("Advertencia: No se encontró el hobby con nombre: " + nombreHobby);
                 }
             }
         }
-        
+
         return estudianteGuardado;
     }
 
@@ -114,16 +111,13 @@ public class EstudianteServiceImpl implements IEstudianteService {
     @Override
     @Transactional
     public Estudiante actualizarEstudiante(Estudiante estudiante) throws Exception {
-       
         Estudiante existente = estudianteRepository.findById(estudiante.getId())
                 .orElseThrow(() -> new Exception("Estudiante no encontrado, no se puede actualizar."));
-        
+
         existente.setNombre(estudiante.getNombre());
         existente.setApPaterno(estudiante.getApPaterno());
         existente.setApMaterno(estudiante.getApMaterno());
-        
-        // (Aquí iría la lógica para actualizar foto o hobbies si se envían)
-        
+
         return estudianteRepository.save(existente);
     }
 
@@ -138,7 +132,6 @@ public class EstudianteServiceImpl implements IEstudianteService {
 
     @Override
     public List<Estudiante> listarEstudiantes(int limit) {
-        
         int effectiveLimit = Math.min(Math.max(limit, 1), 100);
         Pageable pageable = PageRequest.of(0, effectiveLimit);
         return estudianteRepository.findAll(pageable).getContent();

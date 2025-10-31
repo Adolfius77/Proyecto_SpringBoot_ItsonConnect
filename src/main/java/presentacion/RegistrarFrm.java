@@ -13,6 +13,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
+import java.util.Base64;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -556,6 +559,17 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
                 JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            //partes de los hobbies y la foto
+            Set<String>hobbiesSeleccionados = new HashSet<>();
+           if (checkGaming.isSelected()) hobbiesSeleccionados.add("Gaming");
+            if (checkMusica.isSelected()) hobbiesSeleccionados.add("Musica");
+            if (checkDeportes.isSelected()) hobbiesSeleccionados.add("Deportes");
+            if (checkPeliculas.isSelected()) hobbiesSeleccionados.add("Peliculas");
+            if (checkViajes.isSelected()) hobbiesSeleccionados.add("Viajes");
+            if (checkLectura.isSelected()) hobbiesSeleccionados.add("Lectura");
+            if (checkCantar.isSelected()) hobbiesSeleccionados.add("Cantar");
+            if (chekCodificar.isSelected()) hobbiesSeleccionados.add("Codificar");
+         
             //aqui crea los dto y los convierte a json
             EstudianteDTO nuevoEstudiante = new EstudianteDTO();
             nuevoEstudiante.setNombre(nombre);
@@ -563,6 +577,13 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
             nuevoEstudiante.setApMaterno(apMaterno);
             nuevoEstudiante.setCorreo(correo);
             nuevoEstudiante.setPassword(password);
+            
+            //logica de la foto
+            if(this.fotoBytes != null){
+                nuevoEstudiante.setFotoBase64(Base64.getEncoder().encodeToString(this.fotoBytes));
+            }
+            
+            
             
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = objectMapper.writeValueAsString(nuevoEstudiante);

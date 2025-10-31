@@ -54,24 +54,26 @@ public class RegistrarFrm extends javax.swing.JFrame {
         txtApellidoMaterno = new presentacion.TextFieldRedondo();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        botonCircular1 = new presentacion.botonCircular();
+        btnCrearCuenta = new presentacion.botonCircular();
         jLabel9 = new javax.swing.JLabel();
-        botonCircular3 = new presentacion.botonCircular();
+        btnInicioSesion = new presentacion.botonCircular();
         passContresena = new presentacion.PasswordFieldRedondo();
         panelRedondo2 = new presentacion.PanelRedondo();
         jLabel10 = new javax.swing.JLabel();
-        botonCircular4 = new presentacion.botonCircular();
+        btnAgregarFoto = new presentacion.botonCircular();
         jLabel13 = new javax.swing.JLabel();
         passConfirmarContra = new presentacion.PasswordFieldRedondo();
         panelRedondo5 = new presentacion.PanelRedondo();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox9 = new javax.swing.JCheckBox();
-        jCheckBox10 = new javax.swing.JCheckBox();
+        checkGaming = new javax.swing.JCheckBox();
+        checkDeportes = new javax.swing.JCheckBox();
+        checkPeliculas = new javax.swing.JCheckBox();
+        checkViajes = new javax.swing.JCheckBox();
+        checkLectura = new javax.swing.JCheckBox();
+        checkCantar = new javax.swing.JCheckBox();
+        chekCodificar = new javax.swing.JCheckBox();
+        checkMusica = new javax.swing.JCheckBox();
+        jLabel14 = new javax.swing.JLabel();
+        txtCorreoInstituto = new presentacion.TextFieldRedondo();
 
         jLabel2.setText("jLabel2");
 
@@ -142,7 +144,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
         panelRedondo3.setBackground(new java.awt.Color(255, 255, 255));
         panelRedondo3.setRadius(100);
 
-        lblImagen.setText("jLabel14");
+        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ssss.jpg"))); // NOI18N
 
         javax.swing.GroupLayout panelRedondo3Layout = new javax.swing.GroupLayout(panelRedondo3);
         panelRedondo3.setLayout(panelRedondo3Layout);
@@ -157,7 +159,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
             panelRedondo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -165,20 +167,20 @@ public class RegistrarFrm extends javax.swing.JFrame {
         panelRedondo1.setLayout(panelRedondo1Layout);
         panelRedondo1Layout.setHorizontalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRedondo1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelRedondo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelRedondo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelRedondo1Layout.setVerticalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRedondo1Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelRedondo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -203,27 +205,27 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Confirma Contraseña:");
 
-        botonCircular1.setForeground(new java.awt.Color(255, 255, 255));
-        botonCircular1.setText("Crear Cuenta");
-        botonCircular1.setBorderColor(new java.awt.Color(255, 255, 255));
-        botonCircular1.setColor(new java.awt.Color(102, 204, 255));
-        botonCircular1.setColorClick(new java.awt.Color(102, 255, 255));
-        botonCircular1.setColorOver(new java.awt.Color(153, 255, 255));
-        botonCircular1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        btnCrearCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrearCuenta.setText("Crear Cuenta");
+        btnCrearCuenta.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnCrearCuenta.setColor(new java.awt.Color(102, 204, 255));
+        btnCrearCuenta.setColorClick(new java.awt.Color(102, 255, 255));
+        btnCrearCuenta.setColorOver(new java.awt.Color(153, 255, 255));
+        btnCrearCuenta.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Ya tienes una cuenta?");
 
-        botonCircular3.setForeground(new java.awt.Color(30, 115, 179));
-        botonCircular3.setText("Iniciar Sesion");
-        botonCircular3.setBorderColor(new java.awt.Color(255, 255, 255));
-        botonCircular3.setColorClick(new java.awt.Color(255, 255, 255));
-        botonCircular3.setColorOver(new java.awt.Color(153, 255, 255));
-        botonCircular3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        botonCircular3.addActionListener(new java.awt.event.ActionListener() {
+        btnInicioSesion.setForeground(new java.awt.Color(30, 115, 179));
+        btnInicioSesion.setText("Iniciar Sesion");
+        btnInicioSesion.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnInicioSesion.setColorClick(new java.awt.Color(255, 255, 255));
+        btnInicioSesion.setColorOver(new java.awt.Color(153, 255, 255));
+        btnInicioSesion.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnInicioSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCircular3ActionPerformed(evt);
+                btnInicioSesionActionPerformed(evt);
             }
         });
 
@@ -253,17 +255,17 @@ public class RegistrarFrm extends javax.swing.JFrame {
             .addGroup(panelRedondo2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        botonCircular4.setBackground(new java.awt.Color(30, 115, 179));
-        botonCircular4.setForeground(new java.awt.Color(255, 255, 255));
-        botonCircular4.setText("Agregar Foto");
-        botonCircular4.setBorderColor(new java.awt.Color(255, 255, 255));
-        botonCircular4.setColor(new java.awt.Color(30, 115, 179));
-        botonCircular4.setColorClick(new java.awt.Color(30, 115, 179));
-        botonCircular4.setColorOver(new java.awt.Color(0, 204, 204));
-        botonCircular4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnAgregarFoto.setBackground(new java.awt.Color(30, 115, 179));
+        btnAgregarFoto.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarFoto.setText("Agregar Foto");
+        btnAgregarFoto.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnAgregarFoto.setColor(new java.awt.Color(30, 115, 179));
+        btnAgregarFoto.setColorClick(new java.awt.Color(30, 115, 179));
+        btnAgregarFoto.setColorOver(new java.awt.Color(0, 204, 204));
+        btnAgregarFoto.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
@@ -277,39 +279,39 @@ public class RegistrarFrm extends javax.swing.JFrame {
 
         panelRedondo5.setBackground(new java.awt.Color(234, 231, 225));
 
-        jCheckBox1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCheckBox1.setText("Gaming");
+        checkGaming.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        checkGaming.setText("Gaming");
 
-        jCheckBox2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCheckBox2.setText("Musica");
+        checkDeportes.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        checkDeportes.setText("Deportes");
 
-        jCheckBox4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCheckBox4.setText("Peliculas");
+        checkPeliculas.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        checkPeliculas.setText("Peliculas");
 
-        jCheckBox5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCheckBox5.setText("Viajes");
+        checkViajes.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        checkViajes.setText("Viajes");
 
-        jCheckBox8.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCheckBox8.setText("Lectura");
+        checkLectura.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        checkLectura.setText("Lectura");
 
-        jCheckBox6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCheckBox6.setText("Cantar");
-        jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
+        checkCantar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        checkCantar.setText("Cantar");
+        checkCantar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox6ActionPerformed(evt);
+                checkCantarActionPerformed(evt);
             }
         });
 
-        jCheckBox9.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCheckBox9.setText("Codificar");
-        jCheckBox9.addActionListener(new java.awt.event.ActionListener() {
+        chekCodificar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        chekCodificar.setText("Codificar");
+        chekCodificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox9ActionPerformed(evt);
+                chekCodificarActionPerformed(evt);
             }
         });
 
-        jCheckBox10.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jCheckBox10.setText("Musica");
+        checkMusica.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        checkMusica.setText("Musica");
 
         javax.swing.GroupLayout panelRedondo5Layout = new javax.swing.GroupLayout(panelRedondo5);
         panelRedondo5.setLayout(panelRedondo5Layout);
@@ -319,87 +321,94 @@ public class RegistrarFrm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRedondo5Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(checkGaming, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15)
-                        .addComponent(jCheckBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(checkMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(checkDeportes, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(checkPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelRedondo5Layout.createSequentialGroup()
-                        .addComponent(jCheckBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(checkViajes, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jCheckBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(checkLectura, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(checkCantar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jCheckBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(chekCodificar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         panelRedondo5Layout.setVerticalGroup(
             panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRedondo5Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addGroup(panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(checkGaming, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkDeportes, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(checkViajes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkLectura, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkCantar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chekCodificar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel14.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Correo Institucional:");
 
         javax.swing.GroupLayout btnIniciarSesionLayout = new javax.swing.GroupLayout(btnIniciarSesion);
         btnIniciarSesion.setLayout(btnIniciarSesionLayout);
         btnIniciarSesionLayout.setHorizontalGroup(
             btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnIniciarSesionLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(113, 113, 113))
+                        .addGap(18, 18, 18)
+                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(btnIniciarSesionLayout.createSequentialGroup()
                                 .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(panelRedondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(botonCircular4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(30, 30, 30)))
-                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAgregarFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                    .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(txtCorreoInstituto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botonCircular3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(btnIniciarSesionLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
                                 .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
                                     .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                                        .addComponent(passContresena, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(btnIniciarSesionLayout.createSequentialGroup()
+                                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(passContresena, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel7))
                                         .addGap(18, 18, 18)
                                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel8)
-                                            .addComponent(passConfirmarContra, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(panelRedondo5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                                            .addComponent(passConfirmarContra, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnIniciarSesionLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(panelRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)))
                 .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -412,41 +421,48 @@ public class RegistrarFrm extends javax.swing.JFrame {
                     .addGroup(btnIniciarSesionLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(33, 33, 33)
-                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(btnIniciarSesionLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCorreoInstituto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(btnIniciarSesionLayout.createSequentialGroup()
                                 .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botonCircular4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(10, 10, 10)))
-                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(passContresena, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passConfirmarContra, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAgregarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(btnIniciarSesionLayout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(passConfirmarContra, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(btnIniciarSesionLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(passContresena, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
-                            .addComponent(botonCircular3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20))
         );
 
@@ -476,11 +492,11 @@ public class RegistrarFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonCircular2ActionPerformed
 
-    private void botonCircular3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular3ActionPerformed
+    private void btnInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioSesionActionPerformed
         IniciarSesionFrm iniciarSesion = new IniciarSesionFrm();
         iniciarSesion.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_botonCircular3ActionPerformed
+    }//GEN-LAST:event_btnInicioSesionActionPerformed
 
     private void passContresenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passContresenaActionPerformed
         // TODO add your handling code here:
@@ -490,13 +506,13 @@ public class RegistrarFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passConfirmarContraActionPerformed
 
-    private void jCheckBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox9ActionPerformed
+    private void chekCodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chekCodificarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox9ActionPerformed
+    }//GEN-LAST:event_chekCodificarActionPerformed
 
-    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
+    private void checkCantarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkCantarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox6ActionPerformed
+    }//GEN-LAST:event_checkCantarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -534,27 +550,28 @@ public class RegistrarFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presentacion.botonCircular botonCircular1;
     private presentacion.botonCircular botonCircular2;
-    private presentacion.botonCircular botonCircular3;
-    private presentacion.botonCircular botonCircular4;
+    private presentacion.botonCircular btnAgregarFoto;
+    private presentacion.botonCircular btnCrearCuenta;
     private javax.swing.JPanel btnIniciarSesion;
+    private presentacion.botonCircular btnInicioSesion;
+    private javax.swing.JCheckBox checkCantar;
+    private javax.swing.JCheckBox checkDeportes;
+    private javax.swing.JCheckBox checkGaming;
+    private javax.swing.JCheckBox checkLectura;
+    private javax.swing.JCheckBox checkMusica;
+    private javax.swing.JCheckBox checkPeliculas;
+    private javax.swing.JCheckBox checkViajes;
+    private javax.swing.JCheckBox chekCodificar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -578,6 +595,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
     private presentacion.TextFieldRedondo textFieldRedondo5;
     private presentacion.TextFieldRedondo txtApellidoMaterno;
     private presentacion.TextFieldRedondo txtApellidoPaterno;
+    private presentacion.TextFieldRedondo txtCorreoInstituto;
     private presentacion.TextFieldRedondo txtNombre;
     // End of variables declaration//GEN-END:variables
 }

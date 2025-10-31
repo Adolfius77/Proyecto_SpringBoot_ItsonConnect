@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dto.EstudianteDTO;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.Estudiante;
@@ -12,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.impl.EstudianteServiceImpl;
+import service.IEstudianteService; // <-- CORREGIDO: Inyectar la interfaz
 
 /**
  *
@@ -22,10 +19,10 @@ import service.impl.EstudianteServiceImpl;
 @RequestMapping("/api/estudiantes")
 public class EstudianteController {
 
-    private final EstudianteServiceImpl estudianteService;
+    private final IEstudianteService estudianteService; 
     
     @Autowired
-    public EstudianteController(EstudianteServiceImpl estudianteService) {
+    public EstudianteController(IEstudianteService estudianteService) { // <-- Corregido
         this.estudianteService = estudianteService;
     }
 
@@ -40,6 +37,11 @@ public class EstudianteController {
         dto.setApMaterno(e.getApMaterno());
         dto.setCorreo(e.getCorreo());
         dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
+        
+        if (e.getFoto() != null) {
+            dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
+        }
+        
         return dto;
     }
 
@@ -54,14 +56,18 @@ public class EstudianteController {
         e.setApMaterno(dto.getApMaterno());
         e.setCorreo(dto.getCorreo());
         e.setPassword(dto.getPassword());
+        
+        if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) {
+            try {
+                e.setFoto(Base64.getDecoder().decode(dto.getFotoBase64()));
+            } catch (IllegalArgumentException ex) {
+                System.err.println("Error al decodificar foto Base64: " + ex.getMessage());
+            }
+        }
         return e;
     }
 
-    // --- ENDPOINTS PUBLICOS DEL API ---
 
-    /**
-     * Obtiene todos los estudiantes con un limite.
-     */
     @GetMapping
     public List<EstudianteDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
         return estudianteService.listarEstudiantes(limit)
@@ -70,10 +76,6 @@ public class EstudianteController {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Obtiene un estudiante por su ID.
-     * Devuelve 200 OK o 404 Not Found.
-     */
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
         Estudiante e = estudianteService.obtenerEstudiante(id);
@@ -84,64 +86,48 @@ public class EstudianteController {
         return ResponseEntity.ok(toDTO(e));
     }
 
-    /**
-     * Registra un nuevo estudiante.
-     * Devuelve 201 Created o 400 Bad Request.
-     */
     @PostMapping
     public ResponseEntity<?> registrar(@RequestBody EstudianteDTO dto) {
         try {
-            Estudiante e = estudianteService.crearEstudiante(toEntity(dto));
+            Estudiante estudiante = toEntity(dto);
+            
+            
+            Estudiante e = estudianteService.crearEstudiante(estudiante, dto.getHobbies()); 
+            
             return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(e));
         } catch (Exception e) {
-            // Esto atrapa el error si el correo ya existe
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
-    /**
-     * Actualiza un estudiante existente por ID.
-     * Devuelve 200 OK o 404 Not Found.
-     */
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody EstudianteDTO dto) {
         try {
             dto.setId(id);
+            
             Estudiante e = estudianteService.actualizarEstudiante(toEntity(dto));
             return ResponseEntity.ok(toDTO(e));
         } catch (Exception e) {
-            // Esto atrapa el error si el estudiante no existe
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    /**
-     * Elimina un estudiante por ID.
-     * Devuelve 204 No Content o 404 Not Found.
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             estudianteService.eliminarEstudiante(id);
-            // 204 No Content es la respuesta estándar para un DELETE exitoso
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    /**
-     * Endpoint de Login.
-     * Devuelve 200 OK o 401 Unauthorized.
-     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody EstudianteDTO dto) {
         try {
-            // Llama al metodo de login eficiente del servicio
             Estudiante e = estudianteService.login(dto.getCorreo(), dto.getPassword());
             return ResponseEntity.ok(toDTO(e));
         } catch (Exception e) {
-            // Devuelve 401 No Autorizado si las credenciales son incorrectas
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }

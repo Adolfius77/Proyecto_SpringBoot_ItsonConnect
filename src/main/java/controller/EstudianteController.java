@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.IEstudianteService; // <-- CORREGIDO: Inyectar la interfaz
+import service.IEstudianteService;
 
 /**
  *
@@ -19,10 +19,10 @@ import service.IEstudianteService; // <-- CORREGIDO: Inyectar la interfaz
 @RequestMapping("/api/estudiantes")
 public class EstudianteController {
 
-    private final IEstudianteService estudianteService; 
-    
+    private final IEstudianteService estudianteService;
+
     @Autowired
-    public EstudianteController(IEstudianteService estudianteService) { // <-- Corregido
+    public EstudianteController(IEstudianteService estudianteService) {
         this.estudianteService = estudianteService;
     }
 
@@ -37,11 +37,11 @@ public class EstudianteController {
         dto.setApMaterno(e.getApMaterno());
         dto.setCorreo(e.getCorreo());
         dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
-        
+
         if (e.getFoto() != null) {
             dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
         }
-        
+
         return dto;
     }
 
@@ -56,7 +56,7 @@ public class EstudianteController {
         e.setApMaterno(dto.getApMaterno());
         e.setCorreo(dto.getCorreo());
         e.setPassword(dto.getPassword());
-        
+
         if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) {
             try {
                 e.setFoto(Base64.getDecoder().decode(dto.getFotoBase64()));
@@ -66,7 +66,6 @@ public class EstudianteController {
         }
         return e;
     }
-
 
     @GetMapping
     public List<EstudianteDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
@@ -81,7 +80,7 @@ public class EstudianteController {
         Estudiante e = estudianteService.obtenerEstudiante(id);
         if (e == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                 .body("Estudiante no encontrado con id: " + id);
+                    .body("Estudiante no encontrado con id: " + id);
         }
         return ResponseEntity.ok(toDTO(e));
     }
@@ -90,10 +89,9 @@ public class EstudianteController {
     public ResponseEntity<?> registrar(@RequestBody EstudianteDTO dto) {
         try {
             Estudiante estudiante = toEntity(dto);
-            
-            
-            Estudiante e = estudianteService.crearEstudiante(estudiante, dto.getHobbies()); 
-            
+
+            Estudiante e = estudianteService.crearEstudiante(estudiante, dto.getHobbies());
+
             return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(e));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -104,7 +102,7 @@ public class EstudianteController {
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody EstudianteDTO dto) {
         try {
             dto.setId(id);
-            
+
             Estudiante e = estudianteService.actualizarEstudiante(toEntity(dto));
             return ResponseEntity.ok(toDTO(e));
         } catch (Exception e) {

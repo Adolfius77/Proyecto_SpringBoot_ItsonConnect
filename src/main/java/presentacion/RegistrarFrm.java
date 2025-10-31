@@ -37,30 +37,41 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         passwordFieldRedondo4 = new presentacion.PasswordFieldRedondo();
         panelRedondo4 = new presentacion.PanelRedondo();
+        textFieldRedondo5 = new presentacion.TextFieldRedondo();
+        jCheckBox7 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
         btnIniciarSesion = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelRedondo1 = new presentacion.PanelRedondo();
         jLabel3 = new javax.swing.JLabel();
         panelRedondo3 = new presentacion.PanelRedondo();
-        jLabel14 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        textFieldRedondo1 = new presentacion.TextFieldRedondo();
+        txtNombre = new presentacion.TextFieldRedondo();
         jLabel5 = new javax.swing.JLabel();
-        textFieldRedondo2 = new presentacion.TextFieldRedondo();
+        txtApellidoPaterno = new presentacion.TextFieldRedondo();
         jLabel6 = new javax.swing.JLabel();
-        textFieldRedondo3 = new presentacion.TextFieldRedondo();
+        txtApellidoMaterno = new presentacion.TextFieldRedondo();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         botonCircular1 = new presentacion.botonCircular();
         jLabel9 = new javax.swing.JLabel();
         botonCircular3 = new presentacion.botonCircular();
-        passwordFieldRedondo5 = new presentacion.PasswordFieldRedondo();
+        passContresena = new presentacion.PasswordFieldRedondo();
         panelRedondo2 = new presentacion.PanelRedondo();
         jLabel10 = new javax.swing.JLabel();
         botonCircular4 = new presentacion.botonCircular();
         jLabel13 = new javax.swing.JLabel();
-        textFieldRedondo5 = new presentacion.TextFieldRedondo();
-        passwordFieldRedondo6 = new presentacion.PasswordFieldRedondo();
+        passConfirmarContra = new presentacion.PasswordFieldRedondo();
+        panelRedondo5 = new presentacion.PanelRedondo();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox8 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBox9 = new javax.swing.JCheckBox();
+        jCheckBox10 = new javax.swing.JCheckBox();
 
         jLabel2.setText("jLabel2");
 
@@ -109,6 +120,11 @@ public class RegistrarFrm extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        jCheckBox7.setText("jCheckBox7");
+
+        jCheckBox3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox3.setText("Deportes");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnIniciarSesion.setBackground(new java.awt.Color(255, 255, 255));
@@ -126,7 +142,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
         panelRedondo3.setBackground(new java.awt.Color(255, 255, 255));
         panelRedondo3.setRadius(100);
 
-        jLabel14.setText("jLabel14");
+        lblImagen.setText("jLabel14");
 
         javax.swing.GroupLayout panelRedondo3Layout = new javax.swing.GroupLayout(panelRedondo3);
         panelRedondo3.setLayout(panelRedondo3Layout);
@@ -134,14 +150,14 @@ public class RegistrarFrm extends javax.swing.JFrame {
             panelRedondo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRedondo3Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         panelRedondo3Layout.setVerticalGroup(
             panelRedondo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -187,7 +203,6 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Confirma Contraseña:");
 
-        botonCircular1.setBackground(new java.awt.Color(30, 115, 179));
         botonCircular1.setForeground(new java.awt.Color(255, 255, 255));
         botonCircular1.setText("Crear Cuenta");
         botonCircular1.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -212,9 +227,9 @@ public class RegistrarFrm extends javax.swing.JFrame {
             }
         });
 
-        passwordFieldRedondo5.addActionListener(new java.awt.event.ActionListener() {
+        passContresena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldRedondo5ActionPerformed(evt);
+                passContresenaActionPerformed(evt);
             }
         });
 
@@ -228,17 +243,17 @@ public class RegistrarFrm extends javax.swing.JFrame {
         panelRedondo2.setLayout(panelRedondo2Layout);
         panelRedondo2Layout.setHorizontalGroup(
             panelRedondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRedondo2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo2Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
         panelRedondo2Layout.setVerticalGroup(
             panelRedondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo2Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+            .addGroup(panelRedondo2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         botonCircular4.setBackground(new java.awt.Color(30, 115, 179));
@@ -254,11 +269,90 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Hobbys y Intereses");
 
-        passwordFieldRedondo6.addActionListener(new java.awt.event.ActionListener() {
+        passConfirmarContra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldRedondo6ActionPerformed(evt);
+                passConfirmarContraActionPerformed(evt);
             }
         });
+
+        panelRedondo5.setBackground(new java.awt.Color(234, 231, 225));
+
+        jCheckBox1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox1.setText("Gaming");
+
+        jCheckBox2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox2.setText("Musica");
+
+        jCheckBox4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox4.setText("Peliculas");
+
+        jCheckBox5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox5.setText("Viajes");
+
+        jCheckBox8.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox8.setText("Lectura");
+
+        jCheckBox6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox6.setText("Cantar");
+        jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox6ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox9.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox9.setText("Codificar");
+        jCheckBox9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox9ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox10.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jCheckBox10.setText("Musica");
+
+        javax.swing.GroupLayout panelRedondo5Layout = new javax.swing.GroupLayout(panelRedondo5);
+        panelRedondo5.setLayout(panelRedondo5Layout);
+        panelRedondo5Layout.setHorizontalGroup(
+            panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondo5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRedondo5Layout.createSequentialGroup()
+                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(jCheckBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRedondo5Layout.createSequentialGroup()
+                        .addComponent(jCheckBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jCheckBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRedondo5Layout.setVerticalGroup(
+            panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondo5Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout btnIniciarSesionLayout = new javax.swing.GroupLayout(btnIniciarSesion);
         btnIniciarSesion.setLayout(btnIniciarSesionLayout);
@@ -282,9 +376,9 @@ public class RegistrarFrm extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
-                            .addComponent(textFieldRedondo2, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(textFieldRedondo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textFieldRedondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                            .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(btnIniciarSesionLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,17 +389,17 @@ public class RegistrarFrm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13)
-                                    .addComponent(textFieldRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                                        .addComponent(passwordFieldRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(passContresena, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel8)
-                                            .addComponent(passwordFieldRedondo6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(12, 12, 12)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                                            .addComponent(passConfirmarContra, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(panelRedondo5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -322,15 +416,15 @@ public class RegistrarFrm extends javax.swing.JFrame {
                             .addGroup(btnIniciarSesionLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textFieldRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textFieldRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textFieldRedondo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(41, 41, 41))
                             .addGroup(btnIniciarSesionLayout.createSequentialGroup()
                                 .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,15 +436,15 @@ public class RegistrarFrm extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(passwordFieldRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordFieldRedondo6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(passContresena, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passConfirmarContra, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
                             .addComponent(botonCircular3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20))
@@ -360,13 +454,11 @@ public class RegistrarFrm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(btnIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -390,13 +482,21 @@ public class RegistrarFrm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botonCircular3ActionPerformed
 
-    private void passwordFieldRedondo5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldRedondo5ActionPerformed
+    private void passContresenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passContresenaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldRedondo5ActionPerformed
+    }//GEN-LAST:event_passContresenaActionPerformed
 
-    private void passwordFieldRedondo6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldRedondo6ActionPerformed
+    private void passConfirmarContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passConfirmarContraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldRedondo6ActionPerformed
+    }//GEN-LAST:event_passConfirmarContraActionPerformed
+
+    private void jCheckBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox9ActionPerformed
+
+    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -440,12 +540,21 @@ public class RegistrarFrm extends javax.swing.JFrame {
     private presentacion.botonCircular botonCircular4;
     private javax.swing.JPanel btnIniciarSesion;
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox10;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JCheckBox jCheckBox8;
+    private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -454,19 +563,21 @@ public class RegistrarFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblImagen;
     private presentacion.PanelRedondo panelRedondo1;
     private presentacion.PanelRedondo panelRedondo2;
     private presentacion.PanelRedondo panelRedondo3;
     private presentacion.PanelRedondo panelRedondo4;
+    private presentacion.PanelRedondo panelRedondo5;
+    private presentacion.PasswordFieldRedondo passConfirmarContra;
+    private presentacion.PasswordFieldRedondo passContresena;
     private presentacion.PasswordFieldRedondo passwordFieldRedondo1;
     private presentacion.PasswordFieldRedondo passwordFieldRedondo2;
     private presentacion.PasswordFieldRedondo passwordFieldRedondo4;
-    private presentacion.PasswordFieldRedondo passwordFieldRedondo5;
-    private presentacion.PasswordFieldRedondo passwordFieldRedondo6;
-    private presentacion.TextFieldRedondo textFieldRedondo1;
-    private presentacion.TextFieldRedondo textFieldRedondo2;
-    private presentacion.TextFieldRedondo textFieldRedondo3;
     private presentacion.TextFieldRedondo textFieldRedondo4;
     private presentacion.TextFieldRedondo textFieldRedondo5;
+    private presentacion.TextFieldRedondo txtApellidoMaterno;
+    private presentacion.TextFieldRedondo txtApellidoPaterno;
+    private presentacion.TextFieldRedondo txtNombre;
     // End of variables declaration//GEN-END:variables
 }

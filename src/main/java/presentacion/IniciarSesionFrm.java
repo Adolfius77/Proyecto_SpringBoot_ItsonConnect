@@ -286,13 +286,13 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
             String correo = txtCorreoInstitucional.getText(); 
             String password = new String(passwordTxt.getPassword()); 
 
-            // 2. Validación simple en cliente
+           
             if (correo.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Correo y contraseña no pueden estar vacíos.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // 3. Crear DTO y convertir a JSON
+            //  Crear DTO y convertir a JSON
             EstudianteDTO loginDto = new EstudianteDTO();
             loginDto.setCorreo(correo);
             loginDto.setPassword(password);
@@ -300,20 +300,20 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = objectMapper.writeValueAsString(loginDto);
 
-            // 4. Crear cliente y petición HTTP al endpoint de login
+            //  Crear cliente y petición HTTP al endpoint de login
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/estudiantes/login")) // Tu endpoint de login
+                    .uri(URI.create("http://localhost:8080/api/estudiantes/login")) // endpoint de login
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .header("Content-Type", "application/json")
                     .build();
 
-            // 5. Enviar petición y recibir respuesta
+            // Enviar peticion y recibir respuesta
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // 6. Procesar respuesta del servidor
+            // Procesar respuesta del servidor
             if (response.statusCode() == 200) { // 200 OK
-                // Éxito: deserializar el estudiante
+                //deserializar el estudiante
                 EstudianteDTO estudianteLogueado = objectMapper.readValue(response.body(), EstudianteDTO.class);
                 
                 JOptionPane.showMessageDialog(this, "¡Bienvenido, " + estudianteLogueado.getNombre() + "!", "Inicio de Sesión Exitoso", JOptionPane.INFORMATION_MESSAGE);
@@ -324,15 +324,15 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
                 this.dispose(); // Cierra la ventana de login
 
             } else {
-                // Error (ej. 401 Unauthorized, 400 Bad Request)
+                // Error (401 Unauthorized, 400 Bad Request)
                 String errorMessage = response.body();
-                JOptionPane.showMessageDialog(this, "Error: " + errorMessage, "Fallo de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: " + errorMessage, "Fallo de Inicio de Sesion", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception e) {
-            // Error de conexión o JSON
+           
             logger.log(java.util.logging.Level.SEVERE, "Error al iniciar sesión", e);
-            JOptionPane.showMessageDialog(this, "Error de conexión con el servidor: " + e.getMessage(), "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error de conexion con el servidor: " + e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 

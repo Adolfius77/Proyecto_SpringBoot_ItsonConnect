@@ -615,7 +615,7 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
     private void btnAgregarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFotoActionPerformed
        JFileChooser fileChooser = new JFileChooser();
         
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes (JPG, PNG, GIF)", "jpg", "png", "gif");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes (JPG, PNG, GIF)", "jpg", "png", "gif");
         fileChooser.setFileFilter(filter);
 
         int resultado = fileChooser.showOpenDialog(this);

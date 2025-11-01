@@ -64,14 +64,14 @@ public class EstudianteServiceImpl implements IEstudianteService {
             throw new Exception("La contraseña es obligatoria.");
         }
 
-        // 2. Validar formato de correo (simple)
+        
         if (!estudiante.getCorreo().contains("@") || !estudiante.getCorreo().contains(".")) {
             throw new Exception("El formato del correo no es válido.");
         }
 
         String correo = estudiante.getCorreo().toLowerCase();
-        if (!correo.endsWith("@itson.edu.mx") && !correo.endsWith("@itson.mx")) {
-            throw new Exception("Debe ser un correo institucional (@itson.edu.mx o @itson.mx).");
+        if (!correo.endsWith("@potros.itson.edu.mx") && !correo.endsWith("@itson.mx")) {
+            throw new Exception("Debe ser un correo institucional (@potros.itson.edu.mx o @itson.mx).");
         }
 
         if (estudiante.getPassword().length() < 8) {

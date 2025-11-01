@@ -608,7 +608,7 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
             }
         } catch (Exception e) {
             logger.log(java.util.logging.Level.SEVERE, "Error al registrar", e);
-            JOptionPane.showMessageDialog(this, "Error de conexión con el servidor: " + e.getMessage(), "Error de Conexin", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error de conexion con el servidor: " + e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 

@@ -74,6 +74,11 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular1.setColorClick(new java.awt.Color(102, 204, 255));
         botonCircular1.setColorOver(new java.awt.Color(51, 204, 255));
         botonCircular1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        botonCircular1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular1ActionPerformed(evt);
+            }
+        });
 
         botonCircular2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hogar.png"))); // NOI18N
         botonCircular2.setText("Inicio");
@@ -318,6 +323,10 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     private void botonCircular2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonCircular2ActionPerformed
+
+    private void botonCircular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular1ActionPerformed
 
     /**
      * @param args the command line arguments

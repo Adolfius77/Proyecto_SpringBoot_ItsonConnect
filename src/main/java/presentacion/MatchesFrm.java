@@ -30,28 +30,118 @@ public class MatchesFrm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        botonCircular2 = new presentacion.botonCircular();
+        botonCircular3 = new presentacion.botonCircular();
+        botonCircular4 = new presentacion.botonCircular();
+        botonCircular5 = new presentacion.botonCircular();
+        botonCircular1 = new presentacion.botonCircular();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(940, 497));
 
+        jPanel2.setBackground(new java.awt.Color(247, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(250, 364));
 
         jLabel1.setText("Nombre Usuario");
         jLabel1.setPreferredSize(new java.awt.Dimension(102, 16));
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/usuario (2).png"))); // NOI18N
         jLabel2.setText("jLabel2");
+
+        botonCircular2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hogar.png"))); // NOI18N
+        botonCircular2.setText("Inicio");
+        botonCircular2.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular2.setColorClick(new java.awt.Color(102, 204, 255));
+        botonCircular2.setColorOver(new java.awt.Color(102, 204, 255));
+        botonCircular2.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        botonCircular2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular2ActionPerformed(evt);
+            }
+        });
+
+        botonCircular3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/amigos-felices.png"))); // NOI18N
+        botonCircular3.setText("Matches");
+        botonCircular3.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular3.setColorClick(new java.awt.Color(102, 204, 255));
+        botonCircular3.setColorOver(new java.awt.Color(102, 204, 255));
+        botonCircular3.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        botonCircular3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular3ActionPerformed(evt);
+            }
+        });
+
+        botonCircular4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
+        botonCircular4.setText("Mensajes");
+        botonCircular4.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular4.setColorClick(new java.awt.Color(102, 204, 255));
+        botonCircular4.setColorOver(new java.awt.Color(102, 204, 255));
+        botonCircular4.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        botonCircular4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular4ActionPerformed(evt);
+            }
+        });
+
+        botonCircular5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/editar (2).png"))); // NOI18N
+        botonCircular5.setText("Perfil");
+        botonCircular5.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular5.setColorClick(new java.awt.Color(102, 204, 255));
+        botonCircular5.setColorOver(new java.awt.Color(102, 204, 255));
+        botonCircular5.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        botonCircular5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular5ActionPerformed(evt);
+            }
+        });
+
+        botonCircular1.setBackground(new java.awt.Color(102, 204, 255));
+        botonCircular1.setForeground(new java.awt.Color(255, 255, 255));
+        botonCircular1.setText("Buscar estudiantes");
+        botonCircular1.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular1.setColor(new java.awt.Color(102, 204, 255));
+        botonCircular1.setColorClick(new java.awt.Color(102, 204, 255));
+        botonCircular1.setColorOver(new java.awt.Color(51, 204, 255));
+        botonCircular1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        botonCircular1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(botonCircular2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(botonCircular3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(botonCircular4, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(botonCircular5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(botonCircular1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -60,7 +150,33 @@ public class MatchesFrm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(440, Short.MAX_VALUE))
+                .addGap(66, 66, 66)
+                .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonCircular3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonCircular4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonCircular5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+        );
+
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
+        jLabel4.setText("Matches");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -68,12 +184,21 @@ public class MatchesFrm extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 690, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,6 +218,26 @@ public class MatchesFrm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonCircular2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular2ActionPerformed
+
+    private void botonCircular3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular3ActionPerformed
+
+    private void botonCircular4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular4ActionPerformed
+
+    private void botonCircular5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular5ActionPerformed
+
+    private void botonCircular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,9 +275,17 @@ public class MatchesFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private presentacion.botonCircular botonCircular1;
+    private presentacion.botonCircular botonCircular2;
+    private presentacion.botonCircular botonCircular3;
+    private presentacion.botonCircular botonCircular4;
+    private presentacion.botonCircular botonCircular5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

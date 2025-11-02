@@ -234,6 +234,9 @@
                   <Font name="SansSerif" size="12" style="1"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCircular1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="presentacion.botonCircular" name="botonCircular2">
               <Properties>

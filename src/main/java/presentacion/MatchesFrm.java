@@ -4,10 +4,18 @@
  */
 package presentacion;
 
+import dto.MatchDTO;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
+import static java.util.regex.Pattern.matches;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import service.IMatchService;
 
 /**
@@ -16,105 +24,62 @@ import service.IMatchService;
  */
 public class MatchesFrm extends javax.swing.JFrame {
     
-     private IMatchService matchService;
-    private Long estudianteActualId;
-    /**
-     * Creates new form MatchesFrm
-     */
+    
     public MatchesFrm() {
         initComponents();
+        setLocationRelativeTo(null);
+        cargarMatchesDesdeBD(matches);
     }
     
-     private void inicializarMatches() {
-        // Crear el panel contenedor con GridLayout
+    private void initComponents() {
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Matches");
+        setSize(600, 400);
+        setLayout(new BorderLayout());
+
         contenedorMatches = new JPanel();
-        contenedorMatches.setLayout(new GridLayout(0, 3, 15, 15)); // 3 columnas
+        contenedorMatches.setLayout(new GridLayout(0, 2, 10, 10)); // 2 columnas
         contenedorMatches.setBackground(Color.WHITE);
-        contenedorMatches.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        
-        // Agregar el contenedor al ScrollPane
-        jScrollPane1.setViewportView(contenedorMatches);
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
-        
-        // Inicializar el servicio
-        matchService = new MatchService();
-        
-        // Cargar matches desde la API
-        if (estudianteActualId != null) {
-            cargarMatches();
-        } else {
-            // Si no hay estudiante, mostrar mensaje
-            JLabel mensaje = new JLabel("Inicia sesión para ver tus matches");
-            mensaje.setHorizontalAlignment(SwingConstants.CENTER);
-            contenedorMatches.add(mensaje);
-        }
+
+        scrollPane = new JScrollPane(contenedorMatches);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        add(scrollPane, BorderLayout.CENTER);
     }
     
-    // ===== MÉTODO PARA CARGAR MATCHES DESDE LA API =====
-    private void cargarMatches() {
-        // Limpiar contenedor
+    private void cargarMatchesDesdeBD(List<MatchDTO> matches) {
+        List<PanelAvatarMacthes> paneles = new ArrayList<>();
+
+        for (MatchDTO m : matches) {
+            for (Long idParticipante : m.getEstdudiantesId()) {
+                
+                String nombre = "Usuario " + idParticipante;
+                ImageIcon foto = new ImageIcon(getClass().getResource("/imagenes/default_avatar.png")); // imagen por defecto
+                PanelAvatarMacthes panel = new PanelAvatarMacthes(m.getId(), idParticipante, nombre, foto);
+                paneles.add(panel);
+            }
+        }
+
+        mostrarMatches(paneles);
+    }
+    
+    private void mostrarMatches(List<PanelAvatarMacthes> paneles) {
         contenedorMatches.removeAll();
-        
-        // Mostrar loading
-        JLabel loading = new JLabel("Cargando matches...");
-        loading.setHorizontalAlignment(SwingConstants.CENTER);
-        loading.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        contenedorMatches.add(loading);
+
+        for (PanelAvatarMacthes p : paneles) {
+            contenedorMatches.add(p);
+        }
+
         contenedorMatches.revalidate();
         contenedorMatches.repaint();
-        
-        // Cargar en segundo plano
-        SwingWorker<List<MatchDTO>, Void> worker = new SwingWorker<>() {
-            @Override
-            protected List<MatchDTO> doInBackground() throws Exception {
-                return matchService.obtenerMatchesDeEstudiante(estudianteActualId);
-            }
-            
-            @Override
-            protected void done() {
-                contenedorMatches.removeAll();
-                
-                try {
-                    List<MatchDTO> matches = get();
-                    
-                    if (matches.isEmpty()) {
-                        JLabel noMatches = new JLabel("No tienes matches aún 💔");
-                        noMatches.setHorizontalAlignment(SwingConstants.CENTER);
-                        noMatches.setFont(new Font("SansSerif", Font.BOLD, 16));
-                        contenedorMatches.add(noMatches);
-                    } else {
-                        // Por cada match, crear un PanelAvatarMatches
-                        for (MatchDTO match : matches) {
-                            // Obtener el ID del otro participante
-                            Long otroEstudianteId = match.getParticipanteIds().stream()
-                                .filter(id -> !id.equals(estudianteActualId))
-                                .findFirst()
-                                .orElse(null);
-                            
-                            if (otroEstudianteId != null) {
-                                cargarPanelMatch(match, otroEstudianteId);
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    JLabel error = new JLabel("Error al cargar matches: " + e.getMessage());
-                    error.setHorizontalAlignment(SwingConstants.CENTER);
-                    error.setForeground(Color.RED);
-                    contenedorMatches.add(error);
-                    e.printStackTrace();
-                }
-                
-                contenedorMatches.revalidate();
-                contenedorMatches.repaint();
-            }
-        };
-        worker.execute();
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
-     */
+     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -129,7 +94,7 @@ public class MatchesFrm extends javax.swing.JFrame {
         botonCircular5 = new presentacion.botonCircular();
         botonCircular1 = new presentacion.botonCircular();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrollPane = new javax.swing.JScrollPane();
         contenedorMatches = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -270,7 +235,7 @@ public class MatchesFrm extends javax.swing.JFrame {
             .addGap(0, 423, Short.MAX_VALUE)
         );
 
-        jScrollPane2.setViewportView(contenedorMatches);
+        scrollPane.setViewportView(contenedorMatches);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -283,7 +248,7 @@ public class MatchesFrm extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
+                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -293,7 +258,7 @@ public class MatchesFrm extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(scrollPane)
                 .addContainerGap())
         );
 
@@ -314,7 +279,7 @@ public class MatchesFrm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+*/
     private void botonCircular2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonCircular2ActionPerformed
@@ -382,6 +347,6 @@ public class MatchesFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 }

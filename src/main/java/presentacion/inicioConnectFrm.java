@@ -75,23 +75,30 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular1.setColorOver(new java.awt.Color(51, 204, 255));
         botonCircular1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
 
-        botonCircular2.setForeground(new java.awt.Color(0, 0, 0));
         botonCircular2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hogar.png"))); // NOI18N
         botonCircular2.setText("Inicio");
         botonCircular2.setBorderColor(new java.awt.Color(255, 255, 255));
         botonCircular2.setColorClick(new java.awt.Color(102, 204, 255));
         botonCircular2.setColorOver(new java.awt.Color(102, 204, 255));
         botonCircular2.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        botonCircular2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular2ActionPerformed(evt);
+            }
+        });
 
-        botonCircular3.setForeground(new java.awt.Color(0, 0, 0));
         botonCircular3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/amigos-felices.png"))); // NOI18N
         botonCircular3.setText("Matches");
         botonCircular3.setBorderColor(new java.awt.Color(255, 255, 255));
         botonCircular3.setColorClick(new java.awt.Color(102, 204, 255));
         botonCircular3.setColorOver(new java.awt.Color(102, 204, 255));
         botonCircular3.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        botonCircular3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular3ActionPerformed(evt);
+            }
+        });
 
-        botonCircular4.setForeground(new java.awt.Color(0, 0, 0));
         botonCircular4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
         botonCircular4.setText("Mensajes");
         botonCircular4.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -104,7 +111,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
-        botonCircular5.setForeground(new java.awt.Color(0, 0, 0));
         botonCircular5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/editar (2).png"))); // NOI18N
         botonCircular5.setText("Perfil");
         botonCircular5.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -163,24 +169,20 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         );
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Bienvendio de vuelta");
 
         jLabel5.setText("jLabel5");
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 3, 20)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Acciones Rapidas");
 
         botonCircular7.setBackground(new java.awt.Color(102, 204, 255));
-        botonCircular7.setForeground(new java.awt.Color(0, 0, 0));
         botonCircular7.setText("Editar Perfil");
         botonCircular7.setBorderColor(new java.awt.Color(255, 255, 255));
         botonCircular7.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
         botonCircular7.setRadius(50);
 
         botonCircular8.setBackground(new java.awt.Color(102, 204, 255));
-        botonCircular8.setForeground(new java.awt.Color(0, 0, 0));
         botonCircular8.setText("Buscar Estudiante");
         botonCircular8.setBorderColor(new java.awt.Color(255, 255, 255));
         botonCircular8.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
@@ -192,7 +194,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         });
 
         botonCircular9.setBackground(new java.awt.Color(102, 204, 255));
-        botonCircular9.setForeground(new java.awt.Color(0, 0, 0));
         botonCircular9.setText("Opciones");
         botonCircular9.setBorderColor(new java.awt.Color(255, 255, 255));
         botonCircular9.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
@@ -212,7 +213,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         );
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Nuevos Matches");
 
         panelRedondo2.setBackground(new java.awt.Color(255, 255, 255));
@@ -242,7 +242,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(botonCircular7, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                .addComponent(botonCircular7, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botonCircular8, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -252,7 +252,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botonCircular9, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                        .addComponent(botonCircular9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -282,7 +282,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                     .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -310,6 +310,14 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     private void botonCircular8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonCircular8ActionPerformed
+
+    private void botonCircular3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular3ActionPerformed
+
+    private void botonCircular2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular2ActionPerformed
 
     /**
      * @param args the command line arguments

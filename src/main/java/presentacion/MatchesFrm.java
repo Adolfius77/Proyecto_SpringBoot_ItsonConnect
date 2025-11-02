@@ -4,19 +4,112 @@
  */
 package presentacion;
 
+import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import service.IMatchService;
+
 /**
  *
  * @author jorge
  */
 public class MatchesFrm extends javax.swing.JFrame {
-
+    
+     private IMatchService matchService;
+    private Long estudianteActualId;
     /**
      * Creates new form MatchesFrm
      */
     public MatchesFrm() {
         initComponents();
     }
-
+    
+     private void inicializarMatches() {
+        // Crear el panel contenedor con GridLayout
+        contenedorMatches = new JPanel();
+        contenedorMatches.setLayout(new GridLayout(0, 3, 15, 15)); // 3 columnas
+        contenedorMatches.setBackground(Color.WHITE);
+        contenedorMatches.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        
+        // Agregar el contenedor al ScrollPane
+        jScrollPane1.setViewportView(contenedorMatches);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
+        
+        // Inicializar el servicio
+        matchService = new MatchService();
+        
+        // Cargar matches desde la API
+        if (estudianteActualId != null) {
+            cargarMatches();
+        } else {
+            // Si no hay estudiante, mostrar mensaje
+            JLabel mensaje = new JLabel("Inicia sesión para ver tus matches");
+            mensaje.setHorizontalAlignment(SwingConstants.CENTER);
+            contenedorMatches.add(mensaje);
+        }
+    }
+    
+    // ===== MÉTODO PARA CARGAR MATCHES DESDE LA API =====
+    private void cargarMatches() {
+        // Limpiar contenedor
+        contenedorMatches.removeAll();
+        
+        // Mostrar loading
+        JLabel loading = new JLabel("Cargando matches...");
+        loading.setHorizontalAlignment(SwingConstants.CENTER);
+        loading.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        contenedorMatches.add(loading);
+        contenedorMatches.revalidate();
+        contenedorMatches.repaint();
+        
+        // Cargar en segundo plano
+        SwingWorker<List<MatchDTO>, Void> worker = new SwingWorker<>() {
+            @Override
+            protected List<MatchDTO> doInBackground() throws Exception {
+                return matchService.obtenerMatchesDeEstudiante(estudianteActualId);
+            }
+            
+            @Override
+            protected void done() {
+                contenedorMatches.removeAll();
+                
+                try {
+                    List<MatchDTO> matches = get();
+                    
+                    if (matches.isEmpty()) {
+                        JLabel noMatches = new JLabel("No tienes matches aún 💔");
+                        noMatches.setHorizontalAlignment(SwingConstants.CENTER);
+                        noMatches.setFont(new Font("SansSerif", Font.BOLD, 16));
+                        contenedorMatches.add(noMatches);
+                    } else {
+                        // Por cada match, crear un PanelAvatarMatches
+                        for (MatchDTO match : matches) {
+                            // Obtener el ID del otro participante
+                            Long otroEstudianteId = match.getParticipanteIds().stream()
+                                .filter(id -> !id.equals(estudianteActualId))
+                                .findFirst()
+                                .orElse(null);
+                            
+                            if (otroEstudianteId != null) {
+                                cargarPanelMatch(match, otroEstudianteId);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    JLabel error = new JLabel("Error al cargar matches: " + e.getMessage());
+                    error.setHorizontalAlignment(SwingConstants.CENTER);
+                    error.setForeground(Color.RED);
+                    contenedorMatches.add(error);
+                    e.printStackTrace();
+                }
+                
+                contenedorMatches.revalidate();
+                contenedorMatches.repaint();
+            }
+        };
+        worker.execute();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,8 +129,8 @@ public class MatchesFrm extends javax.swing.JFrame {
         botonCircular5 = new presentacion.botonCircular();
         botonCircular1 = new presentacion.botonCircular();
         jLabel4 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        contenedorMatches = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -166,18 +259,18 @@ public class MatchesFrm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
         jLabel4.setText("Matches");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+        javax.swing.GroupLayout contenedorMatchesLayout = new javax.swing.GroupLayout(contenedorMatches);
+        contenedorMatches.setLayout(contenedorMatchesLayout);
+        contenedorMatchesLayout.setHorizontalGroup(
+            contenedorMatchesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 706, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+        contenedorMatchesLayout.setVerticalGroup(
+            contenedorMatchesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 423, Short.MAX_VALUE)
         );
+
+        jScrollPane2.setViewportView(contenedorMatches);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -187,9 +280,11 @@ public class MatchesFrm extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,8 +292,9 @@ public class MatchesFrm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,12 +376,12 @@ public class MatchesFrm extends javax.swing.JFrame {
     private presentacion.botonCircular botonCircular3;
     private presentacion.botonCircular botonCircular4;
     private presentacion.botonCircular botonCircular5;
+    private javax.swing.JPanel contenedorMatches;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

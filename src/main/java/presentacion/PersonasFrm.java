@@ -38,6 +38,8 @@ public class PersonasFrm extends javax.swing.JPanel {
     }
 
     public PersonasFrm(Long emisorId, EstudianteDTO receptorDto) {
+        initComponents();
+
         this.emisorId = emisorId;
         this.receptorId = receptorDto.getId();
 
@@ -50,7 +52,6 @@ public class PersonasFrm extends javax.swing.JPanel {
         btnMegusta.addActionListener(e -> enviarInteraccion("LIKE"));
         btnNoMeInteresa.addActionListener(e -> enviarInteraccion("PASS"));
 
-        initComponents();
     }
 
     private void setFoto(String fotoBase64) {
@@ -67,7 +68,7 @@ public class PersonasFrm extends javax.swing.JPanel {
             icon = getPlaceholderIcon();
         }
 
-        Image img = icon.getImage().getScaledInstance(lblFotoPerfil.getWidth(), lblFotoPerfil.getHeight(), Image.SCALE_SMOOTH);
+        Image img = icon.getImage().getScaledInstance(244, 182, Image.SCALE_SMOOTH);
         lblFotoPerfil.setIcon(new ImageIcon(img));
         lblFotoPerfil.setHorizontalAlignment(SwingConstants.CENTER);
         lblFotoPerfil.setText("");

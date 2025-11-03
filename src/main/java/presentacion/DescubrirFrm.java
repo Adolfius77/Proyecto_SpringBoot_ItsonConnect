@@ -36,10 +36,11 @@ public class DescubrirFrm extends javax.swing.JFrame {
     public DescubrirFrm(EstudianteDTO estudianteActual, ConfigurableApplicationContext context) {
         this.estudianteActual = estudianteActual;
         this.context = context;
+
         initComponents();
+        
         configurarVentana();
         cargarEstudiantes();
-
     }
 
     public DescubrirFrm() {
@@ -47,18 +48,19 @@ public class DescubrirFrm extends javax.swing.JFrame {
         configurarVentana();
 
     }
+
     private void configurarVentana() {
         this.setTitle("Itson Connect - Descubrir");
         // this.setSize(940, 600); // El diseñador ya lo maneja
         setLocationRelativeTo(null);
-        
+
         // Configurar el panel dinámico
         // Usar GridLayout: 0 filas (dinámico), 3 columnas, 10px de espacio
-        panelDinamico.setLayout(new GridLayout(0, 3, 10, 10)); 
+        panelDinamico.setLayout(new GridLayout(0, 3, 10, 10));
         panelDinamico.setBackground(new Color(234, 231, 225)); // Color de fondo
-        
+
         scrollpanel.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        
+
         // --- Manejo del cierre de ventana ---
         // Esto es MUY IMPORTANTE. Si cierras esta ventana,
         // también debe cerrar el servidor de Spring Boot.

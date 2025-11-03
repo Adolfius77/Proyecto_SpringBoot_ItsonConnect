@@ -4,6 +4,9 @@
  */
 package presentacion;
 
+import dto.EstudianteDTO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USER
@@ -13,9 +16,18 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     /**
      * Creates new form inicioConnectFrm
      */
+    private EstudianteDTO estudianteLogueado;
     public inicioConnectFrm() {
         initComponents();
         setLocationRelativeTo(null);
+    }
+    public inicioConnectFrm(EstudianteDTO estudiante) {
+        this.estudianteLogueado = estudiante;
+        initComponents();
+        setLocationRelativeTo(null);
+        if(this.estudianteLogueado != null){
+            jLabel3.setText(this.estudianteLogueado.getNombre());
+        }
     }
 
     /**
@@ -325,9 +337,14 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnBuscarEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEstudiantesActionPerformed
-        DescubrirFrm descu = new DescubrirFrm();
-        descu.setVisible(true);
-        this.dispose();
+       if(this.estudianteLogueado == null){
+           
+           JOptionPane.showMessageDialog(this, "Error, no se ha iniciado sesion.", "Error", JOptionPane.ERROR_MESSAGE);
+           return;
+       }
+       DescubrirFrm descu = new DescubrirFrm(this.estudianteLogueado,null);
+       descu.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_btnBuscarEstudiantesActionPerformed
 
     /**

@@ -319,7 +319,7 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "¡Bienvenido, " + estudianteLogueado.getNombre() + "!", "Inicio de Sesión Exitoso", JOptionPane.INFORMATION_MESSAGE);
                 
                 // Abrir la ventana principal de la app y cerrar esta
-                inicioConnectFrm inicioApp = new inicioConnectFrm(); 
+                inicioConnectFrm inicioApp = new inicioConnectFrm(estudianteLogueado); 
                 inicioApp.setVisible(true);
                 this.dispose(); // Cierra la ventana de login
 

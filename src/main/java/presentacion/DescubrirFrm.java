@@ -14,11 +14,18 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import org.springframework.context.ConfigurableApplicationContext;
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import org.springframework.boot.SpringApplication;
+
 /**
  *
  * @author USER
  */
 public class DescubrirFrm extends javax.swing.JFrame {
+
     private EstudianteDTO estudianteActual;
     private static ConfigurableApplicationContext context;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DescubrirFrm.class.getName());
@@ -29,28 +36,65 @@ public class DescubrirFrm extends javax.swing.JFrame {
     public DescubrirFrm(EstudianteDTO estudianteActual, ConfigurableApplicationContext context) {
         this.estudianteActual = estudianteActual;
         this.context = context;
-        cargarEstudiantes();
         initComponents();
+        configurarVentana();
+        cargarEstudiantes();
+
     }
+
     public DescubrirFrm() {
         initComponents();
-       
+        configurarVentana();
+
     }
-    private void cargarEstudiantes() {
+    private void configurarVentana() {
+        this.setTitle("Itson Connect - Descubrir");
+        // this.setSize(940, 600); // El diseñador ya lo maneja
+        setLocationRelativeTo(null);
         
+        // Configurar el panel dinámico
+        // Usar GridLayout: 0 filas (dinámico), 3 columnas, 10px de espacio
+        panelDinamico.setLayout(new GridLayout(0, 3, 10, 10)); 
+        panelDinamico.setBackground(new Color(234, 231, 225)); // Color de fondo
+        
+        scrollpanel.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        // --- Manejo del cierre de ventana ---
+        // Esto es MUY IMPORTANTE. Si cierras esta ventana,
+        // también debe cerrar el servidor de Spring Boot.
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Preguntar al usuario si quiere salir
+                int a = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres salir?", "Salir", JOptionPane.YES_NO_OPTION);
+                if (a == JOptionPane.YES_OPTION) {
+                    // Si el contexto de Spring existe, ciérralo
+                    if (context != null) {
+                        SpringApplication.exit(context, () -> 0);
+                    }
+                    // Cierra la aplicación
+                    System.exit(0);
+                }
+            }
+        });
+    }
+
+    private void cargarEstudiantes() {
+
         if (estudianteActual == null) {
             JOptionPane.showMessageDialog(this, "Error: No se ha iniciado sesión.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         try {
             // 1. Crear cliente y petición HTTP
             HttpClient client = HttpClient.newHttpClient();
             // Llama al endpoint /descubrir que creamos en el controlador
             String url = "http://localhost:8080/api/estudiantes/descubrir?idActual=" + estudianteActual.getId();
-            
+
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url)) 
+                    .uri(URI.create(url))
                     .GET()
                     .header("Content-Type", "application/json")
                     .build();
@@ -62,29 +106,31 @@ public class DescubrirFrm extends javax.swing.JFrame {
             if (response.statusCode() == 200) {
                 ObjectMapper objectMapper = new ObjectMapper();
                 // Deserializar la respuesta como una *Lista* de EstudianteDTO
-                List<EstudianteDTO> estudiantes = objectMapper.readValue(response.body(), new TypeReference<List<EstudianteDTO>>(){});
-                
+                List<EstudianteDTO> estudiantes = objectMapper.readValue(response.body(), new TypeReference<List<EstudianteDTO>>() {
+                });
+
                 // 4. Crear y añadir las tarjetas al panel
-                panelDinamico.removeAll(); 
-                
+                panelDinamico.removeAll();
+
                 for (EstudianteDTO dto : estudiantes) {
                     // Crea una nueva tarjeta (PersonasFrm) por cada estudiante
                     PersonasFrm card = new PersonasFrm(estudianteActual.getId(), dto);
                     panelDinamico.add(card); // Añade la tarjeta al panel
                 }
-                
+
                 // Refrescar la UI
                 panelDinamico.revalidate();
                 panelDinamico.repaint();
-                
+
             } else {
                 JOptionPane.showMessageDialog(this, "Error al cargar estudiantes: " + response.body(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-             logger.log(java.util.logging.Level.SEVERE, "Error al cargar estudiantes", e);
-             JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            logger.log(java.util.logging.Level.SEVERE, "Error al cargar estudiantes", e);
+            JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,6 +194,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Descubre");
 
+        panelDinamico.setLayout(new java.awt.GridLayout());
         scrollpanel.setViewportView(panelDinamico);
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 2, 13)); // NOI18N
@@ -159,12 +206,16 @@ public class DescubrirFrm extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(67, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,9 +224,9 @@ public class DescubrirFrm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(5, 5, 5)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jMenu1.setText("ITSON Connect");

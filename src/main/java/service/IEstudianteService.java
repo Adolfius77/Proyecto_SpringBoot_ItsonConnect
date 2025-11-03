@@ -17,4 +17,5 @@ public interface IEstudianteService {
    void eliminarEstudiante(Long id) throws Exception;
    List<Estudiante> listarEstudiantes(int limit);
    Estudiante login(String correo, String password) throws Exception;
+   List<Estudiante> descubrirEstudiantes(Long idActual, int limit);
 }

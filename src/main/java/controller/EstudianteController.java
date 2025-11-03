@@ -10,9 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.IEstudianteService;
-import java.util.Base64; 
-import java.util.Set; 
-import java.util.stream.Collectors; 
+import java.util.Base64;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author jorge
@@ -43,7 +44,7 @@ public class EstudianteController {
         if (e.getFoto() != null) {
             dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
         }
-        
+
         if (e.getHobbies() != null) {
             Set<String> hobbyNames = e.getHobbies().stream()
                     .map(hobbyEstudiante -> hobbyEstudiante.getHobby().getNombre())
@@ -136,6 +137,30 @@ public class EstudianteController {
             return ResponseEntity.ok(toDTO(e));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/descubrir")
+    public ResponseEntity<?> descubrirEstudiantes(
+            @RequestParam Long idActual, 
+            @RequestParam(defaultValue = "20") int limit) {
+        
+        if (idActual == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El parametro 'idActual' es obligatorio.");
+        }
+        
+        try {
+            List<Estudiante> estudiantes = estudianteService.descubrirEstudiantes(idActual, limit);
+            
+            List<EstudianteDTO> dtos = estudiantes.stream()
+                    .map(this::toDTO)
+                    .collect(Collectors.toList());
+            
+            return ResponseEntity.ok(dtos);
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Error interno al buscar estudiantes: " + e.getMessage());
         }
     }
 }

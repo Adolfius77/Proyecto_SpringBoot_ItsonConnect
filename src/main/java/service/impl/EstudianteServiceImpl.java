@@ -64,7 +64,6 @@ public class EstudianteServiceImpl implements IEstudianteService {
             throw new Exception("La contraseña es obligatoria.");
         }
 
-        
         if (!estudiante.getCorreo().contains("@") || !estudiante.getCorreo().contains(".")) {
             throw new Exception("El formato del correo no es válido.");
         }
@@ -106,7 +105,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
     @Override
     public Estudiante obtenerEstudiante(Long id) {
         Estudiante estudiante = estudianteRepository.findById(id).orElse(null);
-        if(estudiante !=null){
+        if (estudiante != null) {
             estudiante.getHobbies().size();
         }
         return estudiante;
@@ -138,9 +137,22 @@ public class EstudianteServiceImpl implements IEstudianteService {
     public List<Estudiante> listarEstudiantes(int limit) {
         int effectiveLimit = Math.min(Math.max(limit, 1), 100);
         Pageable pageable = PageRequest.of(0, effectiveLimit);
-        
+
         List<Estudiante> estudiantes = estudianteRepository.findAll(pageable).getContent();
-        
+
+        for (Estudiante e : estudiantes) {
+            e.getHobbies().size();
+        }
+        return estudiantes;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Estudiante> descubrirEstudiantes(Long idActual, int limit) {
+        int effectiveLimit = Math.min(Math.max(limit, 1), 50);
+        Pageable pageable = PageRequest.of(0, effectiveLimit);
+
+        List<Estudiante> estudiantes = estudianteRepository.findEstudiantesParaDescubrir(idActual, pageable);
         for (Estudiante e : estudiantes) {
             e.getHobbies().size();
         }

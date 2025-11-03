@@ -4,8 +4,19 @@
  */
 package presentacion;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.EstudianteDTO;
+import dto.InteraccionDTO;
+import java.awt.Image;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Base64;
+import java.util.Set;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -23,9 +34,104 @@ public class PersonasFrm extends javax.swing.JPanel {
     public PersonasFrm() {
         initComponents();
     }
-   
-        
+
+    public PersonasFrm(Long emisorId, EstudianteDTO receptorDto) {
+        initComponents();
     }
+
+    private void setFoto(String fotoBase64) {
+        ImageIcon icon;
+        if (fotoBase64 != null && !fotoBase64.isEmpty()) {
+            try {
+                byte[] fotoBytes = Base64.getDecoder().decode(fotoBase64);
+                icon = new ImageIcon(fotoBytes);
+            } catch (Exception e) {
+                logger.log(java.util.logging.Level.WARNING, "Error al decodificar foto", e);
+                icon = getPlaceholderIcon();
+            }
+        } else {
+            icon = getPlaceholderIcon();
+        }
+
+        Image img = icon.getImage().getScaledInstance(lblFotoPerfil.getWidth(), lblFotoPerfil.getHeight(), Image.SCALE_SMOOTH);
+        lblFotoPerfil.setIcon(new ImageIcon(img));
+        lblFotoPerfil.setHorizontalAlignment(SwingConstants.CENTER);
+        lblFotoPerfil.setText("");
+    }
+
+    private ImageIcon getPlaceholderIcon() {
+        return new ImageIcon(getClass().getResource("/fotoPerfil.jpg"));
+    }
+
+    private void setHobbies(Set<String> hobbies) {
+        if (hobbies != null && !hobbies.isEmpty()) {
+            String hobbiesTexto = "Hobbies: " + String.join(", ", hobbies);
+            lblHobbys.setText(hobbiesTexto);
+        } else {
+            lblHobbys.setText("Sin hobbies definidos");
+        }
+
+    }
+
+    private void enviarInteraccion(String tipo) {
+        btnMegusta.setEnabled(false);
+        btnNoMeInteresa.setEnabled(false);
+
+        try {
+            InteraccionDTO interaccionDTO = new InteraccionDTO();
+            interaccionDTO.setEmisorId(this.emisorId);
+            interaccionDTO.setReceptorId(this.receptorId);
+            interaccionDTO.setTipo(tipo);
+
+            //convertimos a json
+            ObjectMapper objectMapper = new ObjectMapper();
+            String requestBody = objectMapper.writeValueAsString(interaccionDTO);
+
+            //aqui se crea al cliente y la peticion htpp
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/api/interacciones")) // Endpoint de InteraccionController
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .header("Content-Type", "application/json")
+                    .build();
+            //enviar la peticion
+            client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(response -> {
+                    // Esto se ejecuta cuando el servidor responde
+                    if (response.statusCode() == 201) { // 201 Creado
+                        System.out.println(tipo + " enviado a " + this.receptorId);
+                        
+                        // Oculta esta tarjeta después de interactuar
+                       
+                        javax.swing.SwingUtilities.invokeLater(() -> {
+                            this.setVisible(false); 
+                            //refresca el panel contenedor
+                            ((JPanel)this.getParent()).revalidate();
+                            ((JPanel)this.getParent()).repaint();
+                        });
+                        
+                    } else {
+                        // Error (ej. 400 Bad Request, "Ya interactuaste")
+                        JOptionPane.showMessageDialog(this, "Error: " + response.body(), "Error de Interacción", JOptionPane.ERROR_MESSAGE);
+                        // Vuelve a habilitar los botones si falló
+                        btnMegusta.setEnabled(true);
+                        btnNoMeInteresa.setEnabled(true);
+                    }
+                })
+                .exceptionally(e -> {
+                    // Error de conexión
+                    logger.log(java.util.logging.Level.SEVERE, "Error al enviar interacción", e);
+                    JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    btnMegusta.setEnabled(true);
+                    btnNoMeInteresa.setEnabled(true);
+                    return null;
+                });    
+        } catch (Exception e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al crear JSON de interacción", e);
+            btnMegusta.setEnabled(true);
+            btnNoMeInteresa.setEnabled(true);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

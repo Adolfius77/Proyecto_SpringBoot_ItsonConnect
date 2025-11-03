@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.IEstudianteService;
-
+import java.util.Base64; 
+import java.util.Set; 
+import java.util.stream.Collectors; 
 /**
  *
  * @author jorge
@@ -40,6 +42,13 @@ public class EstudianteController {
 
         if (e.getFoto() != null) {
             dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
+        }
+        
+        if (e.getHobbies() != null) {
+            Set<String> hobbyNames = e.getHobbies().stream()
+                    .map(hobbyEstudiante -> hobbyEstudiante.getHobby().getNombre())
+                    .collect(Collectors.toSet());
+            dto.setHobbies(hobbyNames);
         }
 
         return dto;

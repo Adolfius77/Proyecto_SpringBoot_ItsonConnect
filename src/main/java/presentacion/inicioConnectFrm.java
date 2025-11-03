@@ -27,6 +27,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         if(this.estudianteLogueado != null){
             jLabel3.setText(this.estudianteLogueado.getNombre());
+            lblNombreBienvenida.setText(this.estudianteLogueado.getNombre());
         }
     }
 
@@ -51,7 +52,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblNombreBienvenida = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         botonCircular7 = new presentacion.botonCircular();
         botonCircular8 = new presentacion.botonCircular();
@@ -92,6 +93,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
+        btnInicio.setForeground(new java.awt.Color(0, 0, 0));
         btnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hogar.png"))); // NOI18N
         btnInicio.setText("Inicio");
         btnInicio.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -104,6 +106,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
+        btnMatches.setForeground(new java.awt.Color(0, 0, 0));
         btnMatches.setIcon(new javax.swing.ImageIcon(getClass().getResource("/amigos-felices.png"))); // NOI18N
         btnMatches.setText("Matches");
         btnMatches.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -116,6 +119,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
+        btnMensajes.setForeground(new java.awt.Color(0, 0, 0));
         btnMensajes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
         btnMensajes.setText("Mensajes");
         btnMensajes.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -128,6 +132,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
+        btnPerfil.setForeground(new java.awt.Color(0, 0, 0));
         btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/editar (2).png"))); // NOI18N
         btnPerfil.setText("Perfil");
         btnPerfil.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -142,6 +147,9 @@ public class inicioConnectFrm extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/usuario (2).png"))); // NOI18N
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("SansSerif", 3, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre estudiante");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -159,18 +167,19 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                         .addComponent(btnPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addComponent(jLabel3)))
                 .addGap(29, 29, 29)
                 .addComponent(btnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -185,21 +194,28 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
+        jLabel4.setBackground(new java.awt.Color(51, 51, 51));
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Bienvendio de vuelta");
 
-        jLabel5.setText("jLabel5");
+        lblNombreBienvenida.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        lblNombreBienvenida.setForeground(new java.awt.Color(0, 0, 0));
+        lblNombreBienvenida.setText("jLabel5");
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 3, 20)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(102, 102, 102));
         jLabel6.setText("Acciones Rapidas");
 
         botonCircular7.setBackground(new java.awt.Color(102, 204, 255));
+        botonCircular7.setForeground(new java.awt.Color(255, 255, 255));
         botonCircular7.setText("Editar Perfil");
         botonCircular7.setBorderColor(new java.awt.Color(255, 255, 255));
         botonCircular7.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
         botonCircular7.setRadius(50);
 
         botonCircular8.setBackground(new java.awt.Color(102, 204, 255));
+        botonCircular8.setForeground(new java.awt.Color(255, 255, 255));
         botonCircular8.setText("Buscar Estudiante");
         botonCircular8.setBorderColor(new java.awt.Color(255, 255, 255));
         botonCircular8.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
@@ -211,6 +227,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         });
 
         botonCircular9.setBackground(new java.awt.Color(102, 204, 255));
+        botonCircular9.setForeground(new java.awt.Color(255, 255, 255));
         botonCircular9.setText("Opciones");
         botonCircular9.setBorderColor(new java.awt.Color(255, 255, 255));
         botonCircular9.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
@@ -230,6 +247,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         );
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Nuevos Matches");
 
         panelRedondo2.setBackground(new java.awt.Color(255, 255, 255));
@@ -253,29 +271,27 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(botonCircular7, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                                .addComponent(botonCircular7, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botonCircular8, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botonCircular9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(botonCircular9, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43))))
+                        .addGap(43, 43, 43))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblNombreBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,7 +300,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(lblNombreBienvenida))
                 .addGap(15, 15, 15)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -396,11 +412,11 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblNombreBienvenida;
     private presentacion.PanelRedondo panelRedondo1;
     private presentacion.PanelRedondo panelRedondo2;
     // End of variables declaration//GEN-END:variables

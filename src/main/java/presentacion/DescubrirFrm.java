@@ -41,6 +41,26 @@ public class DescubrirFrm extends javax.swing.JFrame {
         
         configurarVentana();
         cargarEstudiantes();
+        
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            jMenu2MouseClicked(evt);
+        }
+    });
+    }
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {                                      
+        if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesiOn. Intente iniciar sesión de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+        
+        inicioConnectFrm inicioFrm = new inicioConnectFrm(this.estudianteActual);
+        
+        inicioFrm.setVisible(true);
+        
+        this.dispose();
     }
 
     public DescubrirFrm() {
@@ -48,6 +68,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
         configurarVentana();
 
     }
+    
 
     private void configurarVentana() {
         this.setTitle("Itson Connect - Descubrir");
@@ -221,17 +242,27 @@ public class DescubrirFrm extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jMenu1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu1.setForeground(new java.awt.Color(102, 102, 102));
         jMenu1.setText("ITSON Connect");
+        jMenu1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu2.setForeground(new java.awt.Color(102, 102, 102));
         jMenu2.setText("Inicio");
+        jMenu2.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jMenuBar1.add(jMenu2);
 
-        jMenu5.setForeground(new java.awt.Color(255, 255, 255));
+        jMenu5.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu5.setForeground(new java.awt.Color(102, 102, 102));
         jMenu5.setText("Mensajes");
+        jMenu5.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);

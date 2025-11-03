@@ -105,7 +105,11 @@ public class EstudianteServiceImpl implements IEstudianteService {
 
     @Override
     public Estudiante obtenerEstudiante(Long id) {
-        return estudianteRepository.findById(id).orElse(null);
+        Estudiante estudiante = estudianteRepository.findById(id).orElse(null);
+        if(estudiante !=null){
+            estudiante.getHobbies().size();
+        }
+        return estudiante;
     }
 
     @Override
@@ -134,6 +138,12 @@ public class EstudianteServiceImpl implements IEstudianteService {
     public List<Estudiante> listarEstudiantes(int limit) {
         int effectiveLimit = Math.min(Math.max(limit, 1), 100);
         Pageable pageable = PageRequest.of(0, effectiveLimit);
-        return estudianteRepository.findAll(pageable).getContent();
+        
+        List<Estudiante> estudiantes = estudianteRepository.findAll(pageable).getContent();
+        
+        for (Estudiante e : estudiantes) {
+            e.getHobbies().size();
+        }
+        return estudiantes;
     }
 }

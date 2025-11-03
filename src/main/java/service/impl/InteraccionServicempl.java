@@ -40,7 +40,7 @@ public class InteraccionServicempl implements IInteraccionService {
             throw new Exception("Un usuario no puede interactuar consigo mismo.");
         }
 
-        // Validacion: Fecha no futura
+        
         Date ahora = new Date();
         if (interaccion.getFechaHora() == null) {
             interaccion.setFechaHora(ahora);
@@ -52,7 +52,7 @@ public class InteraccionServicempl implements IInteraccionService {
         Estudiante receptor = interaccion.getReceptor();
         TipoInteraccion tipo = interaccion.getTipo();
 
-        // Validacion: No duplicar LIKE/SUPERLIKE 
+       
         if (tipo == TipoInteraccion.LIKE || tipo == TipoInteraccion.SUPERLIKE) {
             Optional<Interaccion> existente = interaccionRepository.buscarLikeOSuperlike(emisor, receptor);
             if (existente.isPresent()) {
@@ -120,7 +120,6 @@ public class InteraccionServicempl implements IInteraccionService {
     public Interaccion actualizarInteraccion(Interaccion interaccion) throws Exception {
         Interaccion existente = obtenerInteraccion(interaccion.getId()); 
 
-        // Validacion: Fecha no futura
         if (interaccion.getFechaHora() != null && interaccion.getFechaHora().after(new Date())) {
             throw new Exception("La fecha de la interaccion no puede ser futura.");
         }

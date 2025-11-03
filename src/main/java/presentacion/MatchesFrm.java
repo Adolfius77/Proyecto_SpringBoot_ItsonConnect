@@ -28,7 +28,7 @@ public class MatchesFrm extends javax.swing.JFrame {
     public MatchesFrm() {
         initComponents();
         setLocationRelativeTo(null);
-        cargarMatchesDesdeBD(matches);
+        //cargarMatchesDesdeBD(matches);
     }
     
     private void initComponents() {

@@ -148,17 +148,6 @@ public class DescubrirFrm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Descubre");
 
-        javax.swing.GroupLayout panelDinamicoLayout = new javax.swing.GroupLayout(panelDinamico);
-        panelDinamico.setLayout(panelDinamicoLayout);
-        panelDinamicoLayout.setHorizontalGroup(
-            panelDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 815, Short.MAX_VALUE)
-        );
-        panelDinamicoLayout.setVerticalGroup(
-            panelDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 374, Short.MAX_VALUE)
-        );
-
         scrollpanel.setViewportView(panelDinamico);
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 2, 13)); // NOI18N

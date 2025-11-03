@@ -166,11 +166,11 @@
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="botonCircular1" pref="201" max="32767" attributes="0"/>
-                              <Component id="botonCircular2" alignment="0" max="32767" attributes="0"/>
-                              <Component id="botonCircular3" alignment="0" max="32767" attributes="0"/>
-                              <Component id="botonCircular4" alignment="0" max="32767" attributes="0"/>
-                              <Component id="botonCircular5" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnBuscarEstudiantes" pref="201" max="32767" attributes="0"/>
+                              <Component id="btnInicio" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnMatches" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnMensajes" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnPerfil" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jLabel2" min="-2" pref="57" max="-2" attributes="0"/>
@@ -194,22 +194,22 @@
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="botonCircular2" min="-2" pref="38" max="-2" attributes="0"/>
+                      <Component id="btnInicio" min="-2" pref="38" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="botonCircular3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnMatches" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="botonCircular4" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnMensajes" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="botonCircular5" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnPerfil" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="botonCircular1" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btnBuscarEstudiantes" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="presentacion.botonCircular" name="botonCircular1">
+            <Component class="presentacion.botonCircular" name="btnBuscarEstudiantes">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="cc" red="66" type="rgb"/>
@@ -235,10 +235,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCircular1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarEstudiantesActionPerformed"/>
               </Events>
             </Component>
-            <Component class="presentacion.botonCircular" name="botonCircular2">
+            <Component class="presentacion.botonCircular" name="btnInicio">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/hogar.png"/>
@@ -258,10 +258,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCircular2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInicioActionPerformed"/>
               </Events>
             </Component>
-            <Component class="presentacion.botonCircular" name="botonCircular3">
+            <Component class="presentacion.botonCircular" name="btnMatches">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/amigos-felices.png"/>
@@ -281,10 +281,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCircular3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMatchesActionPerformed"/>
               </Events>
             </Component>
-            <Component class="presentacion.botonCircular" name="botonCircular4">
+            <Component class="presentacion.botonCircular" name="btnMensajes">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mensajero.png"/>
@@ -304,10 +304,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCircular4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMensajesActionPerformed"/>
               </Events>
             </Component>
-            <Component class="presentacion.botonCircular" name="botonCircular5">
+            <Component class="presentacion.botonCircular" name="btnPerfil">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/editar (2).png"/>
@@ -327,7 +327,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCircular5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPerfilActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">

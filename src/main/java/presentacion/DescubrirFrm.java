@@ -4,19 +4,87 @@
  */
 package presentacion;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.EstudianteDTO;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
+import javax.swing.JOptionPane;
+import org.springframework.context.ConfigurableApplicationContext;
+import com.fasterxml.jackson.core.type.TypeReference;
 /**
  *
  * @author USER
  */
 public class DescubrirFrm extends javax.swing.JFrame {
+    private EstudianteDTO estudianteActual;
+    private static ConfigurableApplicationContext context;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DescubrirFrm.class.getName());
 
     /**
      * Creates new form DescubrirFrm
      */
-    public DescubrirFrm() {
+    public DescubrirFrm(EstudianteDTO estudianteActual, ConfigurableApplicationContext context) {
+        this.estudianteActual = estudianteActual;
+        this.context = context;
+        cargarEstudiantes();
         initComponents();
     }
+    public DescubrirFrm() {
+        initComponents();
+       
+    }
+    private void cargarEstudiantes() {
+        
+        if (estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error: No se ha iniciado sesión.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            // 1. Crear cliente y petición HTTP
+            HttpClient client = HttpClient.newHttpClient();
+            // Llama al endpoint /descubrir que creamos en el controlador
+            String url = "http://localhost:8080/api/estudiantes/descubrir?idActual=" + estudianteActual.getId();
+            
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url)) 
+                    .GET()
+                    .header("Content-Type", "application/json")
+                    .build();
 
+            // 2. Enviar petición y recibir respuesta
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // 3. Procesar respuesta
+            if (response.statusCode() == 200) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                // Deserializar la respuesta como una *Lista* de EstudianteDTO
+                List<EstudianteDTO> estudiantes = objectMapper.readValue(response.body(), new TypeReference<List<EstudianteDTO>>(){});
+                
+                // 4. Crear y añadir las tarjetas al panel
+                panelDinamico.removeAll(); 
+                
+                for (EstudianteDTO dto : estudiantes) {
+                    // Crea una nueva tarjeta (PersonasFrm) por cada estudiante
+                    PersonasFrm card = new PersonasFrm(estudianteActual.getId(), dto);
+                    panelDinamico.add(card); // Añade la tarjeta al panel
+                }
+                
+                // Refrescar la UI
+                panelDinamico.revalidate();
+                panelDinamico.repaint();
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al cargar estudiantes: " + response.body(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+             logger.log(java.util.logging.Level.SEVERE, "Error al cargar estudiantes", e);
+             JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

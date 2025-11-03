@@ -7,8 +7,10 @@ package presentacion;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.EstudianteDTO;
 import dto.InteraccionDTO;
+import java.awt.Font;
 import java.awt.Image;
 import java.net.URI;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
@@ -36,6 +38,18 @@ public class PersonasFrm extends javax.swing.JPanel {
     }
 
     public PersonasFrm(Long emisorId, EstudianteDTO receptorDto) {
+        this.emisorId = emisorId;
+        this.receptorId = receptorDto.getId();
+
+        setFoto(receptorDto.getFotoBase64());
+        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 18));
+
+        lblHobbys.setFont(new Font("SansSerif", Font.ITALIC, 12));
+        setHobbies(receptorDto.getHobbies());
+
+        btnMegusta.addActionListener(e -> enviarInteraccion("LIKE"));
+        btnNoMeInteresa.addActionListener(e -> enviarInteraccion("PASS"));
+
         initComponents();
     }
 
@@ -74,57 +88,60 @@ public class PersonasFrm extends javax.swing.JPanel {
     }
 
     private void enviarInteraccion(String tipo) {
+        // Deshabilita los botones para evitar doble clic
         btnMegusta.setEnabled(false);
         btnNoMeInteresa.setEnabled(false);
 
         try {
-            InteraccionDTO interaccionDTO = new InteraccionDTO();
-            interaccionDTO.setEmisorId(this.emisorId);
-            interaccionDTO.setReceptorId(this.receptorId);
-            interaccionDTO.setTipo(tipo);
+            // 1. Crear el DTO de la Interacción
+            InteraccionDTO interaccionDto = new InteraccionDTO();
+            interaccionDto.setEmisorId(this.emisorId);
+            interaccionDto.setReceptorId(this.receptorId);
+            interaccionDto.setTipo(tipo);
 
-            //convertimos a json
+            // 2. Convertir a JSON
             ObjectMapper objectMapper = new ObjectMapper();
-            String requestBody = objectMapper.writeValueAsString(interaccionDTO);
+            String requestBody = objectMapper.writeValueAsString(interaccionDto);
 
-            //aqui se crea al cliente y la peticion htpp
+            // 3. Crear cliente y petición HTTP
+            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("http://localhost:8080/api/interacciones")) // Endpoint de InteraccionController
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .header("Content-Type", "application/json")
                     .build();
-            //enviar la peticion
+
+            // 4. Enviar petición (asíncrona para no bloquear la UI)
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenAccept(response -> {
-                    // Esto se ejecuta cuando el servidor responde
-                    if (response.statusCode() == 201) { // 201 Creado
-                        System.out.println(tipo + " enviado a " + this.receptorId);
-                        
-                        // Oculta esta tarjeta después de interactuar
-                       
-                        javax.swing.SwingUtilities.invokeLater(() -> {
-                            this.setVisible(false); 
-                            //refresca el panel contenedor
-                            ((JPanel)this.getParent()).revalidate();
-                            ((JPanel)this.getParent()).repaint();
-                        });
-                        
-                    } else {
-                        // Error (ej. 400 Bad Request, "Ya interactuaste")
-                        JOptionPane.showMessageDialog(this, "Error: " + response.body(), "Error de Interacción", JOptionPane.ERROR_MESSAGE);
-                        // Vuelve a habilitar los botones si falló
+                    .thenAccept(response -> {
+                        // Esto se ejecuta cuando el servidor responde
+                        if (response.statusCode() == 201) { // 201 Creado
+                            System.out.println(tipo + " enviado a " + this.receptorId);
+
+                            // Oculta esta tarjeta después de interactuar
+                            javax.swing.SwingUtilities.invokeLater(() -> {
+                                this.setVisible(false);
+                                ((JPanel) this.getParent()).revalidate();
+                                ((JPanel) this.getParent()).repaint();
+                            });
+
+                        } else {
+                            // Error (ej. 400 Bad Request, "Ya interactuaste")
+                            JOptionPane.showMessageDialog(this, "Error: " + response.body(), "Error de Interacción", JOptionPane.ERROR_MESSAGE);
+                            // Vuelve a habilitar los botones si falló
+                            btnMegusta.setEnabled(true);
+                            btnNoMeInteresa.setEnabled(true);
+                        }
+                    })
+                    .exceptionally(e -> {
+                        // Error de conexión
+                        logger.log(java.util.logging.Level.SEVERE, "Error al enviar interacción", e);
+                        JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                         btnMegusta.setEnabled(true);
                         btnNoMeInteresa.setEnabled(true);
-                    }
-                })
-                .exceptionally(e -> {
-                    // Error de conexión
-                    logger.log(java.util.logging.Level.SEVERE, "Error al enviar interacción", e);
-                    JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    btnMegusta.setEnabled(true);
-                    btnNoMeInteresa.setEnabled(true);
-                    return null;
-                });    
+                        return null;
+                    });
+
         } catch (Exception e) {
             logger.log(java.util.logging.Level.SEVERE, "Error al crear JSON de interacción", e);
             btnMegusta.setEnabled(true);

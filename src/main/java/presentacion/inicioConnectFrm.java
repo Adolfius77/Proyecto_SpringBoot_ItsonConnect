@@ -199,7 +199,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Bienvendio de vuelta");
 
-        lblNombreBienvenida.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        lblNombreBienvenida.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         lblNombreBienvenida.setForeground(new java.awt.Color(0, 0, 0));
         lblNombreBienvenida.setText("jLabel5");
 

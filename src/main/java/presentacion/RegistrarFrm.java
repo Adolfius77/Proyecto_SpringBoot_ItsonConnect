@@ -578,6 +578,8 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
             nuevoEstudiante.setCorreo(correo);
             nuevoEstudiante.setPassword(password);
             
+            nuevoEstudiante.setHobbies(hobbiesSeleccionados);
+            
             //logica de la foto
             if(this.fotoBytes != null){
                 nuevoEstudiante.setFotoBase64(Base64.getEncoder().encodeToString(this.fotoBytes));

@@ -13,7 +13,7 @@ import java.util.List;
 public class MatchDTO {
     private Long id;
     private String fecha; 
-    private List<Long> estudiantesId;
+    private List<EstudianteDTO> participantes;
 
     public MatchDTO() {
     }
@@ -34,17 +34,19 @@ public class MatchDTO {
         this.fecha = fecha;
     }
 
-    public List<Long> getEstdudiantesId() {
-        return estudiantesId;
+    public List<EstudianteDTO> getParticipantes() {
+        return participantes;
     }
 
-    public void setParticipanteIds(List<Long> estudiantesID) {
-        this.estudiantesId = estudiantesId;
+    public void setParticipantes(List<EstudianteDTO> participantes) {
+        this.participantes = participantes;
     }
 
     @Override
     public String toString() {
-        return "MatchDTO{" + "id=" + id + ", fecha=" + fecha + ", estudiantesId=" + estudiantesId + '}';
+        return "MatchDTO{" + "id=" + id + ", fecha=" + fecha + ", participantes=" + participantes + '}';
     }
+
+    
     
 }

@@ -3,13 +3,16 @@ package service.impl;
 import Repository.EstudianteRepository;
 import Repository.HobbyEstudianteRepository;
 import Repository.HobbyRepository;
+import Repository.MatchEstudianteRepository;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import model.Estudiante;
 import model.Hobby;
 import model.HobbyEstudiante;
+import model.Match;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +22,9 @@ import service.IEstudianteService;
 
 @Service
 public class EstudianteServiceImpl implements IEstudianteService {
+
+    @Autowired
+    private MatchEstudianteRepository matchEstudianteRepository;
 
     @Autowired
     private EstudianteRepository estudianteRepository;
@@ -157,5 +163,24 @@ public class EstudianteServiceImpl implements IEstudianteService {
             e.getHobbies().size();
         }
         return estudiantes;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Match> obtenerMatchesPorEstudiante(Long idEstudiante) {
+        Estudiante estudiante = new Estudiante(idEstudiante);
+        List<model.MatchEstudiante> relaciones = matchEstudianteRepository.findByEstudiante(estudiante);
+        
+        return relaciones.stream()
+                .map(relacion -> {
+                    Match match = relacion.getMatch();
+                    match.getParticipantes().size(); 
+                    match.getParticipantes().forEach(p -> {
+                        p.getEstudiante().getNombre(); 
+                        p.getEstudiante().getFoto();   
+                    });
+                    return match;
+                })
+                .collect(Collectors.toList());
     }
 }

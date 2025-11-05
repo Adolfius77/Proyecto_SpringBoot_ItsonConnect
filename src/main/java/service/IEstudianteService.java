@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 import java.util.Set; // <-- Importar Set
 import model.Estudiante;
+import model.Match;
 
 /**
  *
@@ -18,4 +19,5 @@ public interface IEstudianteService {
    List<Estudiante> listarEstudiantes(int limit);
    Estudiante login(String correo, String password) throws Exception;
    List<Estudiante> descubrirEstudiantes(Long idActual, int limit);
+   List<Match>obtenerMatchesPorEstudiante(Long idEstudiante);
 }

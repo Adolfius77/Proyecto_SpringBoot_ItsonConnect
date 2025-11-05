@@ -1,5 +1,6 @@
 package controller;
 
+import dto.EstudianteDTO;
 import dto.MatchDTO;
 import model.Match;
 import model.Estudiante;
@@ -23,6 +24,29 @@ public class MatchController {
         this.matchService = matchService;
     }
 
+    private EstudianteDTO toEstudianteDTO(model.Estudiante e) {
+        if (e == null) {
+            return null;
+        }
+        EstudianteDTO dto = new EstudianteDTO();
+        dto.setId(e.getId());
+        dto.setNombre(e.getNombre());
+        dto.setApPaterno(e.getApPaterno());
+        dto.setApMaterno(e.getApMaterno());
+        dto.setCorreo(e.getCorreo());
+        dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
+        if (e.getFoto() != null) {
+            dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
+
+        }
+        if (e.getHobbies() != null) {
+            Set<String> hobbyNombres = e.getHobbies().stream()
+                    .map(hobbyEstudiante -> hobbyEstudiante.getHobby().getNombre())
+                    .collect(Collectors.toSet());
+        }
+        return dto;
+    }
+
     //Convertidores
     private MatchDTO toDTO(Match match) {
         if (match == null) {
@@ -32,14 +56,13 @@ public class MatchController {
         dto.setId(match.getId());
         dto.setFecha(match.getFecha() != null ? match.getFecha().toString() : null);
 
-        List<Long> ids = Optional.ofNullable(match.getParticipantes())
+        List<EstudianteDTO> participantesDTO = Optional.ofNullable(match.getParticipantes())
                 .orElse(Collections.emptySet())
                 .stream()
-                .map(me -> me.getEstudiante() != null ? me.getEstudiante().getId() : null)
+                .map(me -> toEstudianteDTO(me.getEstudiante()))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-        dto.setParticipanteIds(ids);
-
+        dto.setParticipantes(participantesDTO);
         return dto;
     }
 

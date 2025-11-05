@@ -17,15 +17,17 @@ public class inicioConnectFrm extends javax.swing.JFrame {
      * Creates new form inicioConnectFrm
      */
     private EstudianteDTO estudianteLogueado;
+
     public inicioConnectFrm() {
         initComponents();
         setLocationRelativeTo(null);
     }
+
     public inicioConnectFrm(EstudianteDTO estudiante) {
         this.estudianteLogueado = estudiante;
         initComponents();
         setLocationRelativeTo(null);
-        if(this.estudianteLogueado != null){
+        if (this.estudianteLogueado != null) {
             jLabel3.setText(this.estudianteLogueado.getNombre());
             lblNombreBienvenida.setText(this.estudianteLogueado.getNombre());
         }
@@ -345,7 +347,15 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCircular8ActionPerformed
 
     private void btnMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchesActionPerformed
-        // TODO add your handling code here:
+        if (this.estudianteLogueado == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+        matchesFrm matchesVentana = new matchesFrm(this.estudianteLogueado);
+        matchesVentana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMatchesActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
@@ -353,14 +363,14 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnBuscarEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEstudiantesActionPerformed
-       if(this.estudianteLogueado == null){
-           
-           JOptionPane.showMessageDialog(this, "Error, no se ha iniciado sesion.", "Error", JOptionPane.ERROR_MESSAGE);
-           return;
-       }
-       DescubrirFrm descu = new DescubrirFrm(this.estudianteLogueado,null);
-       descu.setVisible(true);
-       this.dispose();
+        if (this.estudianteLogueado == null) {
+
+            JOptionPane.showMessageDialog(this, "Error, no se ha iniciado sesion.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        DescubrirFrm descu = new DescubrirFrm(this.estudianteLogueado, null);
+        descu.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnBuscarEstudiantesActionPerformed
 
     /**

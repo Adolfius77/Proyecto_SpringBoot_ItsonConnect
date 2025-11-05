@@ -4,17 +4,116 @@
  */
 package presentacion;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.EstudianteDTO;
+import dto.MatchDTO;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.concurrent.Executors;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+
 /**
  *
  * @author USER
  */
 public class matchesFrm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form matchesFrm
-     */
+    private EstudianteDTO estudianteActual;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(matchesFrm.class.getName());
+
     public matchesFrm() {
         initComponents();
+        setLocationRelativeTo(null);
+    }
+
+    matchesFrm(EstudianteDTO estudianteActual) {
+        this.estudianteActual = estudianteActual;
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Matches de " + estudianteActual.getNombre());
+        jLabel1.setText(estudianteActual.getNombre()); // Pone tu nombre en el panel lateral
+
+        paneldinamicoMatches.setLayout(new GridLayout(0, 1, 10, 10)); // 1 Columna
+        paneldinamicoMatches.setBackground(Color.WHITE);
+
+        cargarMatches();
+
+    }
+
+    private void cargarMatches() {
+        if (estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error: No se ha iniciado sesión.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                String url = "http://localhost:8080/api/estudiantes/" + estudianteActual.getId() + "/matches";
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .GET()
+                        .build();
+
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    List<MatchDTO> matches = objectMapper.readValue(response.body(), new TypeReference<List<MatchDTO>>() {});
+                    
+                    SwingUtilities.invokeLater(() -> {
+                        mostrarMatches(matches);
+                    });
+                } else {
+                    SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, "Error al cargar matches: "KA" + response.body(), "Error", JOptionPane.ERROR_MESSAGE));
+                }
+            } catch (Exception e) {
+                logger.log(java.util.logging.Level.SEVERE, "Error al cargar matches", e);
+                SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE));
+            }
+        });
+    }
+
+    private void mostrarMatches(List<MatchDTO> matches) {
+        paneldinamicoMatches.removeAll();
+
+        if (matches.isEmpty()) {
+            JLabel lblVacio = new JLabel("Aún no tienes matches. ¡Sigue descubriendo!");
+            lblVacio.setHorizontalAlignment(JLabel.CENTER);
+            paneldinamicoMatches.add(lblVacio);
+        }
+
+        for (MatchDTO m : matches) {
+            EstudianteDTO otroParticipante = null;
+            for (EstudianteDTO participante : m.getParticipantes()) {
+                if (!participante.getId().equals(this.estudianteActual.getId())) {
+                    otroParticipante = participante;
+                    break;
+                }
+            }
+
+            if (otroParticipante != null) {
+                PanelAvatarMacthes panel = new PanelAvatarMacthes(
+                        this.estudianteActual, 
+                        m, 
+                        otroParticipante 
+                );
+                paneldinamicoMatches.add(panel);
+            }
+        }
+
+        paneldinamicoMatches.revalidate();
+        paneldinamicoMatches.repaint();
     }
 
     /**
@@ -217,7 +316,7 @@ public class matchesFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarEstudiantes3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEstudiantes3ActionPerformed
-        
+
     }//GEN-LAST:event_btnBuscarEstudiantes3ActionPerformed
 
     private void btnInicio3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicio3ActionPerformed

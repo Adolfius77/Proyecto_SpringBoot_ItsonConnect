@@ -13,6 +13,10 @@ import service.IEstudianteService;
 import java.util.Base64;
 import java.util.Set;
 import java.util.stream.Collectors;
+import dto.MatchDTO;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  *
@@ -27,6 +31,25 @@ public class EstudianteController {
     @Autowired
     public EstudianteController(IEstudianteService estudianteService) {
         this.estudianteService = estudianteService;
+    }
+
+    private MatchDTO toMatchDTO(model.Match match) {
+        if (match == null) {
+            return null;
+        }
+        MatchDTO dto = new MatchDTO();
+        dto.setId(match.getId());
+        dto.setFecha(match.getFecha() != null ? match.getFecha().toString() : null);
+        List<EstudianteDTO> participantesDTO = Optional.ofNullable(match.getParticipantes())
+                .orElse(Collections.emptySet())
+                .stream()
+                .map(me -> toDTO(me.getEstudiante()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        dto.setParticipantes(participantesDTO);
+
+        return dto;
     }
 
     private EstudianteDTO toDTO(Estudiante e) {
@@ -142,25 +165,41 @@ public class EstudianteController {
 
     @GetMapping("/descubrir")
     public ResponseEntity<?> descubrirEstudiantes(
-            @RequestParam Long idActual, 
+            @RequestParam Long idActual,
             @RequestParam(defaultValue = "20") int limit) {
-        
+
         if (idActual == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El parametro 'idActual' es obligatorio.");
         }
-        
+
         try {
             List<Estudiante> estudiantes = estudianteService.descubrirEstudiantes(idActual, limit);
-            
+
             List<EstudianteDTO> dtos = estudiantes.stream()
                     .map(this::toDTO)
                     .collect(Collectors.toList());
-            
+
             return ResponseEntity.ok(dtos);
-            
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body("Error interno al buscar estudiantes: " + e.getMessage());
+                    .body("Error interno al buscar estudiantes: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{idEstudiante}/matches")
+    public ResponseEntity<?> getMatchesDelEstudiante(@PathVariable Long idEstudiante) {
+        try {
+            List<model.Match> matches = estudianteService.obtenerMatchesPorEstudiante(idEstudiante);
+            
+            List<MatchDTO> dtos = matches.stream()
+                    .map(this::toMatchDTO)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(dtos);
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Error al obtener matches: " + e.getMessage());
         }
     }
 }

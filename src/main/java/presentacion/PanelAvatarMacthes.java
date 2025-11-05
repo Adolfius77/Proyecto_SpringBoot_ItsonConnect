@@ -4,28 +4,35 @@
  */
 package presentacion;
 
+import dto.EstudianteDTO;
+import dto.MatchDTO;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.Base64;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author jorge
  */
 public class PanelAvatarMacthes extends javax.swing.JPanel {
-    private Long matchId;
-    private Long estudianteId;
-    private String nombreEstudiante;
-    private ImageIcon fotoEstudiante;
+   private Long matchId;
+    private String nombreEstudiante; 
+    private ImageIcon fotoEstudiante; 
+    private EstudianteDTO estudianteActual; 
+    private EstudianteDTO otroEstudiante; 
     
     /**
      * Creates new form PanelAvatarMacthes
@@ -35,11 +42,11 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
         configurarEstilos();
     }
 
-    public PanelAvatarMacthes(Long matchId, Long estudianteId, String nombreEstudiante, ImageIcon fotoEstudiante) {
-        this.matchId = matchId;
-        this.estudianteId = estudianteId;
-        this.nombreEstudiante = nombreEstudiante;
-        this.fotoEstudiante = fotoEstudiante;
+    public PanelAvatarMacthes(EstudianteDTO estudianteActual, MatchDTO match, EstudianteDTO otroParticipante) {
+        this.estudianteActual = estudianteActual;
+        this.matchId = match.getId();
+        this.otroEstudiante = otroParticipante;
+        this.nombreEstudiante = otroParticipante.getNombre() + " " + otroParticipante.getApPaterno();
         
         initComponents();
         configurarEstilos();
@@ -73,13 +80,19 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     }
      
      private void cargarDatos() {
-        lblNombre.setText(nombreEstudiante != null ? nombreEstudiante : "Usuario " + estudianteId);
+        lblNombre.setText(this.nombreEstudiante);
         
-        
-        if (fotoEstudiante == null) {
-            lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
+        if (otroEstudiante.getFotoBase64() != null && !otroEstudiante.getFotoBase64().isEmpty()) {
+            try {
+                byte[] fotoBytes = Base64.getDecoder().decode(otroEstudiante.getFotoBase64());
+                ImageIcon icon = new ImageIcon(fotoBytes);
+                Image img = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH); // Escala a 80x80
+                lblFoto.setIcon(new ImageIcon(img));
+            } catch (Exception e) {
+                lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
+            }
         } else {
-            lblFoto.setIcon(fotoEstudiante);
+             lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
         }
     }
      
@@ -211,7 +224,16 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensajeActionPerformed
-        // TODO add your handling code here:
+      if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error: No se pudo identificar al usuario actual.");
+            return;
+        }
+        
+        chatFrm chat = new chatFrm(this.estudianteActual, this.matchId, this.nombreEstudiante);
+        chat.setVisible(true);
+        
+        
+        SwingUtilities.getWindowAncestor(this).dispose();
     }//GEN-LAST:event_btnMensajeActionPerformed
 
 

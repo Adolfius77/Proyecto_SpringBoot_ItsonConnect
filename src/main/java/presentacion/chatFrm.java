@@ -4,6 +4,8 @@
  */
 package presentacion;
 
+import dto.EstudianteDTO;
+
 /**
  *
  * @author USER
@@ -13,7 +15,7 @@ public class chatFrm extends javax.swing.JFrame {
     /**
      * Creates new form chatFrm
      */
-    public chatFrm() {
+    public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreEstudiante) {
         initComponents();
     }
 
@@ -222,7 +224,7 @@ public class chatFrm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new chatFrm().setVisible(true);
+                new chatFrm(this.estudianteActual, this.matchId, this.nombreEstudiante).setVisible(true);
             }
         });
     }

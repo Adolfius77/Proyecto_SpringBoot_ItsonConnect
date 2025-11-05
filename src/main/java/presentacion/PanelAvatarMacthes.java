@@ -174,6 +174,8 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
         lblNombre = new javax.swing.JLabel();
         btnMensaje = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         lblNombre.setText("Nombre Usuario");
 
         btnMensaje.setText("Mensaje");

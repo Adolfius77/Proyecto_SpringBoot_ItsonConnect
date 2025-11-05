@@ -1,5 +1,6 @@
 package controller;
 
+import dto.ChatMensajeDTO;
 import dto.EstudianteDTO;
 import dto.MatchDTO;
 import model.Match;
@@ -12,12 +13,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import model.Mensaje;
+import service.IMensajeService;
 
 @RestController
 @RequestMapping("/api/matches")
 public class MatchController {
 
     private final IMatchService matchService;
+    @Autowired
+    private IMensajeService mensajeService;
 
     @Autowired
     public MatchController(IMatchService matchService) {
@@ -62,7 +67,9 @@ public class MatchController {
                 .map(me -> toEstudianteDTO(me.getEstudiante()))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+
         dto.setParticipantes(participantesDTO);
+
         return dto;
     }
 
@@ -124,6 +131,32 @@ public class MatchController {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @GetMapping("/{matchId}/mensajes")
+    public ResponseEntity<?> obtenerHistorialMensajes(
+            @PathVariable Long matchId,
+            @RequestParam(defaultValue = "50") int limit) {
+        
+        try {
+            List<Mensaje> mensajes = mensajeService.listarMensajesPorMatch(matchId, limit);
+
+            List<ChatMensajeDTO> dtos = mensajes.stream()
+                    .map(m -> {
+                        ChatMensajeDTO dto = new ChatMensajeDTO();
+                        dto.setContenido(m.getContenido());
+                        dto.setEmisorId(m.getEmisor() != null ? m.getEmisor().getId() : null);
+                        dto.setEmisorNombre(m.getEmisor() != null ? m.getEmisor().getNombre() : "Sistema");
+                        dto.setMatchId(m.getMatch() != null ? m.getMatch().getId() : null);
+                        return dto;
+                    })
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(dtos);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Error al obtener mensajes: " + e.getMessage());
         }
     }
 }

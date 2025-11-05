@@ -38,17 +38,18 @@ public class PersonasFrm extends javax.swing.JPanel {
     }
 
     public PersonasFrm(Long emisorId, EstudianteDTO receptorDto) {
+
         initComponents();
 
         this.emisorId = emisorId;
         this.receptorId = receptorDto.getId();
 
         setFoto(receptorDto.getFotoBase64());
-        
+
         lblNombre.setFont(new Font("SansSerif", Font.BOLD, 18));
         String nombreCompleto = receptorDto.getNombre() + " " + receptorDto.getApPaterno();
         lblNombre.setText(nombreCompleto);
-        
+
         lblHobbys.setFont(new Font("SansSerif", Font.ITALIC, 12));
         setHobbies(receptorDto.getHobbies());
 
@@ -72,6 +73,7 @@ public class PersonasFrm extends javax.swing.JPanel {
         }
 
         Image img = icon.getImage().getScaledInstance(244, 182, Image.SCALE_SMOOTH);
+
         lblFotoPerfil.setIcon(new ImageIcon(img));
         lblFotoPerfil.setHorizontalAlignment(SwingConstants.CENTER);
         lblFotoPerfil.setText("");

@@ -15,9 +15,10 @@ public class chatFrm extends javax.swing.JFrame {
     /**
      * Creates new form chatFrm
      */
-    public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreEstudiante) {
+    public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreReceptor) {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -224,7 +225,7 @@ public class chatFrm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new chatFrm(this.estudianteActual, this.matchId, this.nombreEstudiante).setVisible(true);
+                new chatFrm().setVisible(true);
             }
         });
     }

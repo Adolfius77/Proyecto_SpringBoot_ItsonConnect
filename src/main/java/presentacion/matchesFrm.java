@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-
 /**
  *
  * @author USER
@@ -36,12 +35,13 @@ public class matchesFrm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    matchesFrm(EstudianteDTO estudianteActual) {
+    public matchesFrm(EstudianteDTO estudianteActual) {
         this.estudianteActual = estudianteActual;
         initComponents();
+
         setLocationRelativeTo(null);
         setTitle("Matches de " + estudianteActual.getNombre());
-        jLabel1.setText(estudianteActual.getNombre()); // Pone tu nombre en el panel lateral
+        jLabel1.setText(estudianteActual.getNombre());
 
         paneldinamicoMatches.setLayout(new GridLayout(0, 1, 10, 10)); // 1 Columna
         paneldinamicoMatches.setBackground(Color.WHITE);
@@ -52,7 +52,7 @@ public class matchesFrm extends javax.swing.JFrame {
 
     private void cargarMatches() {
         if (estudianteActual == null) {
-            JOptionPane.showMessageDialog(this, "Error: No se ha iniciado sesión.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: No se ha iniciado sesion.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -69,17 +69,18 @@ public class matchesFrm extends javax.swing.JFrame {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() == 200) {
-                    List<MatchDTO> matches = objectMapper.readValue(response.body(), new TypeReference<List<MatchDTO>>() {});
-                    
+                    List<MatchDTO> matches = objectMapper.readValue(response.body(), new TypeReference<List<MatchDTO>>() {
+                    });
+
                     SwingUtilities.invokeLater(() -> {
                         mostrarMatches(matches);
                     });
                 } else {
-                    SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, "Error al cargar matches: "KA" + response.body(), "Error", JOptionPane.ERROR_MESSAGE));
+                    SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, "Error al cargar matches: " + response.body(), "Error", JOptionPane.ERROR_MESSAGE));
                 }
             } catch (Exception e) {
                 logger.log(java.util.logging.Level.SEVERE, "Error al cargar matches", e);
-                SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE));
+                SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, "Error de conexion: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE));
             }
         });
     }
@@ -104,9 +105,9 @@ public class matchesFrm extends javax.swing.JFrame {
 
             if (otroParticipante != null) {
                 PanelAvatarMacthes panel = new PanelAvatarMacthes(
-                        this.estudianteActual, 
-                        m, 
-                        otroParticipante 
+                        this.estudianteActual,
+                        m,
+                        otroParticipante
                 );
                 paneldinamicoMatches.add(panel);
             }

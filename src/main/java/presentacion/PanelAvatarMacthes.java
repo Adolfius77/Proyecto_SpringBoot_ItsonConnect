@@ -43,7 +43,7 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     }
 
     public PanelAvatarMacthes(EstudianteDTO estudianteActual, MatchDTO match, EstudianteDTO otroParticipante) {
-        this.estudianteActual = estudianteActual;
+       this.estudianteActual = estudianteActual;
         this.matchId = match.getId();
         this.otroEstudiante = otroParticipante;
         this.nombreEstudiante = otroParticipante.getNombre() + " " + otroParticipante.getApPaterno();
@@ -86,13 +86,13 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
             try {
                 byte[] fotoBytes = Base64.getDecoder().decode(otroEstudiante.getFotoBase64());
                 ImageIcon icon = new ImageIcon(fotoBytes);
-                Image img = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH); // Escala a 80x80
+                Image img = icon.getImage().getScaledInstance(83, 72, Image.SCALE_SMOOTH);
                 lblFoto.setIcon(new ImageIcon(img));
             } catch (Exception e) {
-                lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
+                lblFoto.setIcon(crearAvatarCircular(72, obtenerIniciales(nombreEstudiante)));
             }
         } else {
-             lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
+             lblFoto.setIcon(crearAvatarCircular(72, obtenerIniciales(nombreEstudiante)));
         }
     }
      
@@ -102,7 +102,7 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
         
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        Color bgColor = generarColorPorId(estudianteId);
+        Color bgColor = generarColorPorId(otroEstudiante.getId()); // Usa el ID del otro
         g2.setColor(bgColor);
         g2.fillOval(0, 0, size, size);
         

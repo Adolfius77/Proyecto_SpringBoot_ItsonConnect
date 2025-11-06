@@ -1,7 +1,7 @@
 package presentacion;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dto.ChatMensajeDTO; // Asegúrate de que esta clase exista y sea correcta
+import dto.ChatMensajeDTO;
 import dto.EstudianteDTO;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-// --- Imports de Spring WebSocket/STOMP (Necesitarás estas dependencias en tu pom.xml) ---
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -71,7 +70,6 @@ public class chatFrm extends javax.swing.JFrame {
 
     private void conectarWebSocket() {
         try {
-            // El servidor usa .withSockJS(), por lo tanto, el cliente DEBE usar SockJsClient.
             List<Transport> transports = new ArrayList<>(1);
             transports.add(new WebSocketTransport(new StandardWebSocketClient()));
             WebSocketClient transport = new SockJsClient(transports);
@@ -81,7 +79,6 @@ public class chatFrm extends javax.swing.JFrame {
             // URL del Endpoint definida en WebsocketConfig.java
             String url = "http://localhost:8080/itson-connect-ws";
 
-            // Conectar y asignar la sesión a nuestra variable de instancia
             this.stompSession = stompClient.connectAsync(url, new MyStompSessionHandler()).get();
 
         } catch (InterruptedException | ExecutionException e) {
@@ -93,7 +90,7 @@ public class chatFrm extends javax.swing.JFrame {
     private void enviarMensaje() {
         String contenido = txtMensaje.getText();
         if (contenido == null || contenido.trim().isEmpty()) {
-            return; // No enviar mensajes vacíos
+            return;
         }
 
         if (stompSession == null || !stompSession.isConnected()) {
@@ -118,9 +115,10 @@ public class chatFrm extends javax.swing.JFrame {
         // 4. Limpiar el campo de texto
         txtMensaje.setText("");
     }
+
     private void mostrarMensaje(ChatMensajeDTO dto) {
         String textoMensaje;
-        
+
         // Determinar si el mensaje es nuestro o del receptor
         if (dto.getEmisorId().equals(this.estudianteActual.getId())) {
             textoMensaje = "Tú: " + dto.getContenido();
@@ -129,59 +127,60 @@ public class chatFrm extends javax.swing.JFrame {
             textoMensaje = this.nombreReceptor + ": " + dto.getContenido();
             // Aquí podrías alinear el JLabel a la izquierda
         }
-        
+
         JLabel lblMensaje = new JLabel(textoMensaje);
         // Aquí puedes añadirle padding, bordes, etc.
-        
+
         panelDinamicoChat.add(lblMensaje);
-        
+
         // Refrescar la UI
         panelDinamicoChat.revalidate();
         panelDinamicoChat.repaint();
     }
+
     private void desconectarWebSocket() {
         if (stompSession != null && stompSession.isConnected()) {
             stompSession.disconnect();
             logger.info("Desconectado del WebSocket.");
         }
-        if(stompClient != null) {
+        if (stompClient != null) {
             stompClient.stop();
         }
     }
+
     private class MyStompSessionHandler extends StompSessionHandlerAdapter {
 
         @Override
         public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
             logger.info("¡Conectado a WebSocket! Sesión: " + session.getSessionId());
-            
+
             // 1. Suscribirse al topic del Match
             // Este es el destino que ChatController usa para re-enviar mensajes
             String destinoTopic = "/topic/match/" + matchId;
-            
+
             session.subscribe(destinoTopic, new StompFrameHandler() {
-                
+
                 // Define qué tipo de objeto esperamos recibir (el DTO)
                 @Override
-                public Type getPayloadType(StompHeaders headers) {
+                public java.lang.reflect.Type getPayloadType(StompHeaders headers) {
                     return ChatMensajeDTO.class;
                 }
-                
+
                 // Método que se llama cuando llega un mensaje
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
                     ChatMensajeDTO mensajeRecibido = (ChatMensajeDTO) payload;
-                    
+
                     // IMPORTANTE: Actualizar la UI de Swing debe hacerse en el Event Dispatch Thread (EDT)
                     SwingUtilities.invokeLater(() -> {
                         mostrarMensaje(mensajeRecibido);
                     });
                 }
             });
-            
+
             logger.info("Suscrito a: " + destinoTopic);
         }
 
-        @Override
         public void handleException(StompSession session, StompHeaders headers, Throwable exception) {
             logger.log(java.util.logging.Level.SEVERE, "Excepción en STOMP", exception);
         }
@@ -191,6 +190,7 @@ public class chatFrm extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, "Error de transporte en STOMP", exception);
         }
     }
+
     public chatFrm() {
         initComponents();
         JOptionPane.showMessageDialog(this, "Error: Este chat se inició sin un usuario o match. No funcionará.", "Error de Contexto", JOptionPane.ERROR_MESSAGE);

@@ -1,17 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.ChatMensajeDTO; // Asegúrate de que esta clase exista y sea correcta
 import dto.EstudianteDTO;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.boot.rsocket.server.RSocketServer.Transport;
+import java.util.concurrent.ExecutionException;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+// --- Imports de Spring WebSocket/STOMP (Necesitarás estas dependencias en tu pom.xml) ---
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
+import org.springframework.web.socket.sockjs.client.SockJsClient;
+import org.springframework.web.socket.sockjs.client.Transport;
+import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 /**
  *
@@ -27,6 +40,8 @@ public class chatFrm extends javax.swing.JFrame {
     private WebSocketStompClient stompClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(chatFrm.class.getName());
+
     public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreReceptor) {
         this.estudianteActual = estudianteActual;
         this.matchId = matchId;
@@ -34,11 +49,151 @@ public class chatFrm extends javax.swing.JFrame {
 
         initComponents();
 
-        this.setTitle("chat con " + this.nombreReceptor);
+        this.setTitle("Chat con " + this.nombreReceptor);
+        this.jLabel2.setText(this.nombreReceptor);
 
-        //primero conectamos al websocket
-        List<Transport> transports = new ArrayList<>(1);
-        transports.add(new WebSocketTransport(new StandardWebSocketClient()));
+        panelDinamicoChat.setLayout(new BoxLayout(panelDinamicoChat, BoxLayout.Y_AXIS));
+
+        conectarWebSocket();
+
+        btnEnviarMensaje.addActionListener(e -> enviarMensaje());
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                desconectarWebSocket();
+
+                System.exit(0);
+            }
+        });
+
+    }
+
+    private void conectarWebSocket() {
+        try {
+            // El servidor usa .withSockJS(), por lo tanto, el cliente DEBE usar SockJsClient.
+            List<Transport> transports = new ArrayList<>(1);
+            transports.add(new WebSocketTransport(new StandardWebSocketClient()));
+            WebSocketClient transport = new SockJsClient(transports);
+
+            this.stompClient = new WebSocketStompClient(transport);
+
+            // URL del Endpoint definida en WebsocketConfig.java
+            String url = "http://localhost:8080/itson-connect-ws";
+
+            // Conectar y asignar la sesión a nuestra variable de instancia
+            this.stompSession = stompClient.connectAsync(url, new MyStompSessionHandler()).get();
+
+        } catch (InterruptedException | ExecutionException e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al conectar con WebSocket", e);
+            JOptionPane.showMessageDialog(this, "Error de conexión al chat: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void enviarMensaje() {
+        String contenido = txtMensaje.getText();
+        if (contenido == null || contenido.trim().isEmpty()) {
+            return; // No enviar mensajes vacíos
+        }
+
+        if (stompSession == null || !stompSession.isConnected()) {
+            JOptionPane.showMessageDialog(this, "No estás conectado al chat.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 1. Crear el DTO que espera el ChatController
+        ChatMensajeDTO mensajeDto = new ChatMensajeDTO();
+        mensajeDto.setContenido(contenido);
+        mensajeDto.setEmisorId(estudianteActual.getId());
+        mensajeDto.setEmisorNombre(estudianteActual.getNombre());
+        mensajeDto.setMatchId(this.matchId);
+
+        // 2. Definir el destino (mapeado en @MessageMapping en ChatController)
+        // El prefijo /app se añade automáticamente
+        String destino = "/app/chat/" + this.matchId;
+
+        // 3. Enviar el DTO
+        stompSession.send(destino, mensajeDto);
+
+        // 4. Limpiar el campo de texto
+        txtMensaje.setText("");
+    }
+    private void mostrarMensaje(ChatMensajeDTO dto) {
+        String textoMensaje;
+        
+        // Determinar si el mensaje es nuestro o del receptor
+        if (dto.getEmisorId().equals(this.estudianteActual.getId())) {
+            textoMensaje = "Tú: " + dto.getContenido();
+            // Aquí podrías alinear el JLabel a la derecha o darle otro color
+        } else {
+            textoMensaje = this.nombreReceptor + ": " + dto.getContenido();
+            // Aquí podrías alinear el JLabel a la izquierda
+        }
+        
+        JLabel lblMensaje = new JLabel(textoMensaje);
+        // Aquí puedes añadirle padding, bordes, etc.
+        
+        panelDinamicoChat.add(lblMensaje);
+        
+        // Refrescar la UI
+        panelDinamicoChat.revalidate();
+        panelDinamicoChat.repaint();
+    }
+    private void desconectarWebSocket() {
+        if (stompSession != null && stompSession.isConnected()) {
+            stompSession.disconnect();
+            logger.info("Desconectado del WebSocket.");
+        }
+        if(stompClient != null) {
+            stompClient.stop();
+        }
+    }
+    private class MyStompSessionHandler extends StompSessionHandlerAdapter {
+
+        @Override
+        public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
+            logger.info("¡Conectado a WebSocket! Sesión: " + session.getSessionId());
+            
+            // 1. Suscribirse al topic del Match
+            // Este es el destino que ChatController usa para re-enviar mensajes
+            String destinoTopic = "/topic/match/" + matchId;
+            
+            session.subscribe(destinoTopic, new StompFrameHandler() {
+                
+                // Define qué tipo de objeto esperamos recibir (el DTO)
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return ChatMensajeDTO.class;
+                }
+                
+                // Método que se llama cuando llega un mensaje
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    ChatMensajeDTO mensajeRecibido = (ChatMensajeDTO) payload;
+                    
+                    // IMPORTANTE: Actualizar la UI de Swing debe hacerse en el Event Dispatch Thread (EDT)
+                    SwingUtilities.invokeLater(() -> {
+                        mostrarMensaje(mensajeRecibido);
+                    });
+                }
+            });
+            
+            logger.info("Suscrito a: " + destinoTopic);
+        }
+
+        @Override
+        public void handleException(StompSession session, StompHeaders headers, Throwable exception) {
+            logger.log(java.util.logging.Level.SEVERE, "Excepción en STOMP", exception);
+        }
+
+        @Override
+        public void handleTransportError(StompSession session, Throwable exception) {
+            logger.log(java.util.logging.Level.SEVERE, "Error de transporte en STOMP", exception);
+        }
+    }
+    public chatFrm() {
+        initComponents();
+        JOptionPane.showMessageDialog(this, "Error: Este chat se inició sin un usuario o match. No funcionará.", "Error de Contexto", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -50,6 +205,8 @@ public class chatFrm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panelDinamicoChat = new javax.swing.JPanel();
@@ -67,6 +224,10 @@ public class chatFrm extends javax.swing.JFrame {
         matches = new javax.swing.JMenu();
         perfil = new javax.swing.JMenu();
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -79,7 +240,7 @@ public class chatFrm extends javax.swing.JFrame {
         panelDinamicoChat.setLayout(panelDinamicoChatLayout);
         panelDinamicoChatLayout.setHorizontalGroup(
             panelDinamicoChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 587, Short.MAX_VALUE)
+            .addGap(0, 567, Short.MAX_VALUE)
         );
         panelDinamicoChatLayout.setVerticalGroup(
             panelDinamicoChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +300,7 @@ public class chatFrm extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,6 +425,8 @@ public class chatFrm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JMenu matches;
     private javax.swing.JPanel panelDinamicoChat;
     private javax.swing.JMenu perfil;

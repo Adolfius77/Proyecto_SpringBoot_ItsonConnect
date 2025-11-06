@@ -24,7 +24,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
-
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 /**
  *
  * @author USER
@@ -34,6 +34,7 @@ public class chatFrm extends javax.swing.JFrame {
     private EstudianteDTO estudianteActual;
     private Long matchId;
     private String nombreReceptor;
+    
 
     private StompSession stompSession;
     private WebSocketStompClient stompClient;
@@ -50,12 +51,13 @@ public class chatFrm extends javax.swing.JFrame {
 
         this.setTitle("Chat con " + this.nombreReceptor);
         this.jLabel2.setText(this.nombreReceptor);
+        this.lblNombreInfo.setText(this.nombreReceptor);
 
         panelDinamicoChat.setLayout(new BoxLayout(panelDinamicoChat, BoxLayout.Y_AXIS));
 
         conectarWebSocket();
 
-        btnEnviarMensaje.addActionListener(e -> enviarMensaje());
+        
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -75,7 +77,8 @@ public class chatFrm extends javax.swing.JFrame {
             WebSocketClient transport = new SockJsClient(transports);
 
             this.stompClient = new WebSocketStompClient(transport);
-
+            //esto tranforma los objetos chatmesaje dto json
+            this.stompClient.setMessageConverter(new MappingJackson2MessageConverter());
             // URL del Endpoint definida en WebsocketConfig.java
             String url = "http://localhost:8080/itson-connect-ws";
 
@@ -125,11 +128,9 @@ public class chatFrm extends javax.swing.JFrame {
             // Aquí podrías alinear el JLabel a la derecha o darle otro color
         } else {
             textoMensaje = this.nombreReceptor + ": " + dto.getContenido();
-            // Aquí podrías alinear el JLabel a la izquierda
         }
 
         JLabel lblMensaje = new JLabel(textoMensaje);
-        // Aquí puedes añadirle padding, bordes, etc.
 
         panelDinamicoChat.add(lblMensaje);
 
@@ -152,7 +153,7 @@ public class chatFrm extends javax.swing.JFrame {
 
         @Override
         public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-            logger.info("¡Conectado a WebSocket! Sesión: " + session.getSessionId());
+            logger.info("¡Conectado a WebSocket! Sesion: " + session.getSessionId());
 
             // 1. Suscribirse al topic del Match
             // Este es el destino que ChatController usa para re-enviar mensajes
@@ -171,7 +172,6 @@ public class chatFrm extends javax.swing.JFrame {
                 public void handleFrame(StompHeaders headers, Object payload) {
                     ChatMensajeDTO mensajeRecibido = (ChatMensajeDTO) payload;
 
-                    // IMPORTANTE: Actualizar la UI de Swing debe hacerse en el Event Dispatch Thread (EDT)
                     SwingUtilities.invokeLater(() -> {
                         mostrarMensaje(mensajeRecibido);
                     });
@@ -214,8 +214,8 @@ public class chatFrm extends javax.swing.JFrame {
         txtMensaje = new presentacion.TextFieldRedondo();
         btnEnviarMensaje = new presentacion.botonCircular();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblNombreInfo = new javax.swing.JLabel();
+        lblHobbies = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -262,6 +262,11 @@ public class chatFrm extends javax.swing.JFrame {
         btnEnviarMensaje.setColorClick(new java.awt.Color(102, 204, 255));
         btnEnviarMensaje.setColorOver(new java.awt.Color(102, 204, 255));
         btnEnviarMensaje.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        btnEnviarMensaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarMensajeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -287,28 +292,31 @@ public class chatFrm extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setText("Nombre");
+        lblNombreInfo.setText("Nombre");
 
-        jLabel4.setText("Hobbies");
+        lblHobbies.setText("Hobbies");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(138, 138, 138)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(174, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(lblHobbies))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(jLabel3)
+                .addComponent(lblNombreInfo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -324,25 +332,26 @@ public class chatFrm extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -376,6 +385,10 @@ public class chatFrm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEnviarMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarMensajeActionPerformed
+        enviarMensaje();
+    }//GEN-LAST:event_btnEnviarMensajeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,8 +430,6 @@ public class chatFrm extends javax.swing.JFrame {
     private javax.swing.JMenu inicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -427,6 +438,8 @@ public class chatFrm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblHobbies;
+    private javax.swing.JLabel lblNombreInfo;
     private javax.swing.JMenu matches;
     private javax.swing.JPanel panelDinamicoChat;
     private javax.swing.JMenu perfil;

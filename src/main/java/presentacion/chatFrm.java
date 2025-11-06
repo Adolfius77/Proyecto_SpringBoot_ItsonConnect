@@ -4,7 +4,14 @@
  */
 package presentacion;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.EstudianteDTO;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.boot.rsocket.server.RSocketServer.Transport;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 /**
  *
@@ -12,13 +19,27 @@ import dto.EstudianteDTO;
  */
 public class chatFrm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form chatFrm
-     */
+    private EstudianteDTO estudianteActual;
+    private Long matchId;
+    private String nombreReceptor;
+
+    private StompSession stompSession;
+    private WebSocketStompClient stompClient;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreReceptor) {
+        this.estudianteActual = estudianteActual;
+        this.matchId = matchId;
+        this.nombreReceptor = nombreReceptor;
+
         initComponents();
+
+        this.setTitle("chat con " + this.nombreReceptor);
+
+        //primero conectamos al websocket
+        List<Transport> transports = new ArrayList<>(1);
+        transports.add(new WebSocketTransport(new StandardWebSocketClient()));
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

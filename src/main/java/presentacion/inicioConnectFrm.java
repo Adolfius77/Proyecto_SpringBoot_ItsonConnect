@@ -44,12 +44,12 @@ public class inicioConnectFrm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         botonCircular6 = new presentacion.botonCircular();
+        btnMensajes = new presentacion.botonCircular();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnBuscarEstudiantes = new presentacion.botonCircular();
         btnInicio = new presentacion.botonCircular();
         btnMatches = new presentacion.botonCircular();
-        btnMensajes = new presentacion.botonCircular();
         btnPerfil = new presentacion.botonCircular();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -73,6 +73,19 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular6.setColorClick(new java.awt.Color(102, 204, 255));
         botonCircular6.setColorOver(new java.awt.Color(51, 204, 255));
         botonCircular6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+
+        btnMensajes.setForeground(new java.awt.Color(0, 0, 0));
+        btnMensajes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
+        btnMensajes.setText("Mensajes");
+        btnMensajes.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnMensajes.setColorClick(new java.awt.Color(102, 204, 255));
+        btnMensajes.setColorOver(new java.awt.Color(102, 204, 255));
+        btnMensajes.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        btnMensajes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMensajesActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,19 +134,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
-        btnMensajes.setForeground(new java.awt.Color(0, 0, 0));
-        btnMensajes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
-        btnMensajes.setText("Mensajes");
-        btnMensajes.setBorderColor(new java.awt.Color(255, 255, 255));
-        btnMensajes.setColorClick(new java.awt.Color(102, 204, 255));
-        btnMensajes.setColorOver(new java.awt.Color(102, 204, 255));
-        btnMensajes.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        btnMensajes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMensajesActionPerformed(evt);
-            }
-        });
-
         btnPerfil.setForeground(new java.awt.Color(0, 0, 0));
         btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/editar (2).png"))); // NOI18N
         btnPerfil.setText("Perfil");
@@ -165,7 +165,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                         .addComponent(btnBuscarEstudiantes, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                         .addComponent(btnInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnMatches, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnMensajes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,8 +186,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 .addComponent(btnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnMatches, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -281,7 +278,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                                 .addComponent(botonCircular8, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(6, 6, 6)
-                        .addComponent(botonCircular9, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                        .addComponent(botonCircular9, javax.swing.GroupLayout.PREFERRED_SIZE, 86, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)

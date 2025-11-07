@@ -71,7 +71,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
         }
 
         if (!estudiante.getCorreo().contains("@") || !estudiante.getCorreo().contains(".")) {
-            throw new Exception("El formato del correo no es válido.");
+            throw new Exception("El formato del correo no es valido.");
         }
 
         String correo = estudiante.getCorreo().toLowerCase();
@@ -100,7 +100,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
                     hobbyEstudiante.setHobby(hobby);
                     hobbyEstudianteRepository.save(hobbyEstudiante);
                 } else {
-                    System.err.println("Advertencia: No se encontró el hobby con nombre: " + nombreHobby);
+                    System.err.println("Advertencia: No se encontro el hobby con nombre: " + nombreHobby);
                 }
             }
         }

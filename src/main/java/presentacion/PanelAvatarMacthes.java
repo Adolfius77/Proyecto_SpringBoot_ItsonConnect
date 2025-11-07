@@ -28,12 +28,13 @@ import javax.swing.SwingUtilities;
  * @author jorge
  */
 public class PanelAvatarMacthes extends javax.swing.JPanel {
-   private Long matchId;
-    private String nombreEstudiante; 
-    private ImageIcon fotoEstudiante; 
-    private EstudianteDTO estudianteActual; 
-    private EstudianteDTO otroEstudiante; 
-    
+
+    private Long matchId;
+    private String nombreEstudiante;
+    private ImageIcon fotoEstudiante;
+    private EstudianteDTO estudianteActual;
+    private EstudianteDTO estudianteReceptor;
+
     /**
      * Creates new form PanelAvatarMacthes
      */
@@ -42,27 +43,27 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
         configurarEstilos();
     }
 
-    public PanelAvatarMacthes(EstudianteDTO estudianteActual, MatchDTO match, EstudianteDTO otroParticipante) {
-       this.estudianteActual = estudianteActual;
+    public PanelAvatarMacthes(EstudianteDTO estudianteActual, MatchDTO match, EstudianteDTO estudianteReceptor) {
+        this.estudianteActual = estudianteActual;
         this.matchId = match.getId();
-        this.otroEstudiante = otroParticipante;
-        this.nombreEstudiante = otroParticipante.getNombre() + " " + otroParticipante.getApPaterno();
-        
+        this.estudianteReceptor = estudianteReceptor;
+        this.nombreEstudiante = estudianteReceptor.getNombre() + " " + estudianteReceptor.getApPaterno();
+
         initComponents();
         configurarEstilos();
         cargarDatos();
     }
-    
-     private void configurarEstilos() {
+
+    private void configurarEstilos() {
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(240, 240, 240), 1, true),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+                BorderFactory.createLineBorder(new Color(240, 240, 240), 1, true),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
-        
+
         lblNombre.setFont(new Font("Arial", Font.BOLD, 14));
         lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
-        
+
         btnMensaje.setBackground(new Color(254, 44, 85));
         btnMensaje.setForeground(Color.WHITE);
         btnMensaje.setFont(new Font("Arial", Font.BOLD, 12));
@@ -73,18 +74,19 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 setBackground(new Color(250, 250, 250));
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 setBackground(Color.WHITE);
             }
         });
     }
-     
-     private void cargarDatos() {
+
+    private void cargarDatos() {
         lblNombre.setText(this.nombreEstudiante);
-        
-        if (otroEstudiante.getFotoBase64() != null && !otroEstudiante.getFotoBase64().isEmpty()) {
+
+        if (estudianteReceptor.getFotoBase64() != null && !estudianteReceptor.getFotoBase64().isEmpty()) {
             try {
-                byte[] fotoBytes = Base64.getDecoder().decode(otroEstudiante.getFotoBase64());
+                byte[] fotoBytes = Base64.getDecoder().decode(estudianteReceptor.getFotoBase64());
                 ImageIcon icon = new ImageIcon(fotoBytes);
                 Image img = icon.getImage().getScaledInstance(83, 72, Image.SCALE_SMOOTH);
                 lblFoto.setIcon(new ImageIcon(img));
@@ -92,52 +94,56 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
                 lblFoto.setIcon(crearAvatarCircular(72, obtenerIniciales(nombreEstudiante)));
             }
         } else {
-             lblFoto.setIcon(crearAvatarCircular(72, obtenerIniciales(nombreEstudiante)));
+            lblFoto.setIcon(crearAvatarCircular(72, obtenerIniciales(nombreEstudiante)));
         }
     }
-     
-     private ImageIcon crearAvatarCircular(int size, String iniciales) {
+
+    private ImageIcon crearAvatarCircular(int size, String iniciales) {
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
-        
+
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        Color bgColor = generarColorPorId(otroEstudiante.getId()); // Usa el ID del otro
+
+        Color bgColor = generarColorPorId(estudianteReceptor.getId()); // Usa el ID del otro
         g2.setColor(bgColor);
         g2.fillOval(0, 0, size, size);
-        
+
         g2.setColor(new Color(254, 44, 85));
         g2.setStroke(new BasicStroke(3));
         g2.drawOval(1, 1, size - 2, size - 2);
-        
+
         g2.setColor(Color.DARK_GRAY);
         g2.setFont(new Font("Arial", Font.BOLD, size / 3));
         FontMetrics fm = g2.getFontMetrics();
         int x = (size - fm.stringWidth(iniciales)) / 2;
         int y = ((size - fm.getHeight()) / 2) + fm.getAscent();
         g2.drawString(iniciales, x, y);
-        
+
         g2.dispose();
         return new ImageIcon(image);
     }
-     
-     private String obtenerIniciales(String nombre) {
-        if (nombre == null || nombre.isEmpty()) return "??";
+
+    private String obtenerIniciales(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            return "??";
+        }
         String[] partes = nombre.trim().split("\\s+");
         if (partes.length >= 2) {
             return (partes[0].substring(0, 1) + partes[1].substring(0, 1)).toUpperCase();
         }
         return nombre.substring(0, Math.min(2, nombre.length())).toUpperCase();
     }
-    
+
     private Color generarColorPorId(Long id) {
-        if (id == null) id = 0L;
+        if (id == null) {
+            id = 0L;
+        }
         Color[] colores = {
             new Color(255, 212, 186), new Color(255, 228, 212),
             new Color(255, 208, 200), new Color(255, 224, 216),
             new Color(232, 216, 200), new Color(255, 220, 220)
         };
-        return colores[(int)(id % colores.length)];
+        return colores[(int) (id % colores.length)];
     }
 
     public Long getMatchId() {
@@ -171,8 +177,6 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     public void setLblNombre(JLabel lblNombre) {
         this.lblNombre = lblNombre;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -224,15 +228,14 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensajeActionPerformed
-      if (this.estudianteActual == null) {
+        if (this.estudianteActual == null) {
             JOptionPane.showMessageDialog(this, "Error: No se pudo identificar al usuario actual.");
             return;
         }
-        
-        chatFrm chat = new chatFrm(this.estudianteActual, this.matchId, this.nombreEstudiante);
+
+        chatFrm chat = new chatFrm(this.estudianteActual, this.matchId, this.nombreEstudiante, this.estudianteReceptor);
         chat.setVisible(true);
-        
-        
+
         SwingUtilities.getWindowAncestor(this).dispose();
     }//GEN-LAST:event_btnMensajeActionPerformed
 

@@ -26,6 +26,7 @@ import javax.swing.SwingUtilities;
  */
 public class matchesFrm extends javax.swing.JFrame {
 
+    private EstudianteDTO estudianteLogueado;
     private EstudianteDTO estudianteActual;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(matchesFrm.class.getName());
@@ -36,6 +37,8 @@ public class matchesFrm extends javax.swing.JFrame {
     }
 
     public matchesFrm(EstudianteDTO estudianteActual) {
+        this.estudianteLogueado = estudianteActual;
+
         this.estudianteActual = estudianteActual;
         initComponents();
 
@@ -127,11 +130,11 @@ public class matchesFrm extends javax.swing.JFrame {
     private void initComponents() {
 
         btnBuscarEstudiantes3 = new presentacion.botonCircular();
+        btnMensajes3 = new presentacion.botonCircular();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnInicio3 = new presentacion.botonCircular();
         btnMatches3 = new presentacion.botonCircular();
-        btnMensajes3 = new presentacion.botonCircular();
         btnPerfil3 = new presentacion.botonCircular();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -150,6 +153,19 @@ public class matchesFrm extends javax.swing.JFrame {
         btnBuscarEstudiantes3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarEstudiantes3ActionPerformed(evt);
+            }
+        });
+
+        btnMensajes3.setForeground(new java.awt.Color(0, 0, 0));
+        btnMensajes3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
+        btnMensajes3.setText("Mensajes");
+        btnMensajes3.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnMensajes3.setColorClick(new java.awt.Color(102, 204, 255));
+        btnMensajes3.setColorOver(new java.awt.Color(102, 204, 255));
+        btnMensajes3.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        btnMensajes3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMensajes3ActionPerformed(evt);
             }
         });
 
@@ -187,19 +203,6 @@ public class matchesFrm extends javax.swing.JFrame {
             }
         });
 
-        btnMensajes3.setForeground(new java.awt.Color(0, 0, 0));
-        btnMensajes3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
-        btnMensajes3.setText("Mensajes");
-        btnMensajes3.setBorderColor(new java.awt.Color(255, 255, 255));
-        btnMensajes3.setColorClick(new java.awt.Color(102, 204, 255));
-        btnMensajes3.setColorOver(new java.awt.Color(102, 204, 255));
-        btnMensajes3.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        btnMensajes3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMensajes3ActionPerformed(evt);
-            }
-        });
-
         btnPerfil3.setForeground(new java.awt.Color(0, 0, 0));
         btnPerfil3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/editar (2).png"))); // NOI18N
         btnPerfil3.setText("Perfil");
@@ -234,7 +237,6 @@ public class matchesFrm extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addGap(0, 6, Short.MAX_VALUE))
                     .addComponent(btnMatches3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMensajes3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPerfil3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -253,8 +255,6 @@ public class matchesFrm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnMatches3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnMensajes3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPerfil3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -321,11 +321,28 @@ public class matchesFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarEstudiantes3ActionPerformed
 
     private void btnInicio3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicio3ActionPerformed
-        // TODO add your handling code here:
+        if (this.estudianteLogueado == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new inicioConnectFrm().setVisible(true);
+            this.dispose();
+            return;
+            
+        }
+        inicioConnectFrm inicio = new inicioConnectFrm(this.estudianteLogueado);
+        inicio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnInicio3ActionPerformed
 
     private void btnMatches3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatches3ActionPerformed
-        // TODO add your handling code here:
+        if (this.estudianteLogueado == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new matchesFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+        matchesFrm matchesVentana = new matchesFrm(this.estudianteLogueado);
+        matchesVentana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMatches3ActionPerformed
 
     private void btnMensajes3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensajes3ActionPerformed
@@ -372,39 +389,15 @@ public class matchesFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presentacion.botonCircular btnBuscarEstudiantes;
-    private presentacion.botonCircular btnBuscarEstudiantes1;
-    private presentacion.botonCircular btnBuscarEstudiantes2;
     private presentacion.botonCircular btnBuscarEstudiantes3;
-    private presentacion.botonCircular btnInicio;
-    private presentacion.botonCircular btnInicio1;
-    private presentacion.botonCircular btnInicio2;
     private presentacion.botonCircular btnInicio3;
-    private presentacion.botonCircular btnMatches;
-    private presentacion.botonCircular btnMatches1;
-    private presentacion.botonCircular btnMatches2;
     private presentacion.botonCircular btnMatches3;
-    private presentacion.botonCircular btnMensajes;
-    private presentacion.botonCircular btnMensajes1;
-    private presentacion.botonCircular btnMensajes2;
     private presentacion.botonCircular btnMensajes3;
-    private presentacion.botonCircular btnPerfil;
-    private presentacion.botonCircular btnPerfil1;
-    private presentacion.botonCircular btnPerfil2;
     private presentacion.botonCircular btnPerfil3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel paneldinamicoMatches;

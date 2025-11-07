@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -34,6 +35,7 @@ public class chatFrm extends javax.swing.JFrame {
     private EstudianteDTO estudianteActual;
     private Long matchId;
     private String nombreReceptor;
+    private EstudianteDTO estudianteReceptor;
     
 
     private StompSession stompSession;
@@ -42,17 +44,28 @@ public class chatFrm extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(chatFrm.class.getName());
 
-    public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreReceptor) {
+    public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreReceptor,EstudianteDTO estudianteReceptor) {
         this.estudianteActual = estudianteActual;
         this.matchId = matchId;
         this.nombreReceptor = nombreReceptor;
+        this.estudianteReceptor = estudianteReceptor;
+        
+        this.nombreReceptor = estudianteReceptor.getNombre() + " " + estudianteReceptor.getApPaterno();
 
         initComponents();
 
         this.setTitle("Chat con " + this.nombreReceptor);
         this.jLabel2.setText(this.nombreReceptor);
+        
         this.lblNombreInfo.setText(this.nombreReceptor);
-
+        
+        Set<String> hobbies = estudianteReceptor.getHobbies();
+        if(hobbies != null && !hobbies.isEmpty()){
+            String hobbiesTexto = "<html>" + String.join(", ", hobbies) + "</html>";
+            this.lblHobbies.setText(hobbiesTexto);
+        }else{
+            this.lblHobbies.setText("esta persona no tiene hobbies");
+        }
         panelDinamicoChat.setLayout(new BoxLayout(panelDinamicoChat, BoxLayout.Y_AXIS));
 
         conectarWebSocket();
@@ -294,7 +307,7 @@ public class chatFrm extends javax.swing.JFrame {
 
         lblNombreInfo.setText("Nombre");
 
-        lblHobbies.setText("Hobbies");
+        lblHobbies.setText("   Hobbies");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -304,19 +317,19 @@ public class chatFrm extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(138, 138, 138)
-                        .addComponent(lblHobbies))
+                        .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGap(130, 130, 130)
+                        .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(38, 38, 38)
                 .addComponent(lblNombreInfo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -325,6 +338,7 @@ public class chatFrm extends javax.swing.JFrame {
         jLabel1.setText("Chat con:");
 
         jLabel2.setFont(new java.awt.Font("Schadow BT", 1, 25)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -353,7 +367,7 @@ public class chatFrm extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );

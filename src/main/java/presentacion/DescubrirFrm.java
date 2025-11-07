@@ -50,7 +50,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
     }
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {                                      
         if (this.estudianteActual == null) {
-            JOptionPane.showMessageDialog(this, "Error de sesiOn. Intente iniciar sesión de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
             new IniciarSesionFrm().setVisible(true);
             this.dispose();
             return;
@@ -167,6 +167,8 @@ public class DescubrirFrm extends javax.swing.JFrame {
         scrollpanel = new javax.swing.JScrollPane();
         panelDinamico = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        textFieldRedondo1 = new presentacion.TextFieldRedondo();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -210,45 +212,51 @@ public class DescubrirFrm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Descubre");
 
-        panelDinamico.setLayout(new java.awt.GridLayout());
+        panelDinamico.setLayout(new java.awt.GridLayout(1, 0));
         scrollpanel.setViewportView(panelDinamico);
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 2, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setText("Conectate con otros estudiantes del ITSON que comparten tus mismo intereses");
 
+        jButton1.setText("Buscar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textFieldRedondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textFieldRedondo1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setBackground(new java.awt.Color(255, 255, 255));
-        jMenu1.setForeground(new java.awt.Color(102, 102, 102));
+        jMenu1.setForeground(new java.awt.Color(0, 0, 0));
         jMenu1.setText("ITSON Connect");
         jMenu1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jMenuBar1.add(jMenu1);
@@ -317,6 +325,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -332,5 +341,6 @@ public class DescubrirFrm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel panelDinamico;
     private javax.swing.JScrollPane scrollpanel;
+    private presentacion.TextFieldRedondo textFieldRedondo1;
     // End of variables declaration//GEN-END:variables
 }

@@ -90,7 +90,7 @@ public class chatFrm extends javax.swing.JFrame {
             WebSocketClient transport = new SockJsClient(transports);
 
             this.stompClient = new WebSocketStompClient(transport);
-            //esto tranforma los objetos chatmesaje dto json
+            //esto tranforma los objetos chatmesaje dto a json
             this.stompClient.setMessageConverter(new MappingJackson2MessageConverter());
             // URL del Endpoint definida en WebsocketConfig.java
             String url = "http://localhost:8080/itson-connect-ws";
@@ -138,7 +138,6 @@ public class chatFrm extends javax.swing.JFrame {
         // Determinar si el mensaje es nuestro o del receptor
         if (dto.getEmisorId().equals(this.estudianteActual.getId())) {
             textoMensaje = "Tú: " + dto.getContenido();
-            // Aquí podrías alinear el JLabel a la derecha o darle otro color
         } else {
             textoMensaje = this.nombreReceptor + ": " + dto.getContenido();
         }
@@ -305,8 +304,12 @@ public class chatFrm extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        lblNombreInfo.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        lblNombreInfo.setForeground(new java.awt.Color(0, 0, 0));
         lblNombreInfo.setText("Nombre");
 
+        lblHobbies.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        lblHobbies.setForeground(new java.awt.Color(0, 0, 0));
         lblHobbies.setText("   Hobbies");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -319,9 +322,9 @@ public class chatFrm extends javax.swing.JFrame {
                         .addGap(138, 138, 138)
                         .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
+                        .addGap(129, 129, 129)
                         .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,7 +332,7 @@ public class chatFrm extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(lblNombreInfo)
                 .addGap(18, 18, 18)
-                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -361,11 +364,11 @@ public class chatFrm extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))

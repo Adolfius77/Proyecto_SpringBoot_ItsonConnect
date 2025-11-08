@@ -37,6 +37,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -56,7 +57,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         setBorder(new EmptyBorder(20, 20, 20, 20));
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        setPreferredSize(new Dimension(600, 800));
+        setPreferredSize(new Dimension(600, 400));
 
 
         // Título (centrado, ocupa 2 columnas)
@@ -215,24 +216,43 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.gridy = 9;
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
-        c.insets = new Insets(10, 0, 16, 0);
+        c.insets = new Insets(10, 0, 0, 0);
         add(titleHobbies, c);
         
         //Panel Hobbies
-        String[] frutas = {"Manzana", "Banana", "Papaya", "Mango", "Uva", "Sandía", "Pera", "Kiwi", "Melón"};
+        String[] frutas = {"Manzana", "Banana", "Papaya", "Mango", "Uva", "Sandía", "Pera", "Kiwi", "Melón", "Manzana", "Banana", "Papaya", "Mango", "Uva", "Sandía", "Pera", "Kiwi", "Melón"};
         String[] pre = {"Manzana", "Banana", "Papaya", "Mango", "Uva", "Pera", "Kiwi", "Melón"};
         List<String> lista = Arrays.asList(pre);
         
         SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(frutas, lista);
+        JScrollPane scrollHobbies = new JScrollPane(hobbiesPanel);
+        scrollHobbies.setBorder(null);
+        scrollHobbies.setPreferredSize(new Dimension(500, 200));
         c.gridx = 0;
         c.gridy = 10;
         c.gridwidth = 2;
-        c.anchor = GridBagConstraints.CENTER;
-        c.insets = new Insets(0, 0, 0, 0);
-        add(hobbiesPanel, c);
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        add(scrollHobbies, c);
         
         List<String> selec = hobbiesPanel.getSelectedItems();
         
+        JButton saveProfileButton = new JButton("Save Changes");
+        saveProfileButton.addActionListener(e -> cargarNuevaImagen());
+        saveProfileButton.setBackground(new Color(230, 242, 255));
+        saveProfileButton.setForeground(new Color(0, 102, 204));
+        saveProfileButton.setFocusPainted(false);
+        saveProfileButton.setPreferredSize(new Dimension(200, 60));
+        c.gridx = 0;
+        c.gridy = 11;
+        c.gridwidth = 2;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(0, 0, 20, 0);
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0;
+        add(saveProfileButton, c);
+
         // Añadir un glue vertical simple (una fila adicional con peso vertical) para empujar contenido arriba
         c.gridx = 0;
         c.gridy = 15;

@@ -311,10 +311,10 @@ public class chatFrm extends javax.swing.JFrame {
         txtMensaje = new presentacion.TextFieldRedondo();
         btnEnviarMensaje = new presentacion.botonCircular();
         jPanel3 = new javax.swing.JPanel();
-        lblNombreInfo = new javax.swing.JLabel();
         lblHobbies = new javax.swing.JLabel();
         panelRedondo1 = new presentacion.PanelRedondo();
         lblFoto = new javax.swing.JLabel();
+        lblNombreInfo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -400,14 +400,14 @@ public class chatFrm extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 232, 225));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblNombreInfo.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        lblNombreInfo.setForeground(new java.awt.Color(0, 0, 0));
-
         lblHobbies.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         lblHobbies.setForeground(new java.awt.Color(0, 0, 0));
         lblHobbies.setToolTipText("");
 
         panelRedondo1.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblNombreInfo.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        lblNombreInfo.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout panelRedondo1Layout = new javax.swing.GroupLayout(panelRedondo1);
         panelRedondo1.setLayout(panelRedondo1Layout);
@@ -417,11 +417,17 @@ public class chatFrm extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(62, Short.MAX_VALUE))
+            .addGroup(panelRedondo1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblNombreInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelRedondo1Layout.setVerticalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRedondo1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap()
+                .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
         );
@@ -433,7 +439,6 @@ public class chatFrm extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblNombreInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelRedondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblHobbies, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(47, Short.MAX_VALUE))
@@ -441,9 +446,7 @@ public class chatFrm extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(98, 98, 98)
                 .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)

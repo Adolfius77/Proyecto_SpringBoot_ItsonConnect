@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.ChatMensajeDTO;
 import dto.EstudianteDTO;
+import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Type;
@@ -12,12 +14,17 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -63,6 +70,10 @@ public class chatFrm extends javax.swing.JFrame {
         this.jLabel2.setText(this.nombreReceptor);
 
         this.lblNombreInfo.setText(this.nombreReceptor);
+        lblNombreInfo.setAlignmentX(CENTER_ALIGNMENT);
+        lblHobbies.setAlignmentY(CENTER_ALIGNMENT);
+        
+        setFoto(estudianteReceptor.getFotoBase64());
 
         Set<String> hobbies = estudianteReceptor.getHobbies();
         if (hobbies != null && !hobbies.isEmpty()) {
@@ -84,7 +95,30 @@ public class chatFrm extends javax.swing.JFrame {
                 System.exit(0);
             }
         });
+        setLocationRelativeTo(null);
 
+    }
+
+    private void setFoto(String fotoBase64) {
+        ImageIcon icon;
+        if (fotoBase64 != null && !fotoBase64.isEmpty()) {
+            try {
+                byte[] fotoBytes = Base64.getDecoder().decode(fotoBase64);
+                icon = new ImageIcon(fotoBytes);
+            } catch (Exception e) {
+                logger.log(java.util.logging.Level.WARNING, "Error al decodificar foto", e);
+                icon = getPlaceholderIcon();
+            }
+            Image img = icon.getImage().getScaledInstance(244, 182, Image.SCALE_SMOOTH);
+            lblFoto.setIcon(new ImageIcon(img));
+            lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+            lblFoto.setText("");
+        }
+
+    }
+
+    private ImageIcon getPlaceholderIcon() {
+        return new ImageIcon(getClass().getResource("/fotoPerfil.jpg"));
     }
 
     private void conectarWebSocket() {
@@ -137,22 +171,27 @@ public class chatFrm extends javax.swing.JFrame {
     }
 
     private void mostrarMensaje(ChatMensajeDTO dto) {
-        String textoMensaje;
+        boolean esMio = dto.getEmisorId().equals(this.estudianteActual.getId());
+        BurbujaMensaje burbuja = new BurbujaMensaje(dto.getContenido(), esMio);
 
-        // Determinar si el mensaje es nuestro o del receptor
-        if (dto.getEmisorId().equals(this.estudianteActual.getId())) {
-            textoMensaje = "Tú: " + dto.getContenido();
-        } else {
-            textoMensaje = this.nombreReceptor + ": " + dto.getContenido();
-        }
+        JPanel fila = new JPanel();
+        fila.setOpaque(false);
+        fila.setLayout(new FlowLayout(esMio ? FlowLayout.TRAILING : FlowLayout.LEADING, 10, 5));
 
-        JLabel lblMensaje = new JLabel(textoMensaje);
+        fila.add(burbuja);
 
-        panelDinamicoChat.add(lblMensaje);
+        panelDinamicoChat.add(fila);
+        panelDinamicoChat.add(Box.createVerticalStrut(5));
 
-        // Refrescar la UI
         panelDinamicoChat.revalidate();
         panelDinamicoChat.repaint();
+
+        SwingUtilities.invokeLater(() -> {
+            try {
+                jScrollPane1.getVerticalScrollBar().setValue(jScrollPane1.getVerticalScrollBar().getMaximum());
+            } catch (Exception e) {
+            }
+        });
     }
 
     private void cargarHistorialDemensajes() {
@@ -264,6 +303,7 @@ public class chatFrm extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panelDinamicoChat = new javax.swing.JPanel();
@@ -273,6 +313,8 @@ public class chatFrm extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         lblNombreInfo = new javax.swing.JLabel();
         lblHobbies = new javax.swing.JLabel();
+        panelRedondo1 = new presentacion.PanelRedondo();
+        lblFoto = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -284,6 +326,17 @@ public class chatFrm extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -308,8 +361,6 @@ public class chatFrm extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        txtMensaje.setText("Escribe un Mensaje......");
 
         btnEnviarMensaje.setBackground(new java.awt.Color(102, 204, 255));
         btnEnviarMensaje.setForeground(new java.awt.Color(255, 255, 255));
@@ -346,38 +397,56 @@ public class chatFrm extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(255, 232, 225));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblNombreInfo.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         lblNombreInfo.setForeground(new java.awt.Color(0, 0, 0));
-        lblNombreInfo.setText("Nombre");
 
         lblHobbies.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         lblHobbies.setForeground(new java.awt.Color(0, 0, 0));
-        lblHobbies.setText("   Hobbies");
+        lblHobbies.setToolTipText("");
+
+        panelRedondo1.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout panelRedondo1Layout = new javax.swing.GroupLayout(panelRedondo1);
+        panelRedondo1.setLayout(panelRedondo1Layout);
+        panelRedondo1Layout.setHorizontalGroup(
+            panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondo1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
+        );
+        panelRedondo1Layout.setVerticalGroup(
+            panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondo1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblNombreInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelRedondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblHobbies, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(lblNombreInfo)
-                .addGap(18, 18, 18)
-                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -415,7 +484,7 @@ public class chatFrm extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -424,9 +493,19 @@ public class chatFrm extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         inicio.setText("Inicio");
+        inicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inicioMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(inicio);
 
         matches.setText("Matches");
+        matches.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                matchesMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(matches);
 
         perfil.setText("Perfil");
@@ -451,6 +530,36 @@ public class chatFrm extends javax.swing.JFrame {
     private void btnEnviarMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarMensajeActionPerformed
         enviarMensaje();
     }//GEN-LAST:event_btnEnviarMensajeActionPerformed
+
+    private void inicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inicioMouseClicked
+        if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+
+        inicioConnectFrm inicioFrm = new inicioConnectFrm(this.estudianteActual);
+
+        inicioFrm.setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_inicioMouseClicked
+
+    private void matchesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_matchesMouseClicked
+        if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+
+        matchesFrm matches = new matchesFrm(this.estudianteActual);
+
+        matches.setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_matchesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -497,13 +606,16 @@ public class chatFrm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblHobbies;
     private javax.swing.JLabel lblNombreInfo;
     private javax.swing.JMenu matches;
     private javax.swing.JPanel panelDinamicoChat;
+    private presentacion.PanelRedondo panelRedondo1;
     private javax.swing.JMenu perfil;
     private presentacion.TextFieldRedondo txtMensaje;
     // End of variables declaration//GEN-END:variables

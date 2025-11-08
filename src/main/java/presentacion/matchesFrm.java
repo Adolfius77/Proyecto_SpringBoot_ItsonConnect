@@ -44,9 +44,9 @@ public class matchesFrm extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setTitle("Matches de " + estudianteActual.getNombre());
-        jLabel1.setText(estudianteActual.getNombre());
+        lblNombreEstudiante.setText(estudianteActual.getNombre());
 
-        paneldinamicoMatches.setLayout(new GridLayout(0, 1, 10, 10)); // 1 Columna
+        paneldinamicoMatches.setLayout(new GridLayout(0, 1, 10, 10)); 
         paneldinamicoMatches.setBackground(Color.WHITE);
 
         cargarMatches();
@@ -137,7 +137,7 @@ public class matchesFrm extends javax.swing.JFrame {
         btnMatches3 = new presentacion.botonCircular();
         btnPerfil3 = new presentacion.botonCircular();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lblNombreEstudiante = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         paneldinamicoMatches = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -218,10 +218,10 @@ public class matchesFrm extends javax.swing.JFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/usuario (2).png"))); // NOI18N
 
-        jLabel9.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel9.setFont(new java.awt.Font("SansSerif", 3, 16)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Nombre estudiante");
+        lblNombreEstudiante.setBackground(new java.awt.Color(0, 0, 0));
+        lblNombreEstudiante.setFont(new java.awt.Font("SansSerif", 3, 16)); // NOI18N
+        lblNombreEstudiante.setForeground(new java.awt.Color(0, 0, 0));
+        lblNombreEstudiante.setText("Nombre estudiante");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -234,7 +234,7 @@ public class matchesFrm extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
+                        .addComponent(lblNombreEstudiante)
                         .addGap(0, 6, Short.MAX_VALUE))
                     .addComponent(btnMatches3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPerfil3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -249,7 +249,7 @@ public class matchesFrm extends javax.swing.JFrame {
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(jLabel9)))
+                        .addComponent(lblNombreEstudiante)))
                 .addGap(29, 29, 29)
                 .addComponent(btnInicio3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -396,10 +396,10 @@ public class matchesFrm extends javax.swing.JFrame {
     private presentacion.botonCircular btnPerfil3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblNombreEstudiante;
     private javax.swing.JPanel paneldinamicoMatches;
     // End of variables declaration//GEN-END:variables
 }

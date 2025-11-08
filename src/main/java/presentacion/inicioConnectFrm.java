@@ -210,6 +210,8 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular7.setForeground(new java.awt.Color(255, 255, 255));
         botonCircular7.setText("Editar Perfil");
         botonCircular7.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular7.setColorClick(new java.awt.Color(102, 204, 255));
+        botonCircular7.setColorOver(new java.awt.Color(102, 204, 255));
         botonCircular7.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
         botonCircular7.setRadius(50);
 
@@ -278,7 +280,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                                 .addComponent(botonCircular8, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(6, 6, 6)
-                        .addComponent(botonCircular9, javax.swing.GroupLayout.PREFERRED_SIZE, 86, Short.MAX_VALUE)
+                        .addComponent(botonCircular9, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)

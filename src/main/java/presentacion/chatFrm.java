@@ -1,11 +1,16 @@
 package presentacion;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.ChatMensajeDTO;
 import dto.EstudianteDTO;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Type;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +31,7 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+
 /**
  *
  * @author USER
@@ -36,7 +42,6 @@ public class chatFrm extends javax.swing.JFrame {
     private Long matchId;
     private String nombreReceptor;
     private EstudianteDTO estudianteReceptor;
-    
 
     private StompSession stompSession;
     private WebSocketStompClient stompClient;
@@ -44,33 +49,32 @@ public class chatFrm extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(chatFrm.class.getName());
 
-    public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreReceptor,EstudianteDTO estudianteReceptor) {
+    public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreReceptor, EstudianteDTO estudianteReceptor) {
         this.estudianteActual = estudianteActual;
         this.matchId = matchId;
         this.nombreReceptor = nombreReceptor;
         this.estudianteReceptor = estudianteReceptor;
-        
+
         this.nombreReceptor = estudianteReceptor.getNombre() + " " + estudianteReceptor.getApPaterno();
 
         initComponents();
 
         this.setTitle("Chat con " + this.nombreReceptor);
         this.jLabel2.setText(this.nombreReceptor);
-        
+
         this.lblNombreInfo.setText(this.nombreReceptor);
-        
+
         Set<String> hobbies = estudianteReceptor.getHobbies();
-        if(hobbies != null && !hobbies.isEmpty()){
+        if (hobbies != null && !hobbies.isEmpty()) {
             String hobbiesTexto = "<html>" + String.join(", ", hobbies) + "</html>";
             this.lblHobbies.setText(hobbiesTexto);
-        }else{
+        } else {
             this.lblHobbies.setText("esta persona no tiene hobbies");
         }
         panelDinamicoChat.setLayout(new BoxLayout(panelDinamicoChat, BoxLayout.Y_AXIS));
 
+        cargarHistorialDemensajes();
         conectarWebSocket();
-
-        
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -149,6 +153,47 @@ public class chatFrm extends javax.swing.JFrame {
         // Refrescar la UI
         panelDinamicoChat.revalidate();
         panelDinamicoChat.repaint();
+    }
+
+    private void cargarHistorialDemensajes() {
+        java.util.concurrent.Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                String url = "http://localhost:8080/api/matches/" + this.matchId + "/mensajes?limit=50";
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .header("Contend-Type", "application/json")
+                        .build();
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() == 200) {
+                    List<ChatMensajeDTO> historial = objectMapper.readValue(
+                            response.body(),
+                            new TypeReference<List<ChatMensajeDTO>>() {
+                    }
+                    );
+                    SwingUtilities.invokeLater(() -> {
+                        for (ChatMensajeDTO dto : historial) {
+                            mostrarMensaje(dto);
+                        }
+                        hacerScrollAbajo();
+                    });
+                } else {
+                    System.out.println("error al cargar el historial: " + response.statusCode());
+                }
+            } catch (Exception e) {
+                logger.log(java.util.logging.Level.SEVERE, "Error cargando historial de chat", e);
+            }
+        });
+    }
+
+    private void hacerScrollAbajo() {
+        try {
+            javax.swing.JScrollBar vertical = jScrollPane1.getVerticalScrollBar();
+            vertical.setValue(vertical.getMaximum());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void desconectarWebSocket() {

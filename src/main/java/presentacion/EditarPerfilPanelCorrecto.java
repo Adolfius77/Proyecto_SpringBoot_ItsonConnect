@@ -313,7 +313,8 @@ public class EditarPerfilPanelCorrecto extends JPanel {
             }
         }
     }
-
+    
+    //sout
     // Demo
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

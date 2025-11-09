@@ -4,6 +4,7 @@
  */
 package presentacion;
 
+import dto.EstudianteDTO;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -49,15 +50,21 @@ import javax.swing.border.LineBorder;
  *
  * @author luisb
  */
-public class EditarPerfilPanelCorrecto extends JPanel {
+public class EditarPerfilFrm extends JFrame {
     private JLabel imageLabel;
+     private EstudianteDTO estudianteLogueado;
 
-    public EditarPerfilPanelCorrecto() {
-        setBackground(Color.WHITE);
-        setBorder(new EmptyBorder(20, 20, 20, 20));
-        setLayout(new GridBagLayout());
+    public EditarPerfilFrm() {
+        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        JPanel mainPanel = new JPanel();
+        
+        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        setPreferredSize(new Dimension(600, 400));
+        mainPanel.setPreferredSize(new Dimension(600, 400));
 
 
         // Título (centrado, ocupa 2 columnas)
@@ -68,7 +75,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         c.insets = new Insets(0, 0, 16, 0);
-        add(title, c);
+        mainPanel.add(title, c);
 
         // Imagen (centrada, ocupa 2 columnas)
         imageLabel = new JLabel("Cargar imagen", SwingConstants.CENTER);
@@ -82,7 +89,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         c.insets = new Insets(0, 0, 8, 0);
-        add(imageLabel, c);
+        mainPanel.add(imageLabel, c);
 
         // Botón (centrado, ocupa 2 columnas)
         JButton photoButton = new JButton("Add Profile Photo");
@@ -96,7 +103,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         c.insets = new Insets(0, 0, 20, 0);
-        add(photoButton, c);
+        mainPanel.add(photoButton, c);
 
         // --- Ahora el formulario: label a la izquierda y campo a la derecha ---
 
@@ -110,7 +117,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0;
         c.insets = new Insets(0, 0, 6, 8);
-        add(nombreLabel, c);
+        mainPanel.add(nombreLabel, c);
 
         // TextField Nombre (columna 1, se expande horizontalmente)
         JTextField nombreField = createTextField("Luis");
@@ -124,7 +131,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;               // permite que la columna de la derecha se expanda
         c.insets = new Insets(0, 0, 6, 0);
-        add(nombreField, c);
+        mainPanel.add(nombreField, c);
         
         //Label Bio
         JLabel bioLabel = new JLabel("Bio");
@@ -136,7 +143,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0;
         c.insets = new Insets(0, 0, 6, 8);
-        add(bioLabel, c);
+        mainPanel.add(bioLabel, c);
         
         //TextArea
         JTextArea area = new JTextArea("Soy Luis Fernando", 3, 20); // 3 líneas visibles
@@ -156,7 +163,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0;
         c.insets = new Insets(0, 0, 6, 0);
-        add(area, c);
+        mainPanel.add(area, c);
         
         //Major 
         JLabel majorLabel = new JLabel("Major");
@@ -168,7 +175,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0;
         c.insets = new Insets(0, 0, 6, 8);
-        add(majorLabel, c);
+        mainPanel.add(majorLabel, c);
 
         // TextField major (columna 1, se expande horizontalmente)
         JTextField majorField = createTextField("Software mega software");
@@ -181,7 +188,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;               // permite que la columna de la derecha se expanda
         c.insets = new Insets(0, 0, 6, 8);
-        add(majorField, c);
+        mainPanel.add(majorField, c);
         
         //Year 
         JLabel yearLabel = new JLabel("Year");
@@ -193,7 +200,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0;
         c.insets = new Insets(0, 0, 6, 8);
-        add(yearLabel, c);
+        mainPanel.add(yearLabel, c);
 
         // TextField year (columna 1, se expande horizontalmente)
         String[] opciones = {"1", "2", "3", "4", "5"};
@@ -207,7 +214,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;               // permite que la columna de la derecha se expanda
         c.insets = new Insets(0, 0, 6, 0);
-        add(comboBox, c);
+        mainPanel.add(comboBox, c);
         
         
         JLabel titleHobbies = new JLabel("Hobbies & Interests");
@@ -217,11 +224,11 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         c.insets = new Insets(10, 0, 0, 0);
-        add(titleHobbies, c);
+        mainPanel.add(titleHobbies, c);
         
         //Panel Hobbies
         String[] frutas = {"Manzana", "Banana", "Papaya", "Mango", "Uva", "Sandía", "Pera", "Kiwi", "Melón", "Manzana", "Banana", "Papaya", "Mango", "Uva", "Sandía", "Pera", "Kiwi", "Melón"};
-        String[] pre = {"Manzana", "Banana", "Papaya", "Mango", "Uva", "Pera", "Kiwi", "Melón"};
+        String[] pre = {};
         List<String> lista = Arrays.asList(pre);
         
         SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(frutas, lista);
@@ -234,7 +241,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
-        add(scrollHobbies, c);
+        mainPanel.add(scrollHobbies, c);
         
         List<String> selec = hobbiesPanel.getSelectedItems();
         
@@ -251,7 +258,7 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.insets = new Insets(0, 0, 20, 0);
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0;
-        add(saveProfileButton, c);
+        mainPanel.add(saveProfileButton, c);
 
         // Añadir un glue vertical simple (una fila adicional con peso vertical) para empujar contenido arriba
         c.gridx = 0;
@@ -259,9 +266,20 @@ public class EditarPerfilPanelCorrecto extends JPanel {
         c.gridwidth = 2;
         c.weighty = 1.0;
         c.fill = GridBagConstraints.VERTICAL;
-        add(Box.createVerticalGlue(), c);
+        mainPanel.add(Box.createVerticalGlue(), c);
+        
+        
+        add(mainPanel);
+        pack();
+        setSize(getWidth(), 850);
+        setLocationRelativeTo(null); // <-- Esto la centra en pantalla
+        setVisible(true);
     }
-
+    
+    private void saveChanges() {
+        
+    }
+    
     // Helper: crea JTextField con estilo
     private JTextField createTextField(String initialText) {
         JTextField field = new JTextField();
@@ -337,14 +355,6 @@ public class EditarPerfilPanelCorrecto extends JPanel {
     //sout
     // Demo
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame f = new JFrame("Editar Perfil - GridBagLayout");
-            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.getContentPane().add(new EditarPerfilPanelCorrecto());
-            f.pack();                       // ajusta tamaño exacto al contenido
-            f.setSize(f.getWidth(), 850);   // pero forzamos un ancho fijo y una altura mínima
-            f.setLocationRelativeTo(null);
-            f.setVisible(true);
-        });
+       EditarPerfilFrm frame = new EditarPerfilFrm();
     }
 }

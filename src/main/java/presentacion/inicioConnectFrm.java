@@ -481,7 +481,15 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMensajesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        // TODO add your handling code here:
+        if (this.estudianteLogueado == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+        
+        
+
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     private void botonCircular8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular8ActionPerformed

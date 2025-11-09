@@ -35,9 +35,8 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PersonasNuevasFrm(EstudianteDTO estudianteActual, MatchDTO match, EstudianteDTO estudianteReceptor) {
-        this.estudianteActual = estudianteActual;
-        this.matchId = match.getId();
+public PersonasNuevasFrm(EstudianteDTO estudianteActual, EstudianteDTO estudianteReceptor) {        this.estudianteActual = estudianteActual;
+  
         this.estudianteReceptor = estudianteReceptor;
         this.nombreEstudiante = estudianteReceptor.getNombre() + " " + estudianteReceptor.getApPaterno();
 

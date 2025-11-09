@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.EstudianteDTO;
 import dto.MatchDTO;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -19,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -46,11 +48,11 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         if (this.estudianteLogueado != null) {
             jLabel3.setText(this.estudianteLogueado.getNombre() + " " + this.estudianteLogueado.getApPaterno());
-            lblNombreBienvenida.setText(this.estudianteLogueado.getNombre() +" "+ this.estudianteLogueado.getApPaterno());
+            lblNombreBienvenida.setText(this.estudianteLogueado.getNombre() + " " + this.estudianteLogueado.getApPaterno());
         }
         panelMatches1.setLayout(new GridLayout(0, 1, 0, 10));
         panelMatches1.setBackground(new Color(255, 255, 255));
-        
+
         cargarMatchesRecientes();
         refreshTimer = new Timer(5000, e -> cargarMatchesRecientes());
         refreshTimer.start();
@@ -58,14 +60,12 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     }
 
     private void cargarMatchesRecientes() {
-        if (estudianteLogueado == null) {
-            return;
-        }
+        if (estudianteLogueado == null) return;
 
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
-                String url = "http://localhost:8080/api/estudiantes/" + estudianteLogueado.getId() + "/matches";
+                String url = "http://localhost:8080/api/estudiantes/descubrir?idActual=" + estudianteLogueado.getId() + "&limit=5"; 
 
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))
@@ -75,37 +75,30 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() == 200) {
-                    List<MatchDTO> allMatches = objectMapper.readValue(response.body(), new TypeReference<List<MatchDTO>>() {
-                    });
+                    List<EstudianteDTO> nuevosUsuarios = objectMapper.readValue(response.body(), new TypeReference<List<EstudianteDTO>>() {});
 
-                    List<MatchDTO> recentMatches = allMatches.stream().limit(5).collect(Collectors.toList());
-
-                    SwingUtilities.invokeLater(() -> actualizarPanelMatches(recentMatches));
+                    SwingUtilities.invokeLater(() -> actualizarPanelDescubrir(nuevosUsuarios));
                 }
             } catch (Exception e) {
-                System.err.println("Error al refrescar matches: " + e.getMessage());
+                System.err.println("Error al cargar usuarios para descubrir: " + e.getMessage());
             }
         });
 
     }
-    private void actualizarPanelMatches(List<MatchDTO> matches){
+
+    private void actualizarPanelDescubrir(List<EstudianteDTO> usuarios) {
         panelMatches1.removeAll();
-        
-        if(matches.isEmpty()){
-            JLabel lblvacio = new JLabel("no hay matches aun papu");
-            lblvacio.setHorizontalAlignment(lblvacio.CENTER);
-            lblvacio.setForeground(Color.gray);
-            panelMatches1.add(lblvacio);
-        }else{
-            for(MatchDTO match : matches){
-                EstudianteDTO otro = match.getParticipantes().stream()
-                        .filter(p -> !p.getId().equals(estudianteLogueado.getId()))
-                        .findFirst()
-                        .orElse(null);
-                if(otro != null){
-                    PersonasNuevasFrm tarjeta = new PersonasNuevasFrm(estudianteLogueado,match, otro);
-                    panelMatches1.add(tarjeta);
-            }
+
+        if (usuarios.isEmpty()) {
+            JLabel lblVacio = new JLabel("¡No hay nuevos usuarios por ahora!");
+            lblVacio.setHorizontalAlignment(SwingConstants.CENTER);
+            lblVacio.setForeground(Color.GRAY);
+            lblVacio.setFont(new Font("SansSerif", Font.ITALIC, 14));
+            panelMatches1.add(lblVacio);
+        } else {
+            for (EstudianteDTO usuario : usuarios) {
+                PersonasNuevasFrm tarjeta = new PersonasNuevasFrm(estudianteLogueado, usuario);
+                panelMatches1.add(tarjeta);
             }
         }
         panelMatches1.revalidate();

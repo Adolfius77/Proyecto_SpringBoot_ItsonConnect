@@ -4,8 +4,23 @@
  */
 package presentacion;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.EstudianteDTO;
+import dto.MatchDTO;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 /**
  *
@@ -17,6 +32,8 @@ public class inicioConnectFrm extends javax.swing.JFrame {
      * Creates new form inicioConnectFrm
      */
     private EstudianteDTO estudianteLogueado;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private Timer refreshTimer;
 
     public inicioConnectFrm() {
         initComponents();
@@ -31,6 +48,68 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             jLabel3.setText(this.estudianteLogueado.getNombre());
             lblNombreBienvenida.setText(this.estudianteLogueado.getNombre());
         }
+        panelMatches1.setLayout(new GridLayout(0, 1, 0, 10));
+        panelMatches1.setBackground(new Color(255, 255, 255));
+        
+        cargarMatchesRecientes();
+        refreshTimer = new Timer(5000, e -> cargarMatchesRecientes());
+        refreshTimer.start();
+
+    }
+
+    private void cargarMatchesRecientes() {
+        if (estudianteLogueado == null) {
+            return;
+        }
+
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                String url = "http://localhost:8080/api/estudiantes/" + estudianteLogueado.getId() + "/matches";
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .GET()
+                        .build();
+
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    List<MatchDTO> allMatches = objectMapper.readValue(response.body(), new TypeReference<List<MatchDTO>>() {
+                    });
+
+                    List<MatchDTO> recentMatches = allMatches.stream().limit(5).collect(Collectors.toList());
+
+                    SwingUtilities.invokeLater(() -> actualizarPanelMatches(recentMatches));
+                }
+            } catch (Exception e) {
+                System.err.println("Error al refrescar matches: " + e.getMessage());
+            }
+        });
+
+    }
+    private void actualizarPanelMatches(List<MatchDTO> matches){
+        panelMatches1.removeAll();
+        
+        if(matches.isEmpty()){
+            JLabel lblvacio = new JLabel("no hay matches aun papu");
+            lblvacio.setHorizontalAlignment(lblvacio.CENTER);
+            lblvacio.setForeground(Color.gray);
+            panelMatches1.add(lblvacio);
+        }else{
+            for(MatchDTO match : matches){
+                EstudianteDTO otro = match.getParticipantes().stream()
+                        .filter(p -> !p.getId().equals(estudianteLogueado.getId()))
+                        .findFirst()
+                        .orElse(null);
+                if(otro != null){
+                    PanelAvatarMacthes tarjeta = new PanelAvatarMacthes(estudianteLogueado,match, otro);
+                    panelMatches1.add(tarjeta);
+            }
+            }
+        }
+        panelMatches1.revalidate();
+        panelMatches1.repaint();
     }
 
     /**
@@ -59,9 +138,9 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular7 = new presentacion.botonCircular();
         botonCircular8 = new presentacion.botonCircular();
         botonCircular9 = new presentacion.botonCircular();
-        panelRedondo1 = new presentacion.PanelRedondo();
+        panelMatches1 = new presentacion.PanelRedondo();
         jLabel7 = new javax.swing.JLabel();
-        panelRedondo2 = new presentacion.PanelRedondo();
+        panelMatches2 = new presentacion.PanelRedondo();
 
         jLabel1.setText("YA LO LOGRASTE");
 
@@ -234,16 +313,16 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular9.setFont(new java.awt.Font("SansSerif", 0, 15)); // NOI18N
         botonCircular9.setRadius(50);
 
-        panelRedondo1.setBackground(new java.awt.Color(255, 255, 255));
+        panelMatches1.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout panelRedondo1Layout = new javax.swing.GroupLayout(panelRedondo1);
-        panelRedondo1.setLayout(panelRedondo1Layout);
-        panelRedondo1Layout.setHorizontalGroup(
-            panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelMatches1Layout = new javax.swing.GroupLayout(panelMatches1);
+        panelMatches1.setLayout(panelMatches1Layout);
+        panelMatches1Layout.setHorizontalGroup(
+            panelMatches1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 237, Short.MAX_VALUE)
         );
-        panelRedondo1Layout.setVerticalGroup(
-            panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelMatches1Layout.setVerticalGroup(
+            panelMatches1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 186, Short.MAX_VALUE)
         );
 
@@ -251,16 +330,16 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Nuevos Matches");
 
-        panelRedondo2.setBackground(new java.awt.Color(255, 255, 255));
+        panelMatches2.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout panelRedondo2Layout = new javax.swing.GroupLayout(panelRedondo2);
-        panelRedondo2.setLayout(panelRedondo2Layout);
-        panelRedondo2Layout.setHorizontalGroup(
-            panelRedondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelMatches2Layout = new javax.swing.GroupLayout(panelMatches2);
+        panelMatches2.setLayout(panelMatches2Layout);
+        panelMatches2Layout.setHorizontalGroup(
+            panelMatches2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 237, Short.MAX_VALUE)
         );
-        panelRedondo2Layout.setVerticalGroup(
-            panelRedondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelMatches2Layout.setVerticalGroup(
+            panelMatches2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 186, Short.MAX_VALUE)
         );
 
@@ -284,8 +363,8 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panelMatches1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelMatches2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -313,9 +392,9 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                             .addComponent(botonCircular7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botonCircular8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botonCircular9, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelMatches1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelMatches2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -426,7 +505,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblNombreBienvenida;
-    private presentacion.PanelRedondo panelRedondo1;
-    private presentacion.PanelRedondo panelRedondo2;
+    private presentacion.PanelRedondo panelMatches1;
+    private presentacion.PanelRedondo panelMatches2;
     // End of variables declaration//GEN-END:variables
 }

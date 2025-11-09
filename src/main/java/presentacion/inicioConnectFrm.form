@@ -120,8 +120,8 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="panelRedondo1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="panelRedondo2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="panelMatches1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="panelMatches2" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
@@ -158,10 +158,10 @@
                               <Component id="botonCircular9" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="panelRedondo1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelMatches1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="panelRedondo2" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelMatches2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -458,7 +458,7 @@
             <Property name="radius" type="int" value="50"/>
           </Properties>
         </Component>
-        <Container class="presentacion.PanelRedondo" name="panelRedondo1">
+        <Container class="presentacion.PanelRedondo" name="panelMatches1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -489,7 +489,7 @@
             <Property name="text" type="java.lang.String" value="Nuevos Matches"/>
           </Properties>
         </Component>
-        <Container class="presentacion.PanelRedondo" name="panelRedondo2">
+        <Container class="presentacion.PanelRedondo" name="panelMatches2">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>

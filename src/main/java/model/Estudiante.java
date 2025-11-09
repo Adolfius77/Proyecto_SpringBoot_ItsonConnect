@@ -50,6 +50,8 @@ public class Estudiante implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "foto", columnDefinition = "LONGBLOB")
     private byte[] foto;
+    
+    
 
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
     private Set<Interaccion> interaccionesEnviadas;

@@ -11,11 +11,16 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.Base64;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -51,7 +56,54 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
 
         initComponents();
         configurarEstilos();
+        configurarDiseño();
         cargarDatos();
+    }
+
+    private void configurarDiseño() {
+        setLayout(new GridBagLayout());
+        setBackground(Color.WHITE);
+        setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(230, 230, 230)), 
+                BorderFactory.createEmptyBorder(15, 20, 15, 20) 
+        ));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = 2; 
+        gbc.insets = new Insets(0, 0, 0, 15); 
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(lblFoto, gbc);
+
+        // 2. Nombre (Columna 1, Fila 0)
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        gbc.weightx = 1.0; 
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 3, 0); 
+        add(lblNombre1, gbc);
+
+        // 3. Intereses (Columna 1, Fila 1)
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        add(lblIntereses, gbc);
+
+        // 4. Botón Mensaje (Columna 2)
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        gbc.weightx = 0; // No se estira
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.insets = new Insets(0, 10, 0, 0); 
+        add(btnMensaje, gbc);
     }
 
     private void configurarEstilos() {
@@ -61,11 +113,10 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
 
-        lblNombre.setFont(new Font("Arial", Font.BOLD, 14));
-        lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+        lblIntereses.setFont(new Font("Arial", Font.BOLD, 14));
+        lblIntereses.setHorizontalAlignment(SwingConstants.CENTER);
 
-        btnMensaje.setBackground(new Color(254, 44, 85));
-        btnMensaje.setForeground(Color.WHITE);
+        
         btnMensaje.setFont(new Font("Arial", Font.BOLD, 12));
         btnMensaje.setFocusPainted(false);
         btnMensaje.setBorderPainted(false);
@@ -82,13 +133,21 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     }
 
     private void cargarDatos() {
-        lblNombre.setText(this.nombreEstudiante);
+        lblNombre1.setText(this.nombreEstudiante);
+
+        Set<String> hobies = estudianteReceptor.getHobbies();
+        if (hobies != null && !hobies.isEmpty()) {
+            lblIntereses.setText("Interes en comun: " + String.join(", ", hobies));
+
+        } else {
+            lblIntereses.setText("no hay interes en comun");
+        }
 
         if (estudianteReceptor.getFotoBase64() != null && !estudianteReceptor.getFotoBase64().isEmpty()) {
             try {
                 byte[] fotoBytes = Base64.getDecoder().decode(estudianteReceptor.getFotoBase64());
                 ImageIcon icon = new ImageIcon(fotoBytes);
-                Image img = icon.getImage().getScaledInstance(83, 72, Image.SCALE_SMOOTH);
+                Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 lblFoto.setIcon(new ImageIcon(img));
             } catch (Exception e) {
                 lblFoto.setIcon(crearAvatarCircular(72, obtenerIniciales(nombreEstudiante)));
@@ -171,11 +230,16 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     }
 
     public JLabel getLblNombre() {
-        return lblNombre;
+        return lblIntereses;
     }
 
     public void setLblNombre(JLabel lblNombre) {
-        this.lblNombre = lblNombre;
+        this.lblIntereses = lblNombre;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 
     /**
@@ -187,20 +251,38 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         lblFoto = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
-        btnMensaje = new javax.swing.JButton();
+        lblIntereses = new javax.swing.JLabel();
+        btnMensaje = new presentacion.botonCircular();
+        lblNombre1 = new javax.swing.JLabel();
+
+        jLabel1.setText("jLabel1");
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        lblNombre.setText("Nombre Usuario");
+        lblIntereses.setBackground(new java.awt.Color(0, 0, 0));
+        lblIntereses.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
+        lblIntereses.setForeground(new java.awt.Color(0, 0, 0));
+        lblIntereses.setText("Intereses en comun");
 
+        btnMensaje.setBackground(new java.awt.Color(204, 204, 204));
+        btnMensaje.setForeground(new java.awt.Color(0, 0, 0));
         btnMensaje.setText("Mensaje");
+        btnMensaje.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnMensaje.setColor(new java.awt.Color(204, 204, 204));
+        btnMensaje.setColorClick(new java.awt.Color(204, 204, 204));
+        btnMensaje.setColorOver(new java.awt.Color(204, 204, 204));
+        btnMensaje.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnMensaje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMensajeActionPerformed(evt);
             }
         });
+
+        lblNombre1.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
+        lblNombre1.setForeground(new java.awt.Color(0, 0, 0));
+        lblNombre1.setText("Nombre Usuario");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -208,22 +290,32 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblIntereses, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(165, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblNombre)
-                .addGap(18, 18, 18)
-                .addComponent(btnMensaje)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombre1))
+                        .addGap(4, 4, 4)
+                        .addComponent(lblIntereses)
+                        .addGap(0, 18, Short.MAX_VALUE)))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -241,8 +333,10 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMensaje;
+    private presentacion.botonCircular btnMensaje;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblFoto;
-    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblIntereses;
+    private javax.swing.JLabel lblNombre1;
     // End of variables declaration//GEN-END:variables
 }

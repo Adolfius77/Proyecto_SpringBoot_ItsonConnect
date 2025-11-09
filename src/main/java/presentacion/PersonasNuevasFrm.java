@@ -8,16 +8,22 @@ import dto.EstudianteDTO;
 import dto.MatchDTO;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.Base64;
 import java.util.Set;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -25,18 +31,19 @@ import javax.swing.ImageIcon;
  */
 public class PersonasNuevasFrm extends javax.swing.JPanel {
 
-    private Long matchId;
     private String nombreEstudiante;
-    private ImageIcon fotoEstudiante;
     private EstudianteDTO estudianteActual;
     private EstudianteDTO estudianteReceptor;
+
+    
 
     public PersonasNuevasFrm() {
         initComponents();
     }
 
-public PersonasNuevasFrm(EstudianteDTO estudianteActual, EstudianteDTO estudianteReceptor) {        this.estudianteActual = estudianteActual;
-  
+    public PersonasNuevasFrm(EstudianteDTO estudianteActual, EstudianteDTO estudianteReceptor) {
+        this.estudianteActual = estudianteActual;
+
         this.estudianteReceptor = estudianteReceptor;
         this.nombreEstudiante = estudianteReceptor.getNombre() + " " + estudianteReceptor.getApPaterno();
 
@@ -44,46 +51,49 @@ public PersonasNuevasFrm(EstudianteDTO estudianteActual, EstudianteDTO estudiant
         cargarDatos();
     }
 
+    
+
     private void cargarDatos() {
         lblNombreEstudiante.setText(this.nombreEstudiante);
         Set<String> hobbies = estudianteReceptor.getHobbies();
-        if (hobbies != null && hobbies.isEmpty()) {
-            lblIntereseYhobies.setText("Interes en comun: " + String.join(", ", hobbies));
 
+        if (hobbies != null && !hobbies.isEmpty()) {
+            lblIntereseYhobies.setText("Intereses: " + String.join(", ", hobbies));
         } else {
-            lblIntereseYhobies.setText("no hay intereses en comun");
+            lblIntereseYhobies.setText("Sin intereses comunes visibles");
         }
+
+       
         if (estudianteReceptor.getFotoBase64() != null && !estudianteReceptor.getFotoBase64().isEmpty()) {
             try {
                 byte[] fotoBytes = Base64.getDecoder().decode(estudianteReceptor.getFotoBase64());
                 ImageIcon icon = new ImageIcon(fotoBytes);
-                Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                Image img = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                 lblFoto.setIcon(new ImageIcon(img));
             } catch (Exception e) {
-                lblFoto.setIcon(crearAvatarCircular(72, obtenerIniciales(nombreEstudiante)));
+                lblFoto.setIcon(crearAvatarCircular(60, obtenerIniciales(nombreEstudiante)));
             }
         } else {
-            lblFoto.setIcon(crearAvatarCircular(72, obtenerIniciales(nombreEstudiante)));
-
+            lblFoto.setIcon(crearAvatarCircular(60, obtenerIniciales(nombreEstudiante)));
         }
     }
 
     private ImageIcon crearAvatarCircular(int size, String iniciales) {
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
-
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Color bgColor = generarColorPorId(estudianteReceptor.getId()); // Usa el ID del otro
+        Color bgColor = generarColorPorId(estudianteReceptor.getId());
         g2.setColor(bgColor);
         g2.fillOval(0, 0, size, size);
 
+        
         g2.setColor(new Color(254, 44, 85));
-        g2.setStroke(new BasicStroke(3));
+        g2.setStroke(new BasicStroke(2));
         g2.drawOval(1, 1, size - 2, size - 2);
 
         g2.setColor(Color.DARK_GRAY);
-        g2.setFont(new Font("Arial", Font.BOLD, size / 3));
+        g2.setFont(new Font("Arial", Font.BOLD, (int) (size / 2.5)));
         FontMetrics fm = g2.getFontMetrics();
         int x = (size - fm.stringWidth(iniciales)) / 2;
         int y = ((size - fm.getHeight()) / 2) + fm.getAscent();

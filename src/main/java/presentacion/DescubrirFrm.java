@@ -173,6 +173,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -251,25 +252,36 @@ public class DescubrirFrm extends javax.swing.JFrame {
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
-        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuBar1.setBackground(new java.awt.Color(30, 115, 179));
 
-        jMenu1.setBackground(new java.awt.Color(255, 255, 255));
-        jMenu1.setForeground(new java.awt.Color(0, 0, 0));
+        jMenu1.setBackground(new java.awt.Color(30, 115, 179));
+        jMenu1.setForeground(new java.awt.Color(255, 255, 255));
         jMenu1.setText("ITSON Connect");
         jMenu1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setBackground(new java.awt.Color(255, 255, 255));
-        jMenu2.setForeground(new java.awt.Color(102, 102, 102));
+        jMenu2.setBackground(new java.awt.Color(30, 115, 179));
+        jMenu2.setForeground(new java.awt.Color(255, 255, 255));
         jMenu2.setText("Inicio");
         jMenu2.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jMenuBar1.add(jMenu2);
 
-        jMenu5.setBackground(new java.awt.Color(255, 255, 255));
-        jMenu5.setForeground(new java.awt.Color(102, 102, 102));
-        jMenu5.setText("Mensajes");
+        jMenu5.setBackground(new java.awt.Color(30, 115, 179));
+        jMenu5.setForeground(new java.awt.Color(255, 255, 255));
+        jMenu5.setText("Matches");
         jMenu5.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
+
+        jMenu6.setBackground(new java.awt.Color(30, 115, 179));
+        jMenu6.setForeground(new java.awt.Color(255, 255, 255));
+        jMenu6.setText("Perfil");
+        jMenu6.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
 
@@ -290,6 +302,21 @@ public class DescubrirFrm extends javax.swing.JFrame {
     private void textFieldRedondo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldRedondo1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldRedondo1ActionPerformed
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+        
+        matchesFrm mensajes = new matchesFrm(this.estudianteActual);
+        
+        mensajes.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -335,6 +362,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;

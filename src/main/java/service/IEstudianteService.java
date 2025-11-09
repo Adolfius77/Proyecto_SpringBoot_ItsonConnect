@@ -14,7 +14,7 @@ public interface IEstudianteService {
 
    Estudiante crearEstudiante(Estudiante estudiante, Set<String> hobbyNames) throws Exception;
    Estudiante obtenerEstudiante(Long id);
-   Estudiante actualizarEstudiante(Estudiante estudiante) throws Exception;
+   Estudiante actualizarEstudiante(Estudiante estudiante,Set<String> nombreHobbies) throws Exception;
    void eliminarEstudiante(Long id) throws Exception;
    List<Estudiante> listarEstudiantes(int limit);
    Estudiante login(String correo, String password) throws Exception;

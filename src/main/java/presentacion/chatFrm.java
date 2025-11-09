@@ -487,15 +487,24 @@ public class chatFrm extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jMenuBar1.setBackground(new java.awt.Color(30, 115, 179));
+        jMenuBar1.setForeground(new java.awt.Color(30, 115, 179));
+
+        jMenu1.setBackground(new java.awt.Color(30, 115, 179));
+        jMenu1.setForeground(new java.awt.Color(255, 255, 255));
         jMenu1.setText("ITSON Connect");
+        jMenu1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jMenuBar1.add(jMenu1);
 
+        inicio.setBackground(new java.awt.Color(30, 115, 179));
+        inicio.setForeground(new java.awt.Color(255, 255, 255));
         inicio.setText("Inicio");
+        inicio.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         inicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 inicioMouseClicked(evt);
@@ -503,7 +512,10 @@ public class chatFrm extends javax.swing.JFrame {
         });
         jMenuBar1.add(inicio);
 
+        matches.setBackground(new java.awt.Color(30, 115, 179));
+        matches.setForeground(new java.awt.Color(255, 255, 255));
         matches.setText("Matches");
+        matches.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         matches.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 matchesMouseClicked(evt);
@@ -511,7 +523,10 @@ public class chatFrm extends javax.swing.JFrame {
         });
         jMenuBar1.add(matches);
 
+        perfil.setBackground(new java.awt.Color(30, 115, 179));
+        perfil.setForeground(new java.awt.Color(255, 255, 255));
         perfil.setText("Perfil");
+        perfil.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jMenuBar1.add(perfil);
 
         setJMenuBar(jMenuBar1);

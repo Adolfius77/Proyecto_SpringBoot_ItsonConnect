@@ -48,9 +48,20 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
         this.nombreEstudiante = estudianteReceptor.getNombre() + " " + estudianteReceptor.getApPaterno();
 
         initComponents();
+        configurarEstiloTarjeta();
         cargarDatos();
     }
-
+    private void configurarEstiloTarjeta(){
+        this.setOpaque(false);
+        
+        jPanel1.setOpaque(true);
+        jPanel1.setBackground(Color.white);
+        
+        jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            new javax.swing.border.LineBorder(new Color(230, 230, 230), 1, true), 
+            javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15) 
+    ));
+    }
     
 
     private void cargarDatos() {
@@ -171,7 +182,7 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
                                 .addGap(6, 6, 6)
                                 .addComponent(lblIntereseYhobies))
                             .addComponent(lblNombreEstudiante))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +193,7 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
                 .addComponent(lblNombreEstudiante)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblIntereseYhobies)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

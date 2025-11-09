@@ -136,7 +136,7 @@ public class EstudianteController {
         try {
             dto.setId(id);
 
-            Estudiante e = estudianteService.actualizarEstudiante(toEntity(dto));
+            Estudiante e = estudianteService.actualizarEstudiante(toEntity(dto),dto.getHobbies());
             return ResponseEntity.ok(toDTO(e));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

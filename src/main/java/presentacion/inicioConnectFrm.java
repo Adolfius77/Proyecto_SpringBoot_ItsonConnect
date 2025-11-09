@@ -50,7 +50,9 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             jLabel3.setText(this.estudianteLogueado.getNombre() + " " + this.estudianteLogueado.getApPaterno());
             lblNombreBienvenida.setText(this.estudianteLogueado.getNombre() + " " + this.estudianteLogueado.getApPaterno());
         }
-        panelMatches1.setLayout(new GridLayout(0, 1, 0, 10));
+        panelMatches1.setLayout(new GridLayout(0, 1, 0, 25));
+        panelMatches1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20));
+
         panelMatches1.setBackground(new Color(255, 255, 255));
 
         cargarMatchesRecientes();
@@ -60,12 +62,14 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     }
 
     private void cargarMatchesRecientes() {
-        if (estudianteLogueado == null) return;
+        if (estudianteLogueado == null) {
+            return;
+        }
 
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
-                String url = "http://localhost:8080/api/estudiantes/descubrir?idActual=" + estudianteLogueado.getId() + "&limit=5"; 
+                String url = "http://localhost:8080/api/estudiantes/descubrir?idActual=" + estudianteLogueado.getId() + "&limit=5";
 
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))
@@ -75,7 +79,8 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() == 200) {
-                    List<EstudianteDTO> nuevosUsuarios = objectMapper.readValue(response.body(), new TypeReference<List<EstudianteDTO>>() {});
+                    List<EstudianteDTO> nuevosUsuarios = objectMapper.readValue(response.body(), new TypeReference<List<EstudianteDTO>>() {
+                    });
 
                     SwingUtilities.invokeLater(() -> actualizarPanelDescubrir(nuevosUsuarios));
                 }
@@ -132,7 +137,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         btnPerfil = new presentacion.botonCircular();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnPerfil1 = new presentacion.botonCircular();
+        btnCerrarSesion = new presentacion.botonCircular();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         lblNombreBienvenida = new javax.swing.JLabel();
@@ -295,15 +300,15 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre estudiante");
 
-        btnPerfil1.setForeground(new java.awt.Color(0, 0, 0));
-        btnPerfil1.setText("Cerrar sesion");
-        btnPerfil1.setBorderColor(new java.awt.Color(204, 255, 255));
-        btnPerfil1.setColorClick(new java.awt.Color(102, 204, 255));
-        btnPerfil1.setColorOver(new java.awt.Color(102, 204, 255));
-        btnPerfil1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        btnPerfil1.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrarSesion.setForeground(new java.awt.Color(0, 0, 0));
+        btnCerrarSesion.setText("Cerrar sesion");
+        btnCerrarSesion.setBorderColor(new java.awt.Color(204, 255, 255));
+        btnCerrarSesion.setColorClick(new java.awt.Color(102, 204, 255));
+        btnCerrarSesion.setColorOver(new java.awt.Color(102, 204, 255));
+        btnCerrarSesion.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPerfil1ActionPerformed(evt);
+                btnCerrarSesionActionPerformed(evt);
             }
         });
 
@@ -320,7 +325,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                             .addComponent(btnInicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnMatches, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnPerfil, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPerfil1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnCerrarSesion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,7 +353,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnPerfil1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscarEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
@@ -514,9 +519,21 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnOpcionesActionPerformed
 
-    private void btnPerfil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfil1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPerfil1ActionPerformed
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que deseas cerrar sesion?",
+                "Cerrar Sesión",
+                javax.swing.JOptionPane.YES_NO_OPTION
+        );
+        if(confirm == javax.swing.JOptionPane.YES_OPTION){
+            this.estudianteLogueado = null;
+            
+            Main mainFrame = new Main();
+            mainFrame.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -562,12 +579,12 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     private presentacion.botonCircular botonCircular8;
     private presentacion.botonCircular botonCircular9;
     private presentacion.botonCircular btnBuscarEstudiantes;
+    private presentacion.botonCircular btnCerrarSesion;
     private presentacion.botonCircular btnInicio;
     private presentacion.botonCircular btnMatches;
     private presentacion.botonCircular btnMensajes;
     private presentacion.botonCircular btnOpciones;
     private presentacion.botonCircular btnPerfil;
-    private presentacion.botonCircular btnPerfil1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

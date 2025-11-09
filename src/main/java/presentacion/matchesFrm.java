@@ -44,9 +44,9 @@ public class matchesFrm extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setTitle("Matches de " + estudianteActual.getNombre());
-        lblNombreEstudiante.setText(estudianteActual.getNombre());
+        lblNombreEstudiante.setText(estudianteActual.getNombre() + " " + estudianteActual.getApPaterno());
 
-        paneldinamicoMatches.setLayout(new GridLayout(0, 1, 10, 10)); 
+        paneldinamicoMatches.setLayout(new GridLayout(0, 1, 10, 10));
         paneldinamicoMatches.setBackground(Color.WHITE);
 
         cargarMatches();
@@ -132,6 +132,7 @@ public class matchesFrm extends javax.swing.JFrame {
         btnBuscarEstudiantes3 = new presentacion.botonCircular();
         btnMensajes3 = new presentacion.botonCircular();
         btnPerfil1 = new presentacion.botonCircular();
+        btnBuscarEstudiantes = new presentacion.botonCircular();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnInicio3 = new presentacion.botonCircular();
@@ -139,7 +140,9 @@ public class matchesFrm extends javax.swing.JFrame {
         btnPerfil3 = new presentacion.botonCircular();
         jLabel8 = new javax.swing.JLabel();
         lblNombreEstudiante = new javax.swing.JLabel();
-        btnPerfil2 = new presentacion.botonCircular();
+        btnCerrarSesion = new presentacion.botonCircular();
+        btnBuscarEstudiantes1 = new presentacion.botonCircular();
+        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         paneldinamicoMatches = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -182,6 +185,20 @@ public class matchesFrm extends javax.swing.JFrame {
         btnPerfil1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPerfil1ActionPerformed(evt);
+            }
+        });
+
+        btnBuscarEstudiantes.setBackground(new java.awt.Color(102, 204, 255));
+        btnBuscarEstudiantes.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarEstudiantes.setText("Buscar estudiantes");
+        btnBuscarEstudiantes.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnBuscarEstudiantes.setColor(new java.awt.Color(102, 204, 255));
+        btnBuscarEstudiantes.setColorClick(new java.awt.Color(102, 204, 255));
+        btnBuscarEstudiantes.setColorOver(new java.awt.Color(51, 204, 255));
+        btnBuscarEstudiantes.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnBuscarEstudiantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarEstudiantesActionPerformed(evt);
             }
         });
 
@@ -239,15 +256,29 @@ public class matchesFrm extends javax.swing.JFrame {
         lblNombreEstudiante.setForeground(new java.awt.Color(0, 0, 0));
         lblNombreEstudiante.setText("Nombre estudiante");
 
-        btnPerfil2.setForeground(new java.awt.Color(0, 0, 0));
-        btnPerfil2.setText("Cerrar sesion");
-        btnPerfil2.setBorderColor(new java.awt.Color(204, 255, 255));
-        btnPerfil2.setColorClick(new java.awt.Color(102, 204, 255));
-        btnPerfil2.setColorOver(new java.awt.Color(102, 204, 255));
-        btnPerfil2.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        btnPerfil2.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrarSesion.setForeground(new java.awt.Color(0, 0, 0));
+        btnCerrarSesion.setText("Cerrar sesion");
+        btnCerrarSesion.setBorderColor(new java.awt.Color(204, 255, 255));
+        btnCerrarSesion.setColorClick(new java.awt.Color(102, 204, 255));
+        btnCerrarSesion.setColorOver(new java.awt.Color(102, 204, 255));
+        btnCerrarSesion.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPerfil2ActionPerformed(evt);
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
+
+        btnBuscarEstudiantes1.setBackground(new java.awt.Color(102, 204, 255));
+        btnBuscarEstudiantes1.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarEstudiantes1.setText("Buscar estudiantes");
+        btnBuscarEstudiantes1.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnBuscarEstudiantes1.setColor(new java.awt.Color(102, 204, 255));
+        btnBuscarEstudiantes1.setColorClick(new java.awt.Color(102, 204, 255));
+        btnBuscarEstudiantes1.setColorOver(new java.awt.Color(51, 204, 255));
+        btnBuscarEstudiantes1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnBuscarEstudiantes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarEstudiantes1ActionPerformed(evt);
             }
         });
 
@@ -263,7 +294,8 @@ public class matchesFrm extends javax.swing.JFrame {
                             .addComponent(btnInicio3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnMatches3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnPerfil3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPerfil2, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)))
+                            .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                            .addComponent(btnBuscarEstudiantes1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,6 +303,7 @@ public class matchesFrm extends javax.swing.JFrame {
                         .addComponent(lblNombreEstudiante)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jSeparator1)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,15 +315,19 @@ public class matchesFrm extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(lblNombreEstudiante)))
-                .addGap(29, 29, 29)
+                .addGap(28, 28, 28)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnInicio3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnMatches3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnPerfil3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnPerfil2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBuscarEstudiantes1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
 
         paneldinamicoMatches.setBackground(new java.awt.Color(255, 255, 255));
@@ -313,6 +350,9 @@ public class matchesFrm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Mis Macthes");
 
+        jButton1.setBackground(new java.awt.Color(30, 115, 179));
+        jButton1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Buscar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -343,7 +383,7 @@ public class matchesFrm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textFieldRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
@@ -376,7 +416,7 @@ public class matchesFrm extends javax.swing.JFrame {
             new inicioConnectFrm().setVisible(true);
             this.dispose();
             return;
-            
+
         }
         inicioConnectFrm inicio = new inicioConnectFrm(this.estudianteLogueado);
         inicio.setVisible(true);
@@ -407,9 +447,43 @@ public class matchesFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPerfil1ActionPerformed
 
-    private void btnPerfil2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfil2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPerfil2ActionPerformed
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que deseas cerrar sesion?",
+                "Cerrar Sesión",
+                javax.swing.JOptionPane.YES_NO_OPTION
+        );
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            this.estudianteLogueado = null;
+
+            Main mainFrame = new Main();
+            mainFrame.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnBuscarEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEstudiantesActionPerformed
+        if (this.estudianteLogueado == null) {
+
+            JOptionPane.showMessageDialog(this, "Error, no se ha iniciado sesion.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        DescubrirFrm descu = new DescubrirFrm(this.estudianteLogueado, null);
+        descu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBuscarEstudiantesActionPerformed
+
+    private void btnBuscarEstudiantes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEstudiantes1ActionPerformed
+        if (this.estudianteLogueado == null) {
+
+            JOptionPane.showMessageDialog(this, "Error, no se ha iniciado sesion.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        DescubrirFrm descu = new DescubrirFrm(this.estudianteLogueado, null);
+        descu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBuscarEstudiantes1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,12 +521,14 @@ public class matchesFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private presentacion.botonCircular btnBuscarEstudiantes;
+    private presentacion.botonCircular btnBuscarEstudiantes1;
     private presentacion.botonCircular btnBuscarEstudiantes3;
+    private presentacion.botonCircular btnCerrarSesion;
     private presentacion.botonCircular btnInicio3;
     private presentacion.botonCircular btnMatches3;
     private presentacion.botonCircular btnMensajes3;
     private presentacion.botonCircular btnPerfil1;
-    private presentacion.botonCircular btnPerfil2;
     private presentacion.botonCircular btnPerfil3;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -460,6 +536,7 @@ public class matchesFrm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblNombreEstudiante;
     private javax.swing.JPanel paneldinamicoMatches;
     private presentacion.TextFieldRedondo textFieldRedondo1;

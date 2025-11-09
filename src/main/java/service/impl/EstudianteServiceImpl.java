@@ -119,13 +119,32 @@ public class EstudianteServiceImpl implements IEstudianteService {
 
     @Override
     @Transactional
-    public Estudiante actualizarEstudiante(Estudiante estudiante) throws Exception {
+    public Estudiante actualizarEstudiante(Estudiante estudiante, Set<String> nombreHobbies) throws Exception {
         Estudiante existente = estudianteRepository.findById(estudiante.getId())
                 .orElseThrow(() -> new Exception("Estudiante no encontrado, no se puede actualizar."));
 
         existente.setNombre(estudiante.getNombre());
         existente.setApPaterno(estudiante.getApPaterno());
         existente.setApMaterno(estudiante.getApMaterno());
+
+        if (estudiante.getFoto() != null && estudiante.getFoto().length > 0) {
+            existente.setFoto(estudiante.getFoto());
+        }
+
+        if (nombreHobbies != null) {
+            List<model.HobbyEstudiante> hobbiesAnteriores = hobbyEstudianteRepository.findByEstudiante(existente);
+            hobbyEstudianteRepository.deleteAll(hobbiesAnteriores);
+
+            for (String nombreHobby : nombreHobbies) {
+                model.Hobby hobby = hobbyRepository.findByNombre(nombreHobby).orElse(null);
+                if (hobby != null) {
+                    model.HobbyEstudiante nuevoHobby = new model.HobbyEstudiante();
+                    nuevoHobby.setEstudiante(existente);
+                    nuevoHobby.setHobby(hobby);
+                    hobbyEstudianteRepository.save(nuevoHobby);
+                }
+            }
+        }
 
         return estudianteRepository.save(existente);
     }
@@ -170,14 +189,14 @@ public class EstudianteServiceImpl implements IEstudianteService {
     public List<Match> obtenerMatchesPorEstudiante(Long idEstudiante) {
         Estudiante estudiante = new Estudiante(idEstudiante);
         List<model.MatchEstudiante> relaciones = matchEstudianteRepository.findByEstudiante(estudiante);
-        
+
         return relaciones.stream()
                 .map(relacion -> {
                     Match match = relacion.getMatch();
-                    match.getParticipantes().size(); 
+                    match.getParticipantes().size();
                     match.getParticipantes().forEach(p -> {
-                        p.getEstudiante().getNombre(); 
-                        p.getEstudiante().getFoto();   
+                        p.getEstudiante().getNombre();
+                        p.getEstudiante().getFoto();
                     });
                     return match;
                 })

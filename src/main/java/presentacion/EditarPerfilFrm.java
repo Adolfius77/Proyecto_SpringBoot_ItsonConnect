@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -52,6 +53,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import model.Hobby;
 import service.IEstudianteService;
 
 /**
@@ -237,6 +239,15 @@ public class EditarPerfilFrm extends JFrame {
         mainPanel.add(titleHobbies, c);
         
         //Panel Hobbies
+        /*
+        List<Hobby> hobbies = hobbyService.listarHobbies();
+        Set<String> selectedSet = estudianteLogueado.getHobbies() == null ? 
+                          Collections.emptySet() :
+                          estudianteLogueado.getHobbies().stream()
+                                            .map(Hobby::getNombre)
+                                            .collect(Collectors.toSet());
+        String[] selectedArr = selectedSet.toArray(new String[0]);
+        */
         
         SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(hobbies, estudianteLogueado.getHobbies());
         JScrollPane scrollHobbies = new JScrollPane(hobbiesPanel);
@@ -250,7 +261,7 @@ public class EditarPerfilFrm extends JFrame {
         c.weighty = 1.0;
         mainPanel.add(scrollHobbies, c);
         
-        List<String> selec = hobbiesPanel.getSelectedItems();
+        List<Hobby> selec = hobbiesPanel.getSelectedHobbies();
         
         JButton saveProfileButton = new JButton("Save Changes");
         saveProfileButton.addActionListener(e -> cargarNuevaImagen());

@@ -107,7 +107,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
             // 1. Crear cliente y petición HTTP
             HttpClient client = HttpClient.newHttpClient();
             // Llama al endpoint /descubrir que creamos en el controlador
-            String url = ConfigCliente.BASE_URL + "/api/estudiantes/descubrir?idActual=";
+            String url = ConfigCliente.BASE_URL + "/api/estudiantes/descubrir?idActual=" + estudianteActual.getId();
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))

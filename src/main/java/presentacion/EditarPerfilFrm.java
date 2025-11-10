@@ -4,6 +4,7 @@
  */
 package presentacion;
 
+import controller.EstudianteController;
 import dto.EstudianteDTO;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
@@ -24,7 +25,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashSet;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -45,6 +51,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import service.IEstudianteService;
 
 /**
  *
@@ -52,8 +59,9 @@ import javax.swing.border.LineBorder;
  */
 public class EditarPerfilFrm extends JFrame {
     private JLabel imageLabel;
-     private EstudianteDTO estudianteLogueado;
-
+    private EstudianteDTO estudianteLogueado;
+    private JTextField majorField;
+    
     public EditarPerfilFrm() {
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -178,7 +186,7 @@ public class EditarPerfilFrm extends JFrame {
         mainPanel.add(majorLabel, c);
 
         // TextField major (columna 1, se expande horizontalmente)
-        JTextField majorField = createTextField("Software mega software");
+        majorField = createTextField("Software mega software");
         int j = majorField.getPreferredSize().height;
         majorField.setPreferredSize(new Dimension(200, j));
         majorField.setMaximumSize(new Dimension(Integer.MAX_VALUE, j));
@@ -276,9 +284,7 @@ public class EditarPerfilFrm extends JFrame {
         setVisible(true);
     }
     
-    private void saveChanges() {
-        
-    }
+    
     
     // Helper: crea JTextField con estilo
     private JTextField createTextField(String initialText) {
@@ -292,6 +298,60 @@ public class EditarPerfilFrm extends JFrame {
         field.setText(initialText);
         return field;
     }
+    
+    private void saveChanges() {
+        if (majorField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(
+            null,
+            "El campo Major no puede estar vacío.",
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        
+        try {
+            Long estudianteId = estudianteLogueado.getId(); // ← el ID del estudiante logueado
+            String apiUrl = "http://localhost:8080/estudiantes/" + estudianteId;
+
+            EstudianteDTO dto = new EstudianteDTO();
+            estudianteLogueado.setHobbies(new HashSet<>(Arrays.asList("Cine", "Música"))); // ejemplo
+            //estudianteLogueado.setFotoBase64(Base64.getEncoder().encodeToString(fotoBytes));
+
+            // Convertir DTO a JSON
+            //Gson gson = new Gson();
+            //String jsonInput = gson.toJson(dto);
+
+            HttpURLConnection conn = (HttpURLConnection) new URL(apiUrl).openConnection();
+            conn.setRequestMethod("PUT");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                //byte[] input = jsonInput.getBytes("utf-8");
+              //  os.write(input, 0, input.length);
+            }
+
+            int code = conn.getResponseCode();
+            if (code == 200) {
+                JOptionPane.showMessageDialog(null, "Perfil actualizado con éxito.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el perfil. Código: " + code);
+            }
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+            null,
+            "Error al trata de actualizar este perfil.",
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        
+    }
+    
 
     // Muestra imagen a partir de bytes con escalado manteniendo proporción
     private void mostrarImagenDesdeBytes(byte[] datos) {
@@ -329,6 +389,7 @@ public class EditarPerfilFrm extends JFrame {
             ex.printStackTrace();
         }
     }
+    
 
     // Abre un JFileChooser y muestra la imagen seleccionada usando mostrarImagenDesdeBytes
     private void cargarNuevaImagen() {

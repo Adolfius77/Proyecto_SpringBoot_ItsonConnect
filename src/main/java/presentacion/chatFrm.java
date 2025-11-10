@@ -198,7 +198,7 @@ public class chatFrm extends javax.swing.JFrame {
         java.util.concurrent.Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
-                String url = "http://localhost:8080/api/matches/" + this.matchId + "/mensajes?limit=50";
+                String url = ConfigCliente.BASE_URL + "/api/matches/" + this.matchId + "/mensajes?limit=50";
 
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))

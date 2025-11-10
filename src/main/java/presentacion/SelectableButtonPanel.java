@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import model.Hobby;
 
 /**
  *
@@ -24,18 +25,22 @@ import javax.swing.border.LineBorder;
  */
 public class SelectableButtonPanel extends JPanel {
     private final List<JToggleButton> buttons = new ArrayList<>();
+    private final List<Hobby> hobbies = new ArrayList<>(); // guardamos la referencia a los hobbies originales
 
-    public SelectableButtonPanel(String[] items, List<String> preselected) {
+    public SelectableButtonPanel(List<Hobby> hobbies, List<Hobby> preselected) {
         setLayout(new WrapLayout(FlowLayout.LEFT, 10, 8));
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(200, 300));
 
-        for (String item : items) {
-            JToggleButton btn = createStyledButton(item);
-            if (preselected != null && preselected.contains(item)) {
+        for (Hobby hobby : hobbies) {
+            JToggleButton btn = createStyledButton(hobby.getNombre());
+            this.hobbies.add(hobby); // guardamos el objeto completo
+
+            if (preselected != null && preselected.contains(hobby)) {
                 btn.setSelected(true);
                 updateButtonStyle(btn);
             }
+
             buttons.add(btn);
             add(btn);
         }
@@ -108,11 +113,14 @@ public class SelectableButtonPanel extends JPanel {
         button.repaint();
 }
 
-    public List<String> getSelectedItems() {
-        List<String> selected = new ArrayList<>();
-        for (JToggleButton btn : buttons) {
-            if (btn.isSelected()) selected.add(btn.getText());
+    public List<Hobby> getSelectedHobbies() {
+    List<Hobby> selected = new ArrayList<>();
+
+    for (int i = 0; i < buttons.size(); i++) {
+        if (buttons.get(i).isSelected()) {
+            selected.add(hobbies.get(i)); // hobbies es la lista paralela a buttons
         }
-        return selected;
     }
+    return selected;
+}
 }

@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -77,4 +78,17 @@ public class Hobby implements Serializable {
     public void setHobby(Set<HobbyEstudiante> hobby) {
         this.hobby = hobby;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Hobby)) return false;
+        Hobby hobby = (Hobby) o;
+        return Objects.equals(id, hobby.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+}
 }

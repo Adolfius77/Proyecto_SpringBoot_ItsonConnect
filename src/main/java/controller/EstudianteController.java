@@ -17,6 +17,9 @@ import dto.MatchDTO;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
+import model.Hobby;
+import model.HobbyEstudiante;
+import service.IHobbyService;
 
 /**
  *
@@ -27,10 +30,12 @@ import java.util.Optional;
 public class EstudianteController {
 
     private final IEstudianteService estudianteService;
+    private final IHobbyService hobbyService;
 
     @Autowired
-    public EstudianteController(IEstudianteService estudianteService) {
+    public EstudianteController(IEstudianteService estudianteService, IHobbyService hobbyService) {
         this.estudianteService = estudianteService;
+        this.hobbyService = hobbyService;
     }
 
     private MatchDTO toMatchDTO(model.Match match) {
@@ -52,36 +57,29 @@ public class EstudianteController {
         return dto;
     }
 
-    private EstudianteDTO toDTO(Estudiante e) {
-        if (e == null) {
-            return null;
-        }
+    public EstudianteDTO toDTO(Estudiante estudiante) {
         EstudianteDTO dto = new EstudianteDTO();
-        dto.setId(e.getId());
-        dto.setNombre(e.getNombre());
-        dto.setApPaterno(e.getApPaterno());
-        dto.setApMaterno(e.getApMaterno());
-        dto.setCorreo(e.getCorreo());
-        dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
+        dto.setId(estudiante.getId());
+        dto.setNombre(estudiante.getNombre());
+        dto.setApPaterno(estudiante.getApPaterno());
+        dto.setApMaterno(estudiante.getApMaterno());
+        dto.setCorreo(estudiante.getCorreo());
+        dto.setPassword(estudiante.getPassword());
+        dto.setFechaRegistro(estudiante.getFechaRegistro().toString());
 
-        if (e.getFoto() != null) {
-            dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
+        if (estudiante.getFoto() != null) {
+            dto.setFotoBase64(Base64.getEncoder().encodeToString(estudiante.getFoto()));
         }
 
-        if (e.getHobbies() != null) {
-            Set<String> hobbyNames = e.getHobbies().stream()
-                    .map(hobbyEstudiante -> hobbyEstudiante.getHobby().getNombre())
-                    .collect(Collectors.toSet());
-            dto.setHobbies(hobbyNames);
-        }
+        Set<String> hobbyNombres = estudiante.getHobbies().stream()
+            .map(h -> h.getHobby().getNombre())
+            .collect(Collectors.toSet());
+        dto.setHobbies(hobbyNombres);
 
         return dto;
     }
 
-    private Estudiante toEntity(EstudianteDTO dto) {
-        if (dto == null) {
-            return null;
-        }
+    public Estudiante toEntity(EstudianteDTO dto, Set<Hobby> todosLosHobbies) {
         Estudiante e = new Estudiante();
         e.setId(dto.getId());
         e.setNombre(dto.getNombre());
@@ -89,14 +87,32 @@ public class EstudianteController {
         e.setApMaterno(dto.getApMaterno());
         e.setCorreo(dto.getCorreo());
         e.setPassword(dto.getPassword());
+        e.setFechaRegistro(java.sql.Date.valueOf(dto.getFechaRegistro()));
 
-        if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) {
-            try {
-                e.setFoto(Base64.getDecoder().decode(dto.getFotoBase64()));
-            } catch (IllegalArgumentException ex) {
-                System.err.println("Error al decodificar foto Base64: " + ex.getMessage());
-            }
+        if (dto.getFotoBase64() != null) {
+            e.setFoto(Base64.getDecoder().decode(dto.getFotoBase64()));
         }
+
+        // convertir nombres de hobbies → objetos HobbyEstudiante
+        Set<HobbyEstudiante> hobbyEstudiantes = dto.getHobbies().stream()
+            .map(nombre -> {
+                Hobby hobby = todosLosHobbies.stream()
+                    .filter(h -> h.getNombre().equals(nombre))
+                    .findFirst()
+                    .orElse(null);
+                if (hobby != null) {
+                    HobbyEstudiante he = new HobbyEstudiante();
+                    he.setEstudiante(e);
+                    he.setHobby(hobby);
+                    return he;
+                }
+                return null;
+            })
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet());
+
+        e.setHobbies(hobbyEstudiantes);
+
         return e;
     }
 
@@ -121,10 +137,9 @@ public class EstudianteController {
     @PostMapping
     public ResponseEntity<?> registrar(@RequestBody EstudianteDTO dto) {
         try {
-            Estudiante estudiante = toEntity(dto);
-
+            Set<Hobby> todosLosHobbies = estudianteService.;
+            Estudiante estudiante = toEntity(dto, todosLosHobbies);
             Estudiante e = estudianteService.crearEstudiante(estudiante, dto.getHobbies());
-
             return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(e));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

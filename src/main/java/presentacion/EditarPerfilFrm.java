@@ -4,6 +4,7 @@
  */
 package presentacion;
 
+import com.google.gson.Gson;
 import controller.EstudianteController;
 import dto.EstudianteDTO;
 import java.awt.AlphaComposite;
@@ -61,6 +62,7 @@ public class EditarPerfilFrm extends JFrame {
     private JLabel imageLabel;
     private EstudianteDTO estudianteLogueado;
     private JTextField majorField;
+    private byte[] fotoBytes;
     
     public EditarPerfilFrm() {
         
@@ -235,11 +237,8 @@ public class EditarPerfilFrm extends JFrame {
         mainPanel.add(titleHobbies, c);
         
         //Panel Hobbies
-        String[] frutas = {"Manzana", "Banana", "Papaya", "Mango", "Uva", "Sandía", "Pera", "Kiwi", "Melón", "Manzana", "Banana", "Papaya", "Mango", "Uva", "Sandía", "Pera", "Kiwi", "Melón"};
-        String[] pre = {};
-        List<String> lista = Arrays.asList(pre);
         
-        SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(frutas, lista);
+        SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(hobbies, estudianteLogueado.getHobbies());
         JScrollPane scrollHobbies = new JScrollPane(hobbiesPanel);
         scrollHobbies.setBorder(null);
         scrollHobbies.setPreferredSize(new Dimension(500, 200));
@@ -316,11 +315,11 @@ public class EditarPerfilFrm extends JFrame {
 
             EstudianteDTO dto = new EstudianteDTO();
             estudianteLogueado.setHobbies(new HashSet<>(Arrays.asList("Cine", "Música"))); // ejemplo
-            //estudianteLogueado.setFotoBase64(Base64.getEncoder().encodeToString(fotoBytes));
+            estudianteLogueado.setFotoBase64(Base64.getEncoder().encodeToString(fotoBytes));
 
             // Convertir DTO a JSON
-            //Gson gson = new Gson();
-            //String jsonInput = gson.toJson(dto);
+            Gson gson = new Gson();
+            String jsonInput = gson.toJson(dto);
 
             HttpURLConnection conn = (HttpURLConnection) new URL(apiUrl).openConnection();
             conn.setRequestMethod("PUT");
@@ -328,8 +327,8 @@ public class EditarPerfilFrm extends JFrame {
             conn.setDoOutput(true);
 
             try (OutputStream os = conn.getOutputStream()) {
-                //byte[] input = jsonInput.getBytes("utf-8");
-              //  os.write(input, 0, input.length);
+                byte[] input = jsonInput.getBytes("utf-8");
+                os.write(input, 0, input.length);
             }
 
             int code = conn.getResponseCode();

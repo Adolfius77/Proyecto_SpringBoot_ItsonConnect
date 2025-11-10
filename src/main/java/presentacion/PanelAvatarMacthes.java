@@ -93,7 +93,7 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 0, 0, 0);
-        add(lblIntereses, gbc);
+        add(lblCarrera, gbc);
 
         // 4. Botón Mensaje (Columna 2)
         gbc.gridx = 2;
@@ -113,8 +113,8 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
 
-        lblIntereses.setFont(new Font("Arial", Font.BOLD, 14));
-        lblIntereses.setHorizontalAlignment(SwingConstants.CENTER);
+        lblCarrera.setFont(new Font("Arial", Font.BOLD, 14));
+        lblCarrera.setHorizontalAlignment(SwingConstants.CENTER);
 
         
         btnMensaje.setFont(new Font("Arial", Font.BOLD, 12));
@@ -137,10 +137,10 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
 
         Set<String> hobies = estudianteReceptor.getHobbies();
         if (hobies != null && !hobies.isEmpty()) {
-            lblIntereses.setText("Interes en comun: " + String.join(", ", hobies));
+            lblCarrera.setText("Interes en comun: " + String.join(", ", hobies));
 
         } else {
-            lblIntereses.setText("no hay interes en comun");
+            lblCarrera.setText("no hay interes en comun");
         }
 
         if (estudianteReceptor.getFotoBase64() != null && !estudianteReceptor.getFotoBase64().isEmpty()) {
@@ -230,11 +230,11 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     }
 
     public JLabel getLblNombre() {
-        return lblIntereses;
+        return lblCarrera;
     }
 
     public void setLblNombre(JLabel lblNombre) {
-        this.lblIntereses = lblNombre;
+        this.lblCarrera = lblNombre;
     }
 
     @Override
@@ -253,18 +253,19 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         lblFoto = new javax.swing.JLabel();
-        lblIntereses = new javax.swing.JLabel();
+        lblCarrera = new javax.swing.JLabel();
         btnMensaje = new presentacion.botonCircular();
         lblNombre1 = new javax.swing.JLabel();
+        lblIntereses1 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        lblIntereses.setBackground(new java.awt.Color(0, 0, 0));
-        lblIntereses.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
-        lblIntereses.setForeground(new java.awt.Color(0, 0, 0));
-        lblIntereses.setText("Intereses en comun");
+        lblCarrera.setBackground(new java.awt.Color(0, 0, 0));
+        lblCarrera.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
+        lblCarrera.setForeground(new java.awt.Color(0, 0, 0));
+        lblCarrera.setText("Carrera");
 
         btnMensaje.setBackground(new java.awt.Color(204, 204, 204));
         btnMensaje.setForeground(new java.awt.Color(0, 0, 0));
@@ -284,6 +285,11 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
         lblNombre1.setForeground(new java.awt.Color(0, 0, 0));
         lblNombre1.setText("Nombre Usuario");
 
+        lblIntereses1.setBackground(new java.awt.Color(0, 0, 0));
+        lblIntereses1.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
+        lblIntereses1.setForeground(new java.awt.Color(0, 0, 0));
+        lblIntereses1.setText("Intereses en comun");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -299,7 +305,9 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
                         .addComponent(btnMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(63, 63, 63))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblIntereses, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIntereses1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(165, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -309,12 +317,15 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombre1))
-                        .addGap(4, 4, 4)
-                        .addComponent(lblIntereses)
-                        .addGap(0, 18, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(lblNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblIntereses1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblCarrera)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -335,8 +346,9 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private presentacion.botonCircular btnMensaje;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblFoto;
-    private javax.swing.JLabel lblIntereses;
+    private javax.swing.JLabel lblIntereses1;
     private javax.swing.JLabel lblNombre1;
     // End of variables declaration//GEN-END:variables
 }

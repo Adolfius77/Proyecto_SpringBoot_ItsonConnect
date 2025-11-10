@@ -65,7 +65,7 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
     
 
     private void cargarDatos() {
-        lblNombreEstudiante.setText(this.nombreEstudiante);
+        lblCarrera.setText(this.nombreEstudiante);
         Set<String> hobbies = estudianteReceptor.getHobbies();
 
         if (hobbies != null && !hobbies.isEmpty()) {
@@ -153,18 +153,23 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         lblFoto = new javax.swing.JLabel();
-        lblNombreEstudiante = new javax.swing.JLabel();
+        lblCarrera = new javax.swing.JLabel();
         lblIntereseYhobies = new javax.swing.JLabel();
+        lblNombreEstudiante1 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblNombreEstudiante.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        lblNombreEstudiante.setForeground(new java.awt.Color(0, 0, 0));
-        lblNombreEstudiante.setText("Nombre estudiante");
+        lblCarrera.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        lblCarrera.setForeground(new java.awt.Color(0, 0, 0));
+        lblCarrera.setText("Carrera");
 
         lblIntereseYhobies.setFont(new java.awt.Font("SansSerif", 3, 13)); // NOI18N
         lblIntereseYhobies.setForeground(new java.awt.Color(0, 0, 0));
         lblIntereseYhobies.setText("Intereses y hobbies");
+
+        lblNombreEstudiante1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        lblNombreEstudiante1.setForeground(new java.awt.Color(0, 0, 0));
+        lblNombreEstudiante1.setText("Nombre estudiante");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -176,12 +181,15 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
                         .addGap(37, 37, 37)
                         .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
+                        .addGap(91, 91, 91)
+                        .addComponent(lblCarrera))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNombreEstudiante1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(lblIntereseYhobies))
-                            .addComponent(lblNombreEstudiante))))
+                                .addComponent(lblIntereseYhobies)))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -189,11 +197,13 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblNombreEstudiante)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblNombreEstudiante1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblIntereseYhobies)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCarrera)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -211,8 +221,9 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblIntereseYhobies;
-    private javax.swing.JLabel lblNombreEstudiante;
+    private javax.swing.JLabel lblNombreEstudiante1;
     // End of variables declaration//GEN-END:variables
 }

@@ -54,6 +54,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnMegusta" min="-2" pref="148" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="lblCarrera" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="69" max="32767" attributes="0"/>
               </Group>
@@ -65,9 +66,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="lblHobbys" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="lblCarrera" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnNoMeInteresa" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="btnMegusta" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -82,12 +85,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblNombre">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
+            <Property name="text" type="java.lang.String" value="Nombre"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblHobbys">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel2"/>
+            <Property name="text" type="java.lang.String" value="Hobbies"/>
           </Properties>
         </Component>
         <Component class="presentacion.botonCircular" name="btnNoMeInteresa">
@@ -137,6 +140,11 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="SansSerif" size="15" style="1"/>
             </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblCarrera">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Carrera"/>
           </Properties>
         </Component>
       </SubComponents>

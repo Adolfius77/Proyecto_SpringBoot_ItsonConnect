@@ -171,14 +171,15 @@ public class PersonasFrm extends javax.swing.JPanel {
         lblHobbys = new javax.swing.JLabel();
         btnNoMeInteresa = new presentacion.botonCircular();
         btnMegusta = new presentacion.botonCircular();
+        lblCarrera = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblNombre.setText("jLabel1");
+        lblNombre.setText("Nombre");
 
-        lblHobbys.setText("jLabel2");
+        lblHobbys.setText("Hobbies");
 
         btnNoMeInteresa.setForeground(new java.awt.Color(153, 0, 0));
         btnNoMeInteresa.setText("no me interesa");
@@ -197,6 +198,8 @@ public class PersonasFrm extends javax.swing.JPanel {
         btnMegusta.setColorOver(new java.awt.Color(51, 153, 255));
         btnMegusta.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
 
+        lblCarrera.setText("Carrera");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -210,7 +213,8 @@ public class PersonasFrm extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCarrera))
                 .addGap(0, 69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -219,9 +223,11 @@ public class PersonasFrm extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(lblNombre)
-                .addGap(44, 44, 44)
+                .addGap(18, 18, 18)
                 .addComponent(lblHobbys)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
+                .addComponent(lblCarrera)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -246,6 +252,7 @@ public class PersonasFrm extends javax.swing.JPanel {
     private presentacion.botonCircular btnNoMeInteresa;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblFotoPerfil;
     private javax.swing.JLabel lblHobbys;
     private javax.swing.JLabel lblNombre;

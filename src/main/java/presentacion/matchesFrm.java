@@ -62,7 +62,7 @@ public class matchesFrm extends javax.swing.JFrame {
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
-                String url = "http://localhost:8080/api/estudiantes/" + estudianteActual.getId() + "/matches";
+                String url = ConfigCliente.BASE_URL + "/api/estudiantes/" + estudianteActual.getId() + "/matches";
 
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))

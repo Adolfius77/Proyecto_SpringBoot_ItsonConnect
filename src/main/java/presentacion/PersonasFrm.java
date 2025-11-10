@@ -112,7 +112,7 @@ public class PersonasFrm extends javax.swing.JPanel {
             // 3. Crear cliente y petición HTTP
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/interacciones")) // Endpoint de InteraccionController
+                    .uri(URI.create(ConfigCliente.BASE_URL + "/api/interacciones")) // Endpoint de InteraccionController
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .header("Content-Type", "application/json")
                     .build();

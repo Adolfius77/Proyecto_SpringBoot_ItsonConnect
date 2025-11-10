@@ -131,7 +131,7 @@ public class chatFrm extends javax.swing.JFrame {
             //esto tranforma los objetos chatmesaje dto a json
             this.stompClient.setMessageConverter(new MappingJackson2MessageConverter());
             // URL del Endpoint definida en WebsocketConfig.java
-            String url = "http://localhost:8080/itson-connect-ws";
+            String url = ConfigCliente.WS_URL;
 
             this.stompSession = stompClient.connectAsync(url, new MyStompSessionHandler()).get();
 

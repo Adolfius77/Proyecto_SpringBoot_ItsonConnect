@@ -592,7 +592,7 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
             
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/estudiantes")) 
+                    .uri(URI.create(ConfigCliente.BASE_URL + "/api/estudiantes")) 
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .header("Content-Type", "application/json")
                     .build();

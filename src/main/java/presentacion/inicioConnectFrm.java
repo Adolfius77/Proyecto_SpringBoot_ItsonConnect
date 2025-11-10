@@ -69,7 +69,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
-                String url = "http://localhost:8080/api/estudiantes/descubrir?idActual=" + estudianteLogueado.getId() + "&limit=5";
+                String url = ConfigCliente.BASE_URL + "/api/estudiantes/descubrir?idActual=";
 
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))

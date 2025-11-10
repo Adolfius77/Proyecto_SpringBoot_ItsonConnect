@@ -303,7 +303,7 @@ public class IniciarSesionFrm extends javax.swing.JFrame {
             //  Crear cliente y petición HTTP al endpoint de login
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/estudiantes/login")) // endpoint de login
+                    .uri(URI.create(ConfigCliente.BASE_URL + "/api/estudiantes/login")) // endpoint de login
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .header("Content-Type", "application/json")
                     .build();

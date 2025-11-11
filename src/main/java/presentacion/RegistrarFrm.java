@@ -39,6 +39,12 @@ public class RegistrarFrm extends javax.swing.JFrame {
 
         txtCarrera.setEditable(false);
         txtCarrera.setText("Selecciona tu carrera...");
+        
+        btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCarreraActionPerformed(evt);
+            }
+        });
 
     }
 

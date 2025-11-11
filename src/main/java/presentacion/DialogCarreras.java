@@ -31,28 +31,29 @@ public class DialogCarreras extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DialogCarreras.class.getName());
 
-    // Cliente HTTP y JSON
+   
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    // Callback para devolver la selección
-    private final Consumer<String> onCarreraSeleccionada; // <-- ¡IMPORTANTE! Añade esta línea
+   
+    private final Consumer<String> onCarreraSeleccionada; 
 
     // Estado de paginación
     private int paginaActual = 0;
-    private int totalPaginas = 1; // Inicia en 1 para evitar división por cero
+    private int totalPaginas = 1; 
     private final int tamanoPagina = 10;
     private String filtroNombre = "";
+    
 
     private DefaultTableModel tableModel;
 
     public DialogCarreras(java.awt.Frame parent, Consumer<String> onCarreraSeleccionada) {
-        super(parent, true); // true = es modal
-        this.onCarreraSeleccionada = onCarreraSeleccionada; // Guarda la función
+        super(parent, true); 
+        this.onCarreraSeleccionada = onCarreraSeleccionada; 
         this.httpClient = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
 
-        initComponents(); // Esto carga los componentes del .form
+        initComponents(); 
 
         configurarTabla();
         cargarCarreras();
@@ -61,23 +62,32 @@ public class DialogCarreras extends javax.swing.JDialog {
     }
 
     private void configurarTabla() {
+     
         this.tableModel = (DefaultTableModel) tablaCarreras.getModel();
-
-        tableModel.setColumnIdentifiers(new Object[]{"ID", "Nombre"});
+        
+      
+        if (tableModel.getColumnCount() == 0) {
+             tableModel.addColumn("ID");
+             tableModel.addColumn("Nombre");
+        }
 
         tablaCarreras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+    
         tablaCarreras.getColumnModel().getColumn(0).setMinWidth(0);
         tablaCarreras.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaCarreras.getColumnModel().getColumn(0).setWidth(0);
 
+        
         tablaCarreras.getColumnModel().getColumn(1).setPreferredWidth(350);
 
+       
         tablaCarreras.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
-                    btnSeleccionar.doClick();
+                    
+                    btnSeleccionar.doClick(); 
                 }
             }
         });
@@ -453,11 +463,9 @@ public class DialogCarreras extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
-                DialogCarreras dialog = new DialogCarreras(new javax.swing.JFrame(), (carreraSeleccionada) -> {
-                    System.out.println("Prueba de main: Carrera seleccionada -> " + carreraSeleccionada);
+                DialogCarreras dialog = new DialogCarreras(new javax.swing.JFrame(), (carrera) -> {
+                    System.out.println("Prueba: Carrera seleccionada: " + carrera);
                 });
-
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

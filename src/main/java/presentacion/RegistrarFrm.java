@@ -39,51 +39,21 @@ public class RegistrarFrm extends javax.swing.JFrame {
     }
 
     private void inicializarCombos() {
+        cmbGenero.removeAllItems();
+        cmbCarreraa.removeAllItems();
+
         cmbGenero.addItem("Masculino");
         cmbGenero.addItem("Femenino");
         cmbGenero.addItem("Otro");
 
-        cmbCarreraa.removeAllItems();
-        // Licenciaturas
-        cmbCarreraa.addItem("Licenciatura en Administración");
-        cmbCarreraa.addItem("Licenciatura en Administración de Empresas Turísticas");
-        cmbCarreraa.addItem("Licenciatura en Administración Estratégica");
-        cmbCarreraa.addItem("Licenciatura en Arquitectura");
-        cmbCarreraa.addItem("Licenciatura en Ciencias de la Educación");
-        cmbCarreraa.addItem("Licenciatura en Ciencias del Ejercicio Físico");
-        cmbCarreraa.addItem("Licenciatura en Contaduría Pública");
-        cmbCarreraa.addItem("Licenciatura en Derecho");
-        cmbCarreraa.addItem("Licenciatura en Dirección de la Cultura Física y el Deporte");
-        cmbCarreraa.addItem("Licenciatura en Diseño Gráfico");
-        cmbCarreraa.addItem("Licenciatura en Economía y Finanzas");
-        cmbCarreraa.addItem("Licenciatura en Educación Artística y Gestión Cultural");
-        cmbCarreraa.addItem("Licenciatura en Educación Infantil");
-        cmbCarreraa.addItem("Licenciatura en Educación Inicial y Gestión de Instituciones");
-        cmbCarreraa.addItem("Licenciatura en Emprendimiento e Innovación");
-        cmbCarreraa.addItem("Licenciatura en Enfermería");
-        cmbCarreraa.addItem("Licenciatura en Gastronomía");
-        cmbCarreraa.addItem("Licenciatura en Mercadotecnia");
-        cmbCarreraa.addItem("Licenciatura en Psicología");
-        cmbCarreraa.addItem("Licenciatura en Tecnología de Alimentos");
-        cmbCarreraa.addItem("Medicina Veterinaria y Zootecnia");
+        cmbGenero.setSelectedIndex(0);
 
-        // Ingenierías
-        cmbCarreraa.addItem("Ingeniería en Biosistemas");
-        cmbCarreraa.addItem("Ingeniería en Biotecnología");
-        cmbCarreraa.addItem("Ingeniería en Ciencias Ambientales");
-        cmbCarreraa.addItem("Ingeniería Civil");
-        cmbCarreraa.addItem("Ingeniería Electromecánica");
-        cmbCarreraa.addItem("Ingeniería en Electrónica");
-        cmbCarreraa.addItem("Ingeniería Industrial y de Sistemas");
-        cmbCarreraa.addItem("Ingeniería en Logística");
-        cmbCarreraa.addItem("Ingeniería en Manufactura");
-        cmbCarreraa.addItem("Ingeniería en Mecatrónica");
-        cmbCarreraa.addItem("Ingeniería Química");
+        cmbCarreraa.addItem("Licenciatura en Administración");
         cmbCarreraa.addItem("Ingeniería en Software");
 
-        // Profesional Asociado
-        cmbCarreraa.addItem("Profesional Asociado en Automatización Industrial");
-        cmbCarreraa.addItem("Profesional Asociado en Desarrollo Infantil");
+        if (cmbCarreraa.getItemCount() > 0) {
+            cmbCarreraa.setSelectedIndex(0);
+        }
     }
 
     /**
@@ -445,11 +415,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Correo Institucional:");
 
-        cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hombre", "Mujer" }));
-
         jLabel15.setText("Carrera:");
-
-        cmbCarreraa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel16.setText("Genero:");
 
@@ -508,8 +474,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
                                         .addGap(30, 30, 30)
                                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cmbCarreraa, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(63, 63, 63))))))
+                                        .addComponent(cmbCarreraa, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnIniciarSesionLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(panelRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -563,20 +528,16 @@ public class RegistrarFrm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(panelRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(btnInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel15)
-                                    .addComponent(cmbCarreraa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel16))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15)
+                            .addComponent(cmbCarreraa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(btnInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20))
         );
 
@@ -636,7 +597,15 @@ public class RegistrarFrm extends javax.swing.JFrame {
             String correo = txtCorreoInstituto.getText();
             String password = new String(passConfirmarContra.getPassword());
             String confirmPass = new String(passConfirmarContra.getPassword());
+            
+            String generoSeleccionado = (cmbGenero.getSelectedItem() != null)
+                    ? cmbGenero.getSelectedItem().toString()
+                    : null;
 
+            String carreraSeleccionada = (cmbCarreraa.getSelectedItem() != null)
+                    ? cmbCarreraa.getSelectedItem().toString()
+                    : null;
+            
             if (nombre.isEmpty() || apPaterno.isEmpty() || correo.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nombre, Apellido Paterno, Correo y Contraseña son obligatorios.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -645,6 +614,15 @@ public class RegistrarFrm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (cmbGenero.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona un gnero.", "Validacion", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (cmbCarreraa.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona una carrera.", "Validacion", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             //partes de los hobbies y la foto
             Set<String> hobbiesSeleccionados = new HashSet<>();
             if (checkGaming.isSelected()) {
@@ -679,8 +657,8 @@ public class RegistrarFrm extends javax.swing.JFrame {
             nuevoEstudiante.setApMaterno(apMaterno);
             nuevoEstudiante.setCorreo(correo);
             nuevoEstudiante.setPassword(password);
-            nuevoEstudiante.setCarrera((String) cmbCarreraa.getSelectedItem());
-            nuevoEstudiante.setGenero((String) cmbGenero.getSelectedItem());
+            nuevoEstudiante.setCarrera(carreraSeleccionada);
+            nuevoEstudiante.setGenero(generoSeleccionado);
             nuevoEstudiante.setHobbies(hobbiesSeleccionados);
 
             //logica de la foto

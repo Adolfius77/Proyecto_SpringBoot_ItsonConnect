@@ -14,6 +14,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import javax.swing.JLabel;
@@ -30,6 +31,7 @@ public class matchesFrm extends javax.swing.JFrame {
     private EstudianteDTO estudianteActual;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(matchesFrm.class.getName());
+    private List<MatchDTO> listaCompletaDeMatches = new ArrayList<>();
 
     public matchesFrm() {
         initComponents();
@@ -146,7 +148,7 @@ public class matchesFrm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         paneldinamicoMatches = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        textFieldRedondo1 = new presentacion.TextFieldRedondo();
+        textFiedBuscarMatches = new presentacion.TextFieldRedondo();
         jButton1 = new javax.swing.JButton();
 
         btnBuscarEstudiantes3.setBackground(new java.awt.Color(102, 204, 255));
@@ -163,7 +165,6 @@ public class matchesFrm extends javax.swing.JFrame {
             }
         });
 
-        btnMensajes3.setForeground(new java.awt.Color(0, 0, 0));
         btnMensajes3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
         btnMensajes3.setText("Mensajes");
         btnMensajes3.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -176,7 +177,6 @@ public class matchesFrm extends javax.swing.JFrame {
             }
         });
 
-        btnPerfil1.setForeground(new java.awt.Color(0, 0, 0));
         btnPerfil1.setText("Cerrar sesion");
         btnPerfil1.setBorderColor(new java.awt.Color(255, 255, 255));
         btnPerfil1.setColorClick(new java.awt.Color(102, 204, 255));
@@ -210,7 +210,6 @@ public class matchesFrm extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(247, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnInicio3.setForeground(new java.awt.Color(0, 0, 0));
         btnInicio3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hogar.png"))); // NOI18N
         btnInicio3.setText("Inicio");
         btnInicio3.setBorderColor(new java.awt.Color(204, 255, 255));
@@ -223,7 +222,6 @@ public class matchesFrm extends javax.swing.JFrame {
             }
         });
 
-        btnMatches3.setForeground(new java.awt.Color(0, 0, 0));
         btnMatches3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/amigos-felices.png"))); // NOI18N
         btnMatches3.setText("Matches");
         btnMatches3.setBorderColor(new java.awt.Color(204, 255, 255));
@@ -236,7 +234,6 @@ public class matchesFrm extends javax.swing.JFrame {
             }
         });
 
-        btnPerfil3.setForeground(new java.awt.Color(0, 0, 0));
         btnPerfil3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/editar (2).png"))); // NOI18N
         btnPerfil3.setText("Perfil");
         btnPerfil3.setBorderColor(new java.awt.Color(204, 255, 255));
@@ -253,10 +250,8 @@ public class matchesFrm extends javax.swing.JFrame {
 
         lblNombreEstudiante.setBackground(new java.awt.Color(0, 0, 0));
         lblNombreEstudiante.setFont(new java.awt.Font("SansSerif", 3, 16)); // NOI18N
-        lblNombreEstudiante.setForeground(new java.awt.Color(0, 0, 0));
         lblNombreEstudiante.setText("Nombre estudiante");
 
-        btnCerrarSesion.setForeground(new java.awt.Color(0, 0, 0));
         btnCerrarSesion.setText("Cerrar sesion");
         btnCerrarSesion.setBorderColor(new java.awt.Color(204, 255, 255));
         btnCerrarSesion.setColorClick(new java.awt.Color(102, 204, 255));
@@ -347,8 +342,18 @@ public class matchesFrm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(paneldinamicoMatches);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Mis Macthes");
+
+        textFiedBuscarMatches.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFiedBuscarMatchesActionPerformed(evt);
+            }
+        });
+        textFiedBuscarMatches.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textFiedBuscarMatchesKeyReleased(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(30, 115, 179));
         jButton1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
@@ -373,7 +378,7 @@ public class matchesFrm extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(100, 100, 100)
-                                .addComponent(textFieldRedondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(textFiedBuscarMatches, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE))
                         .addContainerGap())))
         );
@@ -385,7 +390,7 @@ public class matchesFrm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textFieldRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textFiedBuscarMatches, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -485,6 +490,14 @@ public class matchesFrm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnBuscarEstudiantes1ActionPerformed
 
+    private void textFiedBuscarMatchesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFiedBuscarMatchesKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFiedBuscarMatchesKeyReleased
+
+    private void textFiedBuscarMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFiedBuscarMatchesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFiedBuscarMatchesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -539,6 +552,6 @@ public class matchesFrm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblNombreEstudiante;
     private javax.swing.JPanel paneldinamicoMatches;
-    private presentacion.TextFieldRedondo textFieldRedondo1;
+    private presentacion.TextFieldRedondo textFiedBuscarMatches;
     // End of variables declaration//GEN-END:variables
 }

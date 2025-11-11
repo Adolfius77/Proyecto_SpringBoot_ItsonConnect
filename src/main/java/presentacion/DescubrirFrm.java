@@ -18,7 +18,10 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import javax.swing.SwingUtilities;
 import org.springframework.boot.SpringApplication;
 
@@ -31,6 +34,9 @@ public class DescubrirFrm extends javax.swing.JFrame {
     private EstudianteDTO estudianteActual;
     private static ConfigurableApplicationContext context;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DescubrirFrm.class.getName());
+    private List<EstudianteDTO> listaCompletaEstudiantes = new ArrayList<>();
+    
+    
 
     /**
      * Creates new form DescubrirFrm
@@ -42,7 +48,9 @@ public class DescubrirFrm extends javax.swing.JFrame {
         initComponents();
         
         configurarVentana();
+        cargarCarrerasDelApi();
         cargarEstudiantes();
+        
         
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -50,6 +58,118 @@ public class DescubrirFrm extends javax.swing.JFrame {
         }
     });
     }
+    private void cargarCarrerasDelApi() {
+        // Asumimos que 'cmbCarreras' es el nombre de tu JComboBox
+        if (cmbCarreras == null) {
+            System.err.println("cmbCarreras es nulo.");
+            return;
+        }
+
+        // Añade "Todas" primero, ya que esto no vendrá de la API
+        cmbCarreras.addItem("Todas las Carreras");
+
+        // Añade el listener que filtra
+        cmbCarreras.addActionListener(e -> filtrarEstudiantes());
+
+        // --- Llama a la API en un hilo separado ---
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                // (Asumiendo que tienes ConfigCliente.BASE_URL)
+                String url = ConfigCliente.BASE_URL + "/api/carreras/nombres";
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .GET()
+                        .build();
+
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    // Deserializa la respuesta como una Lista de Strings
+                    List<String> nombresCarreras = objectMapper.readValue(response.body(), new TypeReference<List<String>>() {
+                    });
+
+                    // Actualiza la UI en el hilo de Swing
+                    SwingUtilities.invokeLater(() -> {
+                        for (String nombre : nombresCarreras) {
+                            cmbCarreras.addItem(nombre);
+                        }
+                    });
+                } else {
+                    // Maneja el error (ej. mostrar un JOptionPane)
+                    System.err.println("Error al cargar carreras: " + response.body());
+                }
+            } catch (Exception e) {
+                // Maneja el error de conexión
+                System.err.println("Excepción al cargar carreras: " + e.getMessage());
+            }
+        });
+    }
+    
+    private void filtrarEstudiantes() {
+        // 1. Obtiene la carrera seleccionada
+        String carreraSeleccionada = (String) cmbCarreras.getSelectedItem();
+
+        List<EstudianteDTO> estudiantesFiltrados;
+
+        // 2. Si es "Todas", usa la lista completa
+        if (carreraSeleccionada == null || carreraSeleccionada.equals("Todas las Carreras")) {
+            estudiantesFiltrados = new ArrayList<>(this.listaCompletaEstudiantes);
+        } else {
+            // 3. --- ¡ESTA ES LA LÍNEA CORREGIDA! ---
+            // Filtra usando una comparación "segura" que evita 'nulls'
+
+            estudiantesFiltrados = this.listaCompletaEstudiantes.stream()
+                    .filter(estudiante -> {
+                        // Primero nos aseguramos que el estudiante SÍ TENGA una carrera
+                        if (estudiante.getCarrera() == null) {
+                            return false; // Si es nula, no puede coincidir
+                        }
+                        // Si no es nula, hacemos la comparación
+                        return estudiante.getCarrera().equals(carreraSeleccionada);
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        // 4. Llama al método que dibuja las tarjetas
+        mostrarEstudiantes(estudiantesFiltrados);
+    }
+    
+    private void mostrarEstudiantes(List<EstudianteDTO> estudiantesAMostrar) {
+        
+        // 1. Define la acción de eliminación (Callback)
+        Consumer<PersonasFrm> funcionDeEliminacion = (tarjetaParaEliminar) -> {
+            SwingUtilities.invokeLater(() -> {
+                // Elimina de la UI
+                panelDinamico.remove(tarjetaParaEliminar);
+                panelDinamico.revalidate();
+                panelDinamico.repaint();
+                
+                // Opcional: También elimina de la lista en memoria
+                this.listaCompletaEstudiantes.remove(tarjetaParaEliminar.getEstudianteDTO()); // <-- Necesitarías un getter en PersonasFrm
+            });
+        };
+
+        // 2. Limpia el panel
+        panelDinamico.removeAll();
+
+        // 3. Crea y añade las tarjetas filtradas
+        for (EstudianteDTO dto : estudiantesAMostrar) {
+            PersonasFrm card = new PersonasFrm(
+                    estudianteActual.getId(), 
+                    dto, 
+                    funcionDeEliminacion
+            );
+            panelDinamico.add(card);
+        }
+
+        // 4. Refresca la UI
+        panelDinamico.revalidate();
+        panelDinamico.repaint();
+    }
+    
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {                                      
         if (this.estudianteActual == null) {
             JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -183,6 +303,8 @@ public class DescubrirFrm extends javax.swing.JFrame {
         scrollpanel = new javax.swing.JScrollPane();
         panelDinamico = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cmbCarreras = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -241,6 +363,8 @@ public class DescubrirFrm extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setText("Conectate con otros estudiantes del ITSON que comparten tus mismo intereses");
 
+        jLabel3.setText("Filtrar por:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -249,7 +373,12 @@ public class DescubrirFrm extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
@@ -259,10 +388,13 @@ public class DescubrirFrm extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(scrollpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(30, 115, 179));
@@ -367,9 +499,11 @@ public class DescubrirFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbCarreras;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

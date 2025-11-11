@@ -1,9 +1,12 @@
 package controller;
 
 import dto.CarreraDTO; 
+import java.util.List;
+import java.util.stream.Collectors;
 import model.Carrera;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +40,19 @@ public class CarreraController {
         Page<CarreraDTO> paginaDTOs = paginaCarreras.map(this::toDTO);
         
         return ResponseEntity.ok(paginaDTOs);
+    }
+    
+    @GetMapping("/nombres")
+    public ResponseEntity<List<String>> obtenerNombresCarreras() {
+        // Pedimos todas las carreras 
+        Pageable pageable = PageRequest.of(0, 100); 
+        Page<Carrera> carrerasPage = carreraService.listarCarreras(null, pageable);
+        
+        // Convertimos la lista de Carrera a una lista de String (solo nombres)
+        List<String> nombres = carrerasPage.getContent().stream()
+                .map(Carrera::getNombre)
+                .collect(Collectors.toList());
+        
+        return ResponseEntity.ok(nombres);
     }
 }

@@ -32,6 +32,7 @@ public class PersonasFrm extends javax.swing.JPanel {
     private Long receptorId;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PersonasFrm.class.getName());
     private Consumer<PersonasFrm> alFinalizarAccion;//consumer
+    private EstudianteDTO estudianteDTO;
 
     /**
      * Creates new form PersonasFrm
@@ -45,7 +46,6 @@ public class PersonasFrm extends javax.swing.JPanel {
         initComponents();
 
         this.emisorId = emisorId;
-        this.receptorId = receptorDto.getId();
 
         setFoto(receptorDto.getFotoBase64());
 
@@ -62,7 +62,11 @@ public class PersonasFrm extends javax.swing.JPanel {
         btnMegusta.addActionListener(e -> enviarInteraccion("LIKE"));
         btnNoMeInteresa.addActionListener(e -> enviarInteraccion("PASS"));
         this.alFinalizarAccion = callback;
-
+        this.estudianteDTO = receptorDto;
+    }
+    
+    public EstudianteDTO getEstudianteDTO() {
+        return this.estudianteDTO;
     }
 
     private void setFoto(String fotoBase64) {

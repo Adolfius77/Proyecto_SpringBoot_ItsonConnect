@@ -28,12 +28,62 @@ import static org.hibernate.internal.HEMLogging.logger;
  * @author USER
  */
 public class RegistrarFrm extends javax.swing.JFrame {
-private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistrarFrm.class.getName());
+
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistrarFrm.class.getName());
     private byte[] fotoBytes;
-    
+
     public RegistrarFrm() {
         initComponents();
+        inicializarCombos();
         setLocationRelativeTo(null);
+    }
+
+    private void inicializarCombos() {
+        cmbGenero.addItem("Masculino");
+        cmbGenero.addItem("Femenino");
+        cmbGenero.addItem("Otro");
+
+        cmbCarreraa.removeAllItems();
+        // Licenciaturas
+        cmbCarreraa.addItem("Licenciatura en Administración");
+        cmbCarreraa.addItem("Licenciatura en Administración de Empresas Turísticas");
+        cmbCarreraa.addItem("Licenciatura en Administración Estratégica");
+        cmbCarreraa.addItem("Licenciatura en Arquitectura");
+        cmbCarreraa.addItem("Licenciatura en Ciencias de la Educación");
+        cmbCarreraa.addItem("Licenciatura en Ciencias del Ejercicio Físico");
+        cmbCarreraa.addItem("Licenciatura en Contaduría Pública");
+        cmbCarreraa.addItem("Licenciatura en Derecho");
+        cmbCarreraa.addItem("Licenciatura en Dirección de la Cultura Física y el Deporte");
+        cmbCarreraa.addItem("Licenciatura en Diseño Gráfico");
+        cmbCarreraa.addItem("Licenciatura en Economía y Finanzas");
+        cmbCarreraa.addItem("Licenciatura en Educación Artística y Gestión Cultural");
+        cmbCarreraa.addItem("Licenciatura en Educación Infantil");
+        cmbCarreraa.addItem("Licenciatura en Educación Inicial y Gestión de Instituciones");
+        cmbCarreraa.addItem("Licenciatura en Emprendimiento e Innovación");
+        cmbCarreraa.addItem("Licenciatura en Enfermería");
+        cmbCarreraa.addItem("Licenciatura en Gastronomía");
+        cmbCarreraa.addItem("Licenciatura en Mercadotecnia");
+        cmbCarreraa.addItem("Licenciatura en Psicología");
+        cmbCarreraa.addItem("Licenciatura en Tecnología de Alimentos");
+        cmbCarreraa.addItem("Medicina Veterinaria y Zootecnia");
+
+        // Ingenierías
+        cmbCarreraa.addItem("Ingeniería en Biosistemas");
+        cmbCarreraa.addItem("Ingeniería en Biotecnología");
+        cmbCarreraa.addItem("Ingeniería en Ciencias Ambientales");
+        cmbCarreraa.addItem("Ingeniería Civil");
+        cmbCarreraa.addItem("Ingeniería Electromecánica");
+        cmbCarreraa.addItem("Ingeniería en Electrónica");
+        cmbCarreraa.addItem("Ingeniería Industrial y de Sistemas");
+        cmbCarreraa.addItem("Ingeniería en Logística");
+        cmbCarreraa.addItem("Ingeniería en Manufactura");
+        cmbCarreraa.addItem("Ingeniería en Mecatrónica");
+        cmbCarreraa.addItem("Ingeniería Química");
+        cmbCarreraa.addItem("Ingeniería en Software");
+
+        // Profesional Asociado
+        cmbCarreraa.addItem("Profesional Asociado en Automatización Industrial");
+        cmbCarreraa.addItem("Profesional Asociado en Desarrollo Infantil");
     }
 
     /**
@@ -586,7 +636,7 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
             String correo = txtCorreoInstituto.getText();
             String password = new String(passConfirmarContra.getPassword());
             String confirmPass = new String(passConfirmarContra.getPassword());
-            
+
             if (nombre.isEmpty() || apPaterno.isEmpty() || correo.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nombre, Apellido Paterno, Correo y Contraseña son obligatorios.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -596,16 +646,32 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
                 return;
             }
             //partes de los hobbies y la foto
-            Set<String>hobbiesSeleccionados = new HashSet<>();
-           if (checkGaming.isSelected()) hobbiesSeleccionados.add("Gaming");
-            if (checkMusica.isSelected()) hobbiesSeleccionados.add("Musica");
-            if (checkDeportes.isSelected()) hobbiesSeleccionados.add("Deportes");
-            if (checkPeliculas.isSelected()) hobbiesSeleccionados.add("Peliculas");
-            if (checkViajes.isSelected()) hobbiesSeleccionados.add("Viajes");
-            if (checkLectura.isSelected()) hobbiesSeleccionados.add("Lectura");
-            if (checkCantar.isSelected()) hobbiesSeleccionados.add("Cantar");
-            if (chekCodificar.isSelected()) hobbiesSeleccionados.add("Codificar");
-         
+            Set<String> hobbiesSeleccionados = new HashSet<>();
+            if (checkGaming.isSelected()) {
+                hobbiesSeleccionados.add("Gaming");
+            }
+            if (checkMusica.isSelected()) {
+                hobbiesSeleccionados.add("Musica");
+            }
+            if (checkDeportes.isSelected()) {
+                hobbiesSeleccionados.add("Deportes");
+            }
+            if (checkPeliculas.isSelected()) {
+                hobbiesSeleccionados.add("Peliculas");
+            }
+            if (checkViajes.isSelected()) {
+                hobbiesSeleccionados.add("Viajes");
+            }
+            if (checkLectura.isSelected()) {
+                hobbiesSeleccionados.add("Lectura");
+            }
+            if (checkCantar.isSelected()) {
+                hobbiesSeleccionados.add("Cantar");
+            }
+            if (chekCodificar.isSelected()) {
+                hobbiesSeleccionados.add("Codificar");
+            }
+
             //aqui crea los dto y los convierte a json
             EstudianteDTO nuevoEstudiante = new EstudianteDTO();
             nuevoEstudiante.setNombre(nombre);
@@ -613,34 +679,33 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
             nuevoEstudiante.setApMaterno(apMaterno);
             nuevoEstudiante.setCorreo(correo);
             nuevoEstudiante.setPassword(password);
-            
+            nuevoEstudiante.setCarrera((String) cmbCarreraa.getSelectedItem());
+            nuevoEstudiante.setGenero((String) cmbGenero.getSelectedItem());
             nuevoEstudiante.setHobbies(hobbiesSeleccionados);
-            
+
             //logica de la foto
-            if(this.fotoBytes != null){
+            if (this.fotoBytes != null) {
                 nuevoEstudiante.setFotoBase64(Base64.getEncoder().encodeToString(this.fotoBytes));
             }
-            
-            
-            
+
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = objectMapper.writeValueAsString(nuevoEstudiante);
-            
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(ConfigCliente.BASE_URL + "/api/estudiantes")) 
+                    .uri(URI.create(ConfigCliente.BASE_URL + "/api/estudiantes"))
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .header("Content-Type", "application/json")
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            
-            if(response.statusCode()== 201){ //201 significa creado
+
+            if (response.statusCode() == 201) { //201 significa creado
                 JOptionPane.showMessageDialog(this, "¡Cuenta creada exitosamente! Ahora inicia sesion.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 IniciarSesionFrm loginFrm = new IniciarSesionFrm();
                 loginFrm.setVisible(true);
                 this.dispose();
-            }else{
+            } else {
                 String errorMessage = response.body();
                 JOptionPane.showMessageDialog(this, "Error: " + errorMessage, "Fallo de Registro", JOptionPane.ERROR_MESSAGE);
             }
@@ -651,8 +716,8 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     private void btnAgregarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFotoActionPerformed
-       JFileChooser fileChooser = new JFileChooser();
-        
+        JFileChooser fileChooser = new JFileChooser();
+
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes (JPG, PNG, GIF)", "jpg", "png", "gif");
         fileChooser.setFileFilter(filter);
 
@@ -661,22 +726,20 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
         if (resultado == JFileChooser.APPROVE_OPTION) {
             try {
                 File archivoSeleccionado = fileChooser.getSelectedFile();
-                
-             
+
                 this.fotoBytes = Files.readAllBytes(archivoSeleccionado.toPath());
-                
-          
+
                 ImageIcon icon = new ImageIcon(archivoSeleccionado.getAbsolutePath());
-               
+
                 Image imagen = icon.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH);
                 lblImagen.setIcon(new ImageIcon(imagen));
-                
+
                 JOptionPane.showMessageDialog(this, "Foto cargada exitosamente.");
-                
+
             } catch (Exception e) {
                 logger.log(java.util.logging.Level.SEVERE, "Error al leer la imagen", e);
                 JOptionPane.showMessageDialog(this, "Error al cargar la foto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                this.fotoBytes = null; 
+                this.fotoBytes = null;
             }
         }
     }//GEN-LAST:event_btnAgregarFotoActionPerformed

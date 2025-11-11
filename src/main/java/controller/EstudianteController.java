@@ -1,27 +1,17 @@
 package controller;
 
 import dto.EstudianteDTO;
+import dto.MatchDTO;
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import model.Estudiante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.IEstudianteService;
-import java.util.Base64;
-import java.util.Set;
-import java.util.stream.Collectors;
-import dto.MatchDTO;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
-import model.Hobby;
-import model.HobbyEstudiante;
-import service.IHobbyService;
 import service.impl.EstudianteServiceImpl;
-
 
 /**
  *
@@ -32,7 +22,7 @@ import service.impl.EstudianteServiceImpl;
 public class EstudianteController {
 
     private final EstudianteServiceImpl estudianteService;
-    
+
     @Autowired
     public EstudianteController(EstudianteServiceImpl estudianteService) {
         this.estudianteService = estudianteService;
@@ -51,6 +41,18 @@ public class EstudianteController {
         dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
         dto.setCarrera(e.getCarrera());
         dto.setGenero(e.getGenero());
+
+        if (e.getFoto() != null) {
+            dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
+        }
+
+        if (e.getHobbies() != null) {
+            Set<String> hobbyNombres = e.getHobbies().stream()
+                    .map(hobbyEstudiante -> hobbyEstudiante.getHobby().getNombre())
+                    .collect(Collectors.toSet());
+            dto.setHobbies(hobbyNombres);
+        }
+
         return dto;
     }
 
@@ -66,15 +68,10 @@ public class EstudianteController {
         e.setCorreo(dto.getCorreo());
         e.setPassword(dto.getPassword());
         e.setCarrera(dto.getCarrera());
-        e.setGenero(e.getGenero());
+        e.setGenero(dto.getGenero());
         return e;
     }
 
-    // --- ENDPOINTS PÚBLICOS DEL API ---
-
-    /**
-     * Obtiene todos los estudiantes con un límite.
-     */
     @GetMapping
     public List<EstudianteDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
         return estudianteService.listarEstudiantes(limit)
@@ -83,39 +80,40 @@ public class EstudianteController {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Obtiene un estudiante por su ID.
-     * Devuelve 200 OK o 404 Not Found.
-     */
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
         Estudiante e = estudianteService.obtenerEstudiante(id);
         if (e == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                 .body("Estudiante no encontrado con id: " + id);
+                    .body("Estudiante no encontrado con id: " + id);
         }
         return ResponseEntity.ok(toDTO(e));
     }
 
-    /**
-     * Registra un nuevo estudiante.
-     * Devuelve 201 Created o 400 Bad Request.
-     */
     @PostMapping
     public ResponseEntity<?> registrar(@RequestBody EstudianteDTO dto) {
         try {
-            Estudiante e = estudianteService.crearEstudiante(toEntity(dto), dto.getHobbies());
-            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(e));
-        } catch (Exception e) {
-            // Esto atrapa el error si el correo ya existe
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            Estudiante e = toEntity(dto);
+
+          
+            if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) {
+                try {
+                    byte[] fotoBytes = Base64.getDecoder().decode(dto.getFotoBase64());
+                    e.setFoto(fotoBytes);
+                } catch (IllegalArgumentException ex) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Formato de foto Base64 inválido.");
+                }
+            }
+
+            Estudiante estudianteGuardado = estudianteService.crearEstudiante(e, dto.getHobbies());
+            
+            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(estudianteGuardado));
+            
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
-    /**
-     * Actualiza un estudiante existente por ID.
-     * Devuelve 200 OK o 404 Not Found.
-     */
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody EstudianteDTO dto) {
         try {
@@ -123,44 +121,77 @@ public class EstudianteController {
             Estudiante e = estudianteService.actualizarEstudiante(toEntity(dto), dto.getHobbies());
             return ResponseEntity.ok(toDTO(e));
         } catch (Exception e) {
-            // Esto atrapa el error si el estudiante no existe
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    /**
-     * Elimina un estudiante por ID.
-     * Devuelve 204 No Content o 404 Not Found.
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             estudianteService.eliminarEstudiante(id);
-            // 204 No Content es la respuesta estándar para un DELETE exitoso
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    /**
-     * Endpoint de Login.
-     * Devuelve 200 OK o 401 Unauthorized.
-     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody EstudianteDTO dto) {
         try {
-            // Llama al método de login eficiente del servicio
             Estudiante e = estudianteService.login(dto.getCorreo(), dto.getPassword());
             return ResponseEntity.ok(toDTO(e));
         } catch (Exception e) {
-            // Devuelve 401 No Autorizado si las credenciales son incorrectas
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+
+    @GetMapping("/descubrir")
+    public ResponseEntity<?> descubrirEstudiantes(
+            @RequestParam Long idActual,
+            @RequestParam(defaultValue = "20") int limit) {
+
+        if (idActual == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El parametro 'idActual' es obligatorio.");
+        }
+
+        try {
+            List<Estudiante> estudiantes = estudianteService.descubrirEstudiantes(idActual, limit);
+            List<EstudianteDTO> dtos = estudiantes.stream()
+                    .map(this::toDTO) // Usa el toDTO completo
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(dtos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno al buscar estudiantes: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/{id}/matches")
-    public List<dto.MatchDTO> obtenerMatches(@PathVariable Long id) {
-       
-        return java.util.Collections.emptyList(); 
+    public ResponseEntity<?> obtenerMatches(@PathVariable Long id) {
+        try {
+            List<model.Match> matches = estudianteService.obtenerMatchesPorEstudiante(id);
+
+            List<MatchDTO> matchDTOs = matches.stream()
+                    .map(match -> {
+                        MatchDTO dto = new MatchDTO();
+                        dto.setId(match.getId());
+                        dto.setFecha(match.getFecha() != null ? match.getFecha().toString() : null);
+
+                        // Convertir los participantes de cada match a DTO
+                        List<EstudianteDTO> participantesDTO = match.getParticipantes().stream()
+                                .map(p -> toDTO(p.getEstudiante())) // Usa el toDTO completo
+                                .collect(Collectors.toList());
+                        dto.setParticipantes(participantesDTO);
+
+                        return dto;
+                    })
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(matchDTOs);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al cargar matches: " + e.getMessage());
+        }
     }
 }

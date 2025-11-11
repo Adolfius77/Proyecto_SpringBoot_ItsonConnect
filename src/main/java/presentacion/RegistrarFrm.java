@@ -46,7 +46,9 @@ public class RegistrarFrm extends javax.swing.JFrame {
         cmbGenero.addItem("Femenino");
         cmbGenero.addItem("Otro");
 
-        cmbGenero.setSelectedIndex(0);
+        if (cmbGenero.getItemCount() > 0) {
+            cmbGenero.setSelectedIndex(0);
+        }
 
         cmbCarreraa.addItem("Licenciatura en Administración");
         cmbCarreraa.addItem("Ingeniería en Software");
@@ -591,13 +593,13 @@ public class RegistrarFrm extends javax.swing.JFrame {
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
         try {
-            String nombre = txtNombre.getText();
-            String apPaterno = txtApellidoPaterno.getText();
-            String apMaterno = txtApellidoMaterno.getText();
-            String correo = txtCorreoInstituto.getText();
-            String password = new String(passConfirmarContra.getPassword());
+            String nombre = txtNombre.getText().trim();
+            String apPaterno = txtApellidoPaterno.getText().trim();
+            String apMaterno = txtApellidoMaterno.getText().trim();
+            String correo = txtCorreoInstituto.getText().trim();
+            String password = new String(passContresena.getPassword());
             String confirmPass = new String(passConfirmarContra.getPassword());
-            
+
             String generoSeleccionado = (cmbGenero.getSelectedItem() != null)
                     ? cmbGenero.getSelectedItem().toString()
                     : null;
@@ -605,25 +607,27 @@ public class RegistrarFrm extends javax.swing.JFrame {
             String carreraSeleccionada = (cmbCarreraa.getSelectedItem() != null)
                     ? cmbCarreraa.getSelectedItem().toString()
                     : null;
-            
+
             if (nombre.isEmpty() || apPaterno.isEmpty() || correo.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Nombre, Apellido Paterno, Correo y Contraseña son obligatorios.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (!password.equals(confirmPass)) {
-                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error de Validacion", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (cmbGenero.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this, "Por favor, selecciona un gnero.", "Validacion", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            if (cmbCarreraa.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this, "Por favor, selecciona una carrera.", "Validacion", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Nombre, Apellido Paterno, Correo y Contraseña son obligatorios.", "Validación", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            //partes de los hobbies y la foto
+            if (!password.equals(confirmPass)) {
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Validación", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (generoSeleccionado == null || generoSeleccionado.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona un género.", "Validación", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (carreraSeleccionada == null || carreraSeleccionada.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona una carrera.", "Validación", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             Set<String> hobbiesSeleccionados = new HashSet<>();
             if (checkGaming.isSelected()) {
                 hobbiesSeleccionados.add("Gaming");
@@ -650,7 +654,6 @@ public class RegistrarFrm extends javax.swing.JFrame {
                 hobbiesSeleccionados.add("Codificar");
             }
 
-            //aqui crea los dto y los convierte a json
             EstudianteDTO nuevoEstudiante = new EstudianteDTO();
             nuevoEstudiante.setNombre(nombre);
             nuevoEstudiante.setApPaterno(apPaterno);
@@ -661,7 +664,6 @@ public class RegistrarFrm extends javax.swing.JFrame {
             nuevoEstudiante.setGenero(generoSeleccionado);
             nuevoEstudiante.setHobbies(hobbiesSeleccionados);
 
-            //logica de la foto
             if (this.fotoBytes != null) {
                 nuevoEstudiante.setFotoBase64(Base64.getEncoder().encodeToString(this.fotoBytes));
             }
@@ -669,27 +671,28 @@ public class RegistrarFrm extends javax.swing.JFrame {
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = objectMapper.writeValueAsString(nuevoEstudiante);
 
+            System.out.println("Enviando JSON: " + requestBody);
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(ConfigCliente.BASE_URL + "/api/estudiantes"))
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .header("Content-Type", "application/json")
                     .build();
+
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() == 201) { //201 significa creado
-                JOptionPane.showMessageDialog(this, "¡Cuenta creada exitosamente! Ahora inicia sesion.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
-
-                IniciarSesionFrm loginFrm = new IniciarSesionFrm();
-                loginFrm.setVisible(true);
+            if (response.statusCode() == 201) {
+                JOptionPane.showMessageDialog(this, "¡Cuenta creada exitosamente! Ahora inicia sesión.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                new IniciarSesionFrm().setVisible(true);
                 this.dispose();
             } else {
-                String errorMessage = response.body();
-                JOptionPane.showMessageDialog(this, "Error: " + errorMessage, "Fallo de Registro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al registrar: " + response.body(), "Error del Servidor", JOptionPane.ERROR_MESSAGE);
             }
+
         } catch (Exception e) {
-            logger.log(java.util.logging.Level.SEVERE, "Error al registrar", e);
-            JOptionPane.showMessageDialog(this, "Error de conexion con el servidor: " + e.getMessage(), "Error de Conexion", JOptionPane.ERROR_MESSAGE);
+            logger.log(java.util.logging.Level.SEVERE, "Excepción al registrar", e);
+            JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 

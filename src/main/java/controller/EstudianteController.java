@@ -49,6 +49,8 @@ public class EstudianteController {
         dto.setApMaterno(e.getApMaterno());
         dto.setCorreo(e.getCorreo());
         dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
+        dto.setCarrera(e.getCarrera());
+        dto.setGenero(e.getGenero());
         return dto;
     }
 
@@ -63,6 +65,8 @@ public class EstudianteController {
         e.setApMaterno(dto.getApMaterno());
         e.setCorreo(dto.getCorreo());
         e.setPassword(dto.getPassword());
+        e.setCarrera(dto.getCarrera());
+        e.setGenero(e.getGenero());
         return e;
     }
 

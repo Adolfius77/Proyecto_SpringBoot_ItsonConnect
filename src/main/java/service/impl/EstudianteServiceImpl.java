@@ -126,6 +126,8 @@ public class EstudianteServiceImpl implements IEstudianteService {
         existente.setNombre(estudiante.getNombre());
         existente.setApPaterno(estudiante.getApPaterno());
         existente.setApMaterno(estudiante.getApMaterno());
+        existente.setCarrera(estudiante.getCarrera());
+        existente.setGenero(estudiante.getGenero());
 
         if (estudiante.getFoto() != null && estudiante.getFoto().length > 0) {
             existente.setFoto(estudiante.getFoto());

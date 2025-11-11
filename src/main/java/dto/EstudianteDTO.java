@@ -11,6 +11,7 @@ import java.util.Set;
  * @author jorge
  */
 public class EstudianteDTO {
+
     private Long id;
     private String nombre;
     private String apPaterno;
@@ -20,12 +21,13 @@ public class EstudianteDTO {
     private String fechaRegistro;
     private String fotoBase64;
     private Set<String> hobbies;
-    
+    private String carrera;
+    private String genero;
 
     public EstudianteDTO() {
     }
 
-    public EstudianteDTO(Long id, String nombre, String apPaterno, String apMaterno, String correo, String password, String fechaRegistro, String fotoBase64, Set<String> hobbies) {
+    public EstudianteDTO(Long id, String nombre, String apPaterno, String apMaterno, String correo, String password, String fechaRegistro, String fotoBase64, Set<String> hobbies, String carrera, String genero) {
         this.id = id;
         this.nombre = nombre;
         this.apPaterno = apPaterno;
@@ -35,6 +37,8 @@ public class EstudianteDTO {
         this.fechaRegistro = fechaRegistro;
         this.fotoBase64 = fotoBase64;
         this.hobbies = hobbies;
+        this.carrera = carrera;
+        this.genero = genero;
     }
 
     public Long getId() {
@@ -109,11 +113,25 @@ public class EstudianteDTO {
         this.hobbies = hobbies;
     }
 
-    @Override
-    public String toString() {
-        return "EstudianteDTO{" + "id=" + id + ", nombre=" + nombre + ", apPaterno=" + apPaterno + ", apMaterno=" + apMaterno + ", correo=" + correo + ", password=" + password + ", fechaRegistro=" + fechaRegistro + ", fotoBase64=" + fotoBase64 + ", hobbies=" + hobbies + '}';
+    public String getCarrera() {
+        return carrera;
     }
 
-    
-    
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    @Override
+    public String toString() {
+        return "EstudianteDTO{" + "id=" + id + ", nombre=" + nombre + ", apPaterno=" + apPaterno + ", apMaterno=" + apMaterno + ", correo=" + correo + ", password=" + password + ", fechaRegistro=" + fechaRegistro + ", fotoBase64=" + fotoBase64 + ", hobbies=" + hobbies + ", carrera=" + carrera + ", genero=" + genero + '}';
+    }
+
 }

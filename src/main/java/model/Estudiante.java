@@ -28,6 +28,12 @@ public class Estudiante implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "carrera", nullable = false)
+    private String carrera;
+    
+    @Column(name = "genero", nullable = false)
+    private String genero;
+    
     @Column(name = "fecha_registro", nullable = false)
     private Date fechaRegistro;
 
@@ -50,8 +56,6 @@ public class Estudiante implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "foto", columnDefinition = "LONGBLOB")
     private byte[] foto;
-    
-    
 
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
     private Set<Interaccion> interaccionesEnviadas;
@@ -71,12 +75,10 @@ public class Estudiante implements Serializable {
     public Estudiante() {
     }
 
-    public Estudiante(Long id) {
+    public Estudiante(Long id, String carrera, String genero, Date fechaRegistro, String nombre, String apPaterno, String apMaterno, String correo, String password, byte[] foto, Set<Interaccion> interaccionesEnviadas, Set<Interaccion> interaccionesRecibidas, Set<HobbyEstudiante> hobbies, Set<MatchEstudiante> matchEstudiantes, Set<Mensaje> mensajesEnviados) {
         this.id = id;
-    }
-
-    public Estudiante(Long id, Date fechaRegistro, String nombre, String apPaterno, String apMaterno, String correo, String password, byte[] foto /*, otros sets si los necesitas inicializar */) {
-        this.id = id;
+        this.carrera = carrera;
+        this.genero = genero;
         this.fechaRegistro = fechaRegistro;
         this.nombre = nombre;
         this.apPaterno = apPaterno;
@@ -84,11 +86,11 @@ public class Estudiante implements Serializable {
         this.correo = correo;
         this.password = password;
         this.foto = foto;
-        this.interaccionesEnviadas = new HashSet<>();
-        this.interaccionesRecibidas = new HashSet<>();
-        this.hobbies = new HashSet<>();
-        this.matchEstudiantes = new HashSet<>();
-        this.mensajesEnviados = new HashSet<>();
+        this.interaccionesEnviadas = interaccionesEnviadas;
+        this.interaccionesRecibidas = interaccionesRecibidas;
+        this.hobbies = hobbies;
+        this.matchEstudiantes = matchEstudiantes;
+        this.mensajesEnviados = mensajesEnviados;
     }
 
     public Long getId() {
@@ -97,6 +99,22 @@ public class Estudiante implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public Date getFechaRegistro() {
@@ -196,29 +214,11 @@ public class Estudiante implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Estudiante that = (Estudiante) obj;
-        return id != null && id.equals(that.id);
-    }
-
-    @Override
     public String toString() {
-        return "Estudiante{"
-                + "id=" + id
-                + ", nombre='" + nombre + '\''
-                + ", correo='" + correo + '\''
-                + 
-                '}';
+        return "Estudiante{" + "id=" + id + ", carrera=" + carrera + ", genero=" + genero + ", fechaRegistro=" + fechaRegistro + ", nombre=" + nombre + ", apPaterno=" + apPaterno + ", apMaterno=" + apMaterno + ", correo=" + correo + ", password=" + password + ", foto=" + foto + ", interaccionesEnviadas=" + interaccionesEnviadas + ", interaccionesRecibidas=" + interaccionesRecibidas + ", hobbies=" + hobbies + ", matchEstudiantes=" + matchEstudiantes + ", mensajesEnviados=" + mensajesEnviados + '}';
     }
+    
+    
+
+    
 }

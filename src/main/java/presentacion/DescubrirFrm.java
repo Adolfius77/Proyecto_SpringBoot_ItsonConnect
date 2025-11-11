@@ -19,6 +19,7 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
         initComponents();
         
         configurarVentana();
-        cargarCarrerasDelApi();
+        configurarComboBox();
         cargarEstudiantes();
         
         
@@ -58,82 +59,41 @@ public class DescubrirFrm extends javax.swing.JFrame {
         }
     });
     }
-    private void cargarCarrerasDelApi() {
-        // Asumimos que 'cmbCarreras' es el nombre de tu JComboBox
+    
+    private void configurarComboBox() {
         if (cmbCarreras == null) {
             System.err.println("cmbCarreras es nulo.");
             return;
         }
-
-        // Añade "Todas" primero, ya que esto no vendrá de la API
+        
+        // 1. Asegúrate de que esté vacío
+        cmbCarreras.removeAllItems();
+        
+        // 2. Añade la opción por defecto
         cmbCarreras.addItem("Todas las Carreras");
 
-        // Añade el listener que filtra
+        // 3. Conecta el listener
+        // (Esto ahora funcionará porque filtrarEstudiantes() ya existe)
         cmbCarreras.addActionListener(e -> filtrarEstudiantes());
-
-        // --- Llama a la API en un hilo separado ---
-        Executors.newSingleThreadExecutor().submit(() -> {
-            try {
-                HttpClient client = HttpClient.newHttpClient();
-                // (Asumiendo que tienes ConfigCliente.BASE_URL)
-                String url = ConfigCliente.BASE_URL + "/api/carreras/nombres";
-
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(url))
-                        .GET()
-                        .build();
-
-                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-                if (response.statusCode() == 200) {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    // Deserializa la respuesta como una Lista de Strings
-                    List<String> nombresCarreras = objectMapper.readValue(response.body(), new TypeReference<List<String>>() {
-                    });
-
-                    // Actualiza la UI en el hilo de Swing
-                    SwingUtilities.invokeLater(() -> {
-                        for (String nombre : nombresCarreras) {
-                            cmbCarreras.addItem(nombre);
-                        }
-                    });
-                } else {
-                    // Maneja el error (ej. mostrar un JOptionPane)
-                    System.err.println("Error al cargar carreras: " + response.body());
-                }
-            } catch (Exception e) {
-                // Maneja el error de conexión
-                System.err.println("Excepción al cargar carreras: " + e.getMessage());
-            }
-        });
     }
     
+    
     private void filtrarEstudiantes() {
-        // 1. Obtiene la carrera seleccionada
         String carreraSeleccionada = (String) cmbCarreras.getSelectedItem();
-
         List<EstudianteDTO> estudiantesFiltrados;
 
-        // 2. Si es "Todas", usa la lista completa
         if (carreraSeleccionada == null || carreraSeleccionada.equals("Todas las Carreras")) {
             estudiantesFiltrados = new ArrayList<>(this.listaCompletaEstudiantes);
         } else {
-            // 3. --- ¡ESTA ES LA LÍNEA CORREGIDA! ---
-            // Filtra usando una comparación "segura" que evita 'nulls'
-
             estudiantesFiltrados = this.listaCompletaEstudiantes.stream()
                     .filter(estudiante -> {
-                        // Primero nos aseguramos que el estudiante SÍ TENGA una carrera
                         if (estudiante.getCarrera() == null) {
-                            return false; // Si es nula, no puede coincidir
+                            return false;
                         }
-                        // Si no es nula, hacemos la comparación
                         return estudiante.getCarrera().equals(carreraSeleccionada);
                     })
                     .collect(Collectors.toList());
         }
-
-        // 4. Llama al método que dibuja las tarjetas
         mostrarEstudiantes(estudiantesFiltrados);
     }
     
@@ -219,66 +179,68 @@ public class DescubrirFrm extends javax.swing.JFrame {
     }
 
     private void cargarEstudiantes() {
-
         if (estudianteActual == null) {
             JOptionPane.showMessageDialog(this, "Error: No se ha iniciado sesión.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        Consumer<PersonasFrm> funcionDeEliminacion = (tarjetaParaEliminar) -> {
-        // Asegúrate de que los cambios de UI se hagan en el hilo de Swing
-        SwingUtilities.invokeLater(() -> {
-            panelDinamico.remove(tarjetaParaEliminar); // Elimina la tarjeta del panel
-            panelDinamico.revalidate(); // Re-calcula el layout
-            panelDinamico.repaint();    // Re-dibuja el panel
-        });
-    };
 
-        try {
-            // 1. Crear cliente y petición HTTP
-            HttpClient client = HttpClient.newHttpClient();
-            // Llama al endpoint /descubrir que creamos en el controlador
-            String url = ConfigCliente.BASE_URL + "/api/estudiantes/descubrir?idActual=" + estudianteActual.getId();
+        this.listaCompletaEstudiantes.clear();
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .GET()
-                    .header("Content-Type", "application/json")
-                    .build();
+        // Usamos un hilo para la llamada a la API
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                // 1. Crear cliente y petición HTTP
+                HttpClient client = HttpClient.newHttpClient();
+                String url = ConfigCliente.BASE_URL + "/api/estudiantes/descubrir?idActual=" + estudianteActual.getId();
 
-            // 2. Enviar petición y recibir respuesta
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .GET()
+                        .header("Content-Type", "application/json")
+                        .build();
 
-            // 3. Procesar respuesta
-            if (response.statusCode() == 200) {
-                ObjectMapper objectMapper = new ObjectMapper();
-                // Deserializar la respuesta como una *Lista* de EstudianteDTO
-                List<EstudianteDTO> estudiantes = objectMapper.readValue(response.body(), new TypeReference<List<EstudianteDTO>>() {
-                });
+                // 2. Enviar petición y recibir respuesta
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-                // 4. Crear y añadir las tarjetas al panel
-                panelDinamico.removeAll();
+                if (response.statusCode() == 200) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    List<EstudianteDTO> estudiantes = objectMapper.readValue(response.body(), new TypeReference<List<EstudianteDTO>>() {
+                    });
 
-                for (EstudianteDTO dto : estudiantes) {
-                    // Crea una nueva tarjeta (PersonasFrm) por cada estudiante
-                    PersonasFrm card = new PersonasFrm(
-                            estudianteActual.getId(),
-                            dto,
-                            funcionDeEliminacion // <-- Aquí se la pasamos
+                    // 3. Guarda la lista completa
+                    this.listaCompletaEstudiantes = estudiantes;
+
+                    // --- LÓGICA NUEVA: EXTRAER CARRERAS ---
+                    // 4. Extrae las carreras únicas de la lista de estudiantes
+                    //    Usamos un Set para evitar duplicados automáticamente
+                    Set<String> carrerasUnicas = estudiantes.stream()
+                            .map(EstudianteDTO::getCarrera) // Obtiene la carrera de cada estudiante
+                            .filter(carrera -> carrera != null && !carrera.isEmpty()) // Filtra nulls o vacíos
+                            .collect(Collectors.toSet()); // Colecciona en un Set
+
+                    // 5. Actualiza la UI en el hilo de Swing
+                    SwingUtilities.invokeLater(() -> {
+                        // Muestra TODOS los estudiantes la primera vez
+                        mostrarEstudiantes(this.listaCompletaEstudiantes);
+
+                        // Llena el ComboBox con las carreras únicas
+                        for (String carrera : carrerasUnicas) {
+                            cmbCarreras.addItem(carrera);
+                        }
+                    });
+
+                } else {
+                    SwingUtilities.invokeLater(()
+                            -> JOptionPane.showMessageDialog(this, "Error al cargar estudiantes: " + response.body(), "Error", JOptionPane.ERROR_MESSAGE)
                     );
-                    panelDinamico.add(card); // Añade la tarjeta al panel
                 }
-
-                // Refrescar la UI
-                panelDinamico.revalidate();
-                panelDinamico.repaint();
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al cargar estudiantes: " + response.body(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                logger.log(java.util.logging.Level.SEVERE, "Error al cargar estudiantes", e);
+                SwingUtilities.invokeLater(()
+                        -> JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE)
+                );
             }
-        } catch (Exception e) {
-            logger.log(java.util.logging.Level.SEVERE, "Error al cargar estudiantes", e);
-            JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        });
     }
 
     /**

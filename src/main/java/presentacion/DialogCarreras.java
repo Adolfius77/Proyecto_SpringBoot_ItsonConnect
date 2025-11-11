@@ -31,29 +31,26 @@ public class DialogCarreras extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DialogCarreras.class.getName());
 
-   
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-   
-    private final Consumer<String> onCarreraSeleccionada; 
+    private final Consumer<String> onCarreraSeleccionada;
 
-    // Estado de paginación
     private int paginaActual = 0;
-    private int totalPaginas = 1; 
+    private int totalPaginas = 1;
     private final int tamanoPagina = 10;
     private String filtroNombre = "";
-    
+    private int filaSeleccionadaGuardada = -1;
 
     private DefaultTableModel tableModel;
 
     public DialogCarreras(java.awt.Frame parent, Consumer<String> onCarreraSeleccionada) {
-        super(parent, true); 
-        this.onCarreraSeleccionada = onCarreraSeleccionada; 
+        super(parent, true);
+        this.onCarreraSeleccionada = onCarreraSeleccionada;
         this.httpClient = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
 
-        initComponents(); 
+        initComponents();
 
         configurarTabla();
         cargarCarreras();
@@ -62,32 +59,50 @@ public class DialogCarreras extends javax.swing.JDialog {
     }
 
     private void configurarTabla() {
-     
+
         this.tableModel = (DefaultTableModel) tablaCarreras.getModel();
-        
-      
-        if (tableModel.getColumnCount() == 0) {
-             tableModel.addColumn("ID");
-             tableModel.addColumn("Nombre");
-        }
+
+        tableModel.setColumnCount(0);
+
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "Nombre"});
 
         tablaCarreras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-    
         tablaCarreras.getColumnModel().getColumn(0).setMinWidth(0);
         tablaCarreras.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaCarreras.getColumnModel().getColumn(0).setWidth(0);
 
-        
         tablaCarreras.getColumnModel().getColumn(1).setPreferredWidth(350);
 
-       
         tablaCarreras.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+
                 if (evt.getClickCount() == 2) {
-                    
-                    btnSeleccionar.doClick(); 
+
+                    int filaSeleccionada = tablaCarreras.rowAtPoint(evt.getPoint());
+
+                    if (filaSeleccionada == -1) {
+                        return;
+                    }
+
+                    String nombreCarrera = (String) tableModel.getValueAt(filaSeleccionada, 1);
+
+                    if (nombreCarrera == null || nombreCarrera.equals("Cargando...") || nombreCarrera.equals("No se encontraron resultados.")) {
+                        JOptionPane.showMessageDialog(DialogCarreras.this, "Por favor, selecciona una carrera válida.", "Selección inválida", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+
+                    onCarreraSeleccionada.accept(nombreCarrera);
+
+                    dispose();
+                }
+            }
+        });
+        tablaCarreras.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    filaSeleccionadaGuardada = tablaCarreras.getSelectedRow();
                 }
             }
         });
@@ -414,14 +429,12 @@ public class DialogCarreras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
-        int filaSeleccionada = tablaCarreras.getSelectedRow();
-
-        if (filaSeleccionada == -1) {
+        if (filaSeleccionadaGuardada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, selecciona una carrera de la tabla.", "Nada seleccionado", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        String nombreCarrera = (String) tableModel.getValueAt(filaSeleccionada, 1);
+        String nombreCarrera = (String) tableModel.getValueAt(filaSeleccionadaGuardada, 1);
 
         if (nombreCarrera == null || nombreCarrera.equals("Cargando...") || nombreCarrera.equals("No se encontraron resultados.")) {
             JOptionPane.showMessageDialog(this, "Por favor, espera a que carguen los datos o selecciona una carrera válida.", "Selección inválida", JOptionPane.WARNING_MESSAGE);
@@ -469,7 +482,8 @@ public class DialogCarreras extends javax.swing.JDialog {
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
+
+                        dialog.dispose();
                     }
                 });
                 dialog.setVisible(true);

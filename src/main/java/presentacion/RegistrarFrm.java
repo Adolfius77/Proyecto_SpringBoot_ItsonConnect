@@ -40,7 +40,10 @@ public class RegistrarFrm extends javax.swing.JFrame {
         txtCarrera.setEditable(false);
         txtCarrera.setText("Selecciona tu carrera...");
         
+        this.getRootPane().setDefaultButton(btnCrearCuenta);
+        
         btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarCarreraActionPerformed(evt);
             }

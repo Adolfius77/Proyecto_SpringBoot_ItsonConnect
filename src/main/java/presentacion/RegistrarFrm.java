@@ -50,12 +50,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
             cmbGenero.setSelectedIndex(0);
         }
 
-        cmbCarreraa.addItem("Licenciatura en Administración");
-        cmbCarreraa.addItem("Ingeniería en Software");
-
-        if (cmbCarreraa.getItemCount() > 0) {
-            cmbCarreraa.setSelectedIndex(0);
-        }
+        
     }
 
     /**
@@ -81,6 +76,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jCheckBox7 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
+        cmbCarreraa = new javax.swing.JComboBox<>();
         btnIniciarSesion = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelRedondo1 = new presentacion.PanelRedondo();
@@ -117,7 +113,6 @@ public class RegistrarFrm extends javax.swing.JFrame {
         txtCorreoInstituto = new presentacion.TextFieldRedondo();
         cmbGenero = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        cmbCarreraa = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -475,8 +470,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
                                         .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(30, 30, 30)
                                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cmbCarreraa, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addGap(185, 185, 185))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnIniciarSesionLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(panelRedondo5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -533,8 +527,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
                             .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15)
-                            .addComponent(cmbCarreraa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel15))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)

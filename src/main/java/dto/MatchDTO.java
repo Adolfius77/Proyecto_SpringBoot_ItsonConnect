@@ -14,6 +14,7 @@ public class MatchDTO {
     private Long id;
     private String fecha; 
     private List<EstudianteDTO> participantes;
+ 
 
     public MatchDTO() {
     }
@@ -42,9 +43,12 @@ public class MatchDTO {
         this.participantes = participantes;
     }
 
+    
+    
+
     @Override
     public String toString() {
-        return "MatchDTO{" + "id=" + id + ", fecha=" + fecha + ", participantes=" + participantes + '}';
+        return "MatchDTO{" + "id=" + id + ", fecha=" + fecha + ", participantes=" + participantes +'}';
     }
 
     

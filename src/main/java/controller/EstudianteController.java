@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import service.IMensajeService;
 import service.impl.EstudianteServiceImpl;
 
 /**
@@ -22,10 +23,12 @@ import service.impl.EstudianteServiceImpl;
 public class EstudianteController {
 
     private final EstudianteServiceImpl estudianteService;
+    private final IMensajeService mensajeService;
 
     @Autowired
-    public EstudianteController(EstudianteServiceImpl estudianteService) {
+    public EstudianteController(EstudianteServiceImpl estudianteService, IMensajeService mensajeService) {
         this.estudianteService = estudianteService;
+        this.mensajeService = mensajeService;
     }
 
     private EstudianteDTO toDTO(Estudiante e) {
@@ -182,6 +185,7 @@ public class EstudianteController {
                                 .map(p -> toDTO(p.getEstudiante())) // Usa el toDTO completo
                                 .collect(Collectors.toList());
                         dto.setParticipantes(participantesDTO);
+                       
 
                         return dto;
                     })

@@ -10,4 +10,5 @@ public interface IMensajeService {
     Mensaje obtenerMensaje(Long id);
     void eliminarMensaje(Long id) throws Exception;
     List<Mensaje> listarMensajesPorMatch(Long idMatch, int limit);
+    
 }

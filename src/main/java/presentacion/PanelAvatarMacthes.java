@@ -126,15 +126,36 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
         btnMensaje.setFocusPainted(false);
         btnMensaje.setBorderPainted(false);
         btnMensaje.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        //efecto como tipo seleccionado
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                setBackground(new Color(250, 250, 250));
+                setBackground(new Color(250, 250, 250)); 
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 setBackground(Color.WHITE);
             }
+        
+        
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                
+                abrirChat(); 
+            }
         });
+        btnMensaje.addActionListener(e -> abrirChat());
+    }
+    
+        private void abrirChat() {
+        if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error: No se pudo identificar al usuario actual.");
+            return;
+        }
+
+        chatFrm chat = new chatFrm(this.estudianteActual, this.matchId, this.nombreEstudiante, this.estudianteReceptor);
+        chat.setVisible(true);
+
+        
+        SwingUtilities.getWindowAncestor(this).dispose();
     }
 
     private void cargarDatos() {

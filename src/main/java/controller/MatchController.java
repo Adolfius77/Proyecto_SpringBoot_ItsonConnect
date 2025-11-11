@@ -40,6 +40,8 @@ public class MatchController {
         dto.setApMaterno(e.getApMaterno());
         dto.setCorreo(e.getCorreo());
         dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
+        dto.setCarrera(e.getCarrera());
+        dto.setGenero(e.getGenero());
         if (e.getFoto() != null) {
             dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
 
@@ -48,6 +50,7 @@ public class MatchController {
             Set<String> hobbyNombres = e.getHobbies().stream()
                     .map(hobbyEstudiante -> hobbyEstudiante.getHobby().getNombre())
                     .collect(Collectors.toSet());
+            dto.setHobbies(hobbyNombres);
         }
         return dto;
     }

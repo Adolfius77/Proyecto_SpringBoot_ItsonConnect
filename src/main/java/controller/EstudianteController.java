@@ -158,4 +158,9 @@ public class EstudianteController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+    @GetMapping("/{id}/matches")
+    public List<dto.MatchDTO> obtenerMatches(@PathVariable Long id) {
+       
+        return java.util.Collections.emptyList(); 
+    }
 }

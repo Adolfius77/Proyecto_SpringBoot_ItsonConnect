@@ -32,6 +32,7 @@ public class MatchEstudianteController {
         dto.setId(me.getId());
         dto.setEstudianteId(me.getEstudiante() != null ? me.getEstudiante().getId() : null);
         dto.setMatchId(me.getMatch() != null ? me.getMatch().getId() : null);
+        
         return dto;
     }
 

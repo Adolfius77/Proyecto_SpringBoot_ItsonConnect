@@ -65,7 +65,8 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
     
 
     private void cargarDatos() {
-        lblCarrera.setText(this.nombreEstudiante);
+        lblNombreEstudiante1.setText(this.nombreEstudiante);
+        lblCarrera.setText(estudianteReceptor.getCarrera());
         Set<String> hobbies = estudianteReceptor.getHobbies();
 
         if (hobbies != null && !hobbies.isEmpty()) {

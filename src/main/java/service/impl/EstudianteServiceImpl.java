@@ -86,6 +86,12 @@ public class EstudianteServiceImpl implements IEstudianteService {
         if (estudianteRepository.findByCorreo(estudiante.getCorreo()).isPresent()) {
             throw new Exception("El correo '" + estudiante.getCorreo() + "' ya está registrado.");
         }
+        if (estudiante.getCarrera() == null || estudiante.getCarrera().isBlank() || estudiante.getCarrera().equals("Seleccione Carrera")) {
+            throw new Exception("Debe seleccionar una carrera valida.");
+        }
+        if (estudiante.getGenero()== null || estudiante.getGenero().isBlank() || estudiante.getGenero().equals("Seleccione un genero")) {
+            throw new Exception("Debe seleccionar un genero.");
+        }
 
         estudiante.setFechaRegistro(new Date());
         Estudiante estudianteGuardado = estudianteRepository.save(estudiante);
@@ -198,7 +204,6 @@ public class EstudianteServiceImpl implements IEstudianteService {
                     match.getParticipantes().size();
                     match.getParticipantes().forEach(p -> {
                         p.getEstudiante().getNombre();
-                        p.getEstudiante().getFoto();
                     });
                     return match;
                 })

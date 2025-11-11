@@ -49,6 +49,7 @@ public class PersonasFrm extends javax.swing.JPanel {
         lblNombre.setFont(new Font("SansSerif", Font.BOLD, 18));
         String nombreCompleto = receptorDto.getNombre() + " " + receptorDto.getApPaterno();
         lblNombre.setText(nombreCompleto);
+        lblCarrera.setText(receptorDto.getCarrera());
 
         lblHobbys.setFont(new Font("SansSerif", Font.ITALIC, 12));
         setHobbies(receptorDto.getHobbies());

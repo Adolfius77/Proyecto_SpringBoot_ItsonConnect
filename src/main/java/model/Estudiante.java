@@ -74,7 +74,9 @@ public class Estudiante implements Serializable {
 
     public Estudiante() {
     }
-
+    public Estudiante(Long id) {
+        this.id = id;
+    }
     public Estudiante(Long id, String carrera, String genero, Date fechaRegistro, String nombre, String apPaterno, String apMaterno, String correo, String password, byte[] foto, Set<Interaccion> interaccionesEnviadas, Set<Interaccion> interaccionesRecibidas, Set<HobbyEstudiante> hobbies, Set<MatchEstudiante> matchEstudiantes, Set<Mensaje> mensajesEnviados) {
         this.id = id;
         this.carrera = carrera;

@@ -51,6 +51,7 @@ public class PersonasFrm extends javax.swing.JPanel {
         lblNombre.setText(nombreCompleto);
         String carreraTexto = receptorDto.getCarrera() != null ? receptorDto.getCarrera() : "Carrera no especificada";
         lblCarrera.setText(carreraTexto);
+        lblGenero.setText(receptorDto.getGenero());
 
         lblHobbys.setFont(new Font("SansSerif", Font.ITALIC, 12));
         setHobbies(receptorDto.getHobbies());
@@ -174,6 +175,7 @@ public class PersonasFrm extends javax.swing.JPanel {
         btnNoMeInteresa = new presentacion.botonCircular();
         btnMegusta = new presentacion.botonCircular();
         lblCarrera = new javax.swing.JLabel();
+        lblGenero = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -202,6 +204,8 @@ public class PersonasFrm extends javax.swing.JPanel {
 
         lblCarrera.setText("Carrera");
 
+        lblGenero.setText("Genero");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -216,20 +220,23 @@ public class PersonasFrm extends javax.swing.JPanel {
                         .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblCarrera))
+                    .addComponent(lblCarrera)
+                    .addComponent(lblGenero))
                 .addGap(0, 69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblFotoPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addComponent(lblNombre)
-                .addGap(18, 18, 18)
-                .addComponent(lblHobbys)
-                .addGap(18, 18, 18)
-                .addComponent(lblCarrera)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblHobbys)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblCarrera)
+                .addGap(12, 12, 12)
+                .addComponent(lblGenero)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -256,6 +263,7 @@ public class PersonasFrm extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblFotoPerfil;
+    private javax.swing.JLabel lblGenero;
     private javax.swing.JLabel lblHobbys;
     private javax.swing.JLabel lblNombre;
     // End of variables declaration//GEN-END:variables

@@ -34,36 +34,37 @@ public class DialogCarreras extends javax.swing.JDialog {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    private final Consumer<String> onCarreraSeleccionada;
-
     private int paginaActual = 0;
     private int totalPaginas = 1;
     private final int tamanoPagina = 10;
     private String filtroNombre = "";
+
     private int filaSeleccionadaGuardada = -1;
+    private String carreraSeleccionada = null;
 
     private DefaultTableModel tableModel;
 
-    public DialogCarreras(java.awt.Frame parent, Consumer<String> onCarreraSeleccionada) {
+    public DialogCarreras(java.awt.Frame parent) {
         super(parent, true);
-        this.onCarreraSeleccionada = onCarreraSeleccionada;
+
         this.httpClient = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
 
         initComponents();
-
         configurarTabla();
         cargarCarreras();
 
         this.setLocationRelativeTo(parent);
     }
 
+    public String getCarreraSeleccionada() {
+        return this.carreraSeleccionada;
+    }
+
     private void configurarTabla() {
 
         this.tableModel = (DefaultTableModel) tablaCarreras.getModel();
-
         tableModel.setColumnCount(0);
-
         tableModel.setColumnIdentifiers(new Object[]{"ID", "Nombre"});
 
         tablaCarreras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -71,17 +72,14 @@ public class DialogCarreras extends javax.swing.JDialog {
         tablaCarreras.getColumnModel().getColumn(0).setMinWidth(0);
         tablaCarreras.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaCarreras.getColumnModel().getColumn(0).setWidth(0);
-
         tablaCarreras.getColumnModel().getColumn(1).setPreferredWidth(350);
 
         tablaCarreras.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-
                 if (evt.getClickCount() == 2) {
 
                     int filaSeleccionada = tablaCarreras.rowAtPoint(evt.getPoint());
-
                     if (filaSeleccionada == -1) {
                         return;
                     }
@@ -93,13 +91,15 @@ public class DialogCarreras extends javax.swing.JDialog {
                         return;
                     }
 
-                    onCarreraSeleccionada.accept(nombreCarrera);
+                    carreraSeleccionada = nombreCarrera;
 
                     dispose();
                 }
             }
         });
+
         tablaCarreras.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
                     filaSeleccionadaGuardada = tablaCarreras.getSelectedRow();
@@ -111,6 +111,7 @@ public class DialogCarreras extends javax.swing.JDialog {
     private void cargarCarreras() {
         tableModel.setRowCount(0);
         tableModel.addRow(new Object[]{null, "Cargando..."});
+        filaSeleccionadaGuardada = -1;
 
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
@@ -324,6 +325,11 @@ public class DialogCarreras extends javax.swing.JDialog {
                 "nombre carrera"
             }
         ));
+        tablaCarreras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCarrerasMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tablaCarreras);
 
         btnCancelar.setText("Cancelar");
@@ -429,6 +435,7 @@ public class DialogCarreras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+
         if (filaSeleccionadaGuardada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, selecciona una carrera de la tabla.", "Nada seleccionado", JOptionPane.WARNING_MESSAGE);
             return;
@@ -441,10 +448,30 @@ public class DialogCarreras extends javax.swing.JDialog {
             return;
         }
 
-        this.onCarreraSeleccionada.accept(nombreCarrera);
+        this.carreraSeleccionada = nombreCarrera;
 
         this.dispose();
     }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void tablaCarrerasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarrerasMouseClicked
+        if (evt.getClickCount() == 2) {
+            int filaSeleccionada = tablaCarreras.rowAtPoint(evt.getPoint());
+            if (filaSeleccionada == -1) {
+                return;
+            }
+
+            String nombreCarrera = (String) tableModel.getValueAt(filaSeleccionada, 1);
+
+            if (nombreCarrera == null || nombreCarrera.equals("Cargando...") || nombreCarrera.equals("No se encontraron resultados.")) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona una carrera válida.", "Selección inválida", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            this.carreraSeleccionada = nombreCarrera;
+
+            this.dispose();
+        }
+    }//GEN-LAST:event_tablaCarrerasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -476,17 +503,26 @@ public class DialogCarreras extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogCarreras dialog = new DialogCarreras(new javax.swing.JFrame(), (carrera) -> {
-                    System.out.println("Prueba: Carrera seleccionada: " + carrera);
-                });
+               
+                DialogCarreras dialog = new DialogCarreras(new javax.swing.JFrame());
+                
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-
-                        dialog.dispose();
+                        dialog.dispose(); 
                     }
                 });
+                
                 dialog.setVisible(true);
+                
+                String resultado = dialog.getCarreraSeleccionada();
+                if (resultado != null) {
+                    System.out.println("Prueba: Carrera seleccionada: " + resultado);
+                } else {
+                    System.out.println("Prueba: Diálogo cancelado.");
+                }
+                
+                System.exit(0); 
             }
         });
     }

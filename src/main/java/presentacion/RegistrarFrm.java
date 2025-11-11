@@ -39,9 +39,9 @@ public class RegistrarFrm extends javax.swing.JFrame {
 
         txtCarrera.setEditable(false);
         txtCarrera.setText("Selecciona tu carrera...");
-        
+
         this.getRootPane().setDefaultButton(btnCrearCuenta);
-        
+
         btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -720,7 +720,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
-    
+
     private void btnAgregarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFotoActionPerformed
         JFileChooser fileChooser = new JFileChooser();
 
@@ -751,11 +751,16 @@ public class RegistrarFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarFotoActionPerformed
 
     private void btnBuscarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCarreraActionPerformed
-        DialogCarreras dialog = new DialogCarreras(this, (carreraSeleccionada) -> {
-            txtCarrera.setText(carreraSeleccionada);
-        });
-        
-        dialog.setVisible(true); // Muestra el dialogo
+        DialogCarreras dialog = new DialogCarreras(this);
+
+        dialog.setVisible(true);
+
+        String carreraElegida = dialog.getCarreraSeleccionada();
+
+        if (carreraElegida != null) {
+
+            txtCarrera.setText(carreraElegida);
+        }
     }//GEN-LAST:event_btnBuscarCarreraActionPerformed
 
     /**

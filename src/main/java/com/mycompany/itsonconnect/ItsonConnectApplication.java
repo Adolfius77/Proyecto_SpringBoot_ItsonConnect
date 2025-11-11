@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import service.ICarreraService;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
@@ -29,7 +30,7 @@ public class ItsonConnectApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(HobbyRepository hobbyRepository) {
+    public CommandLineRunner initData(HobbyRepository hobbyRepository,ICarreraService carreraService) {
         return (args) -> {
             List<String> hobbiesIniciales = Arrays.asList(
                     "Gaming",
@@ -50,6 +51,7 @@ public class ItsonConnectApplication {
 
                 }
             }
+            carreraService.precargarCarreras();
         };
     }
 

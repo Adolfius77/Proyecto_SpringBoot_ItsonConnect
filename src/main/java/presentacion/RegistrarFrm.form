@@ -226,7 +226,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="txtCarrera" min="-2" pref="285" max="-2" attributes="0"/>
-                              <Component id="botonCircular1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnBuscarCarrera" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -288,7 +288,7 @@
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="botonCircular1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnBuscarCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -782,7 +782,7 @@
             <Property name="text" type="java.lang.String" value="Genero:"/>
           </Properties>
         </Component>
-        <Component class="presentacion.botonCircular" name="botonCircular1">
+        <Component class="presentacion.botonCircular" name="btnBuscarCarrera">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="b3" green="73" red="1e" type="rgb"/>
@@ -807,6 +807,9 @@
               <Font name="Dialog" size="15" style="1"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarCarreraActionPerformed"/>
+          </Events>
         </Component>
         <Component class="presentacion.TextFieldRedondo" name="txtCarrera">
         </Component>

@@ -36,15 +36,14 @@ public class RegistrarFrm extends javax.swing.JFrame {
         initComponents();
         inicializarCombos();
         setLocationRelativeTo(null);
-        
+
         txtCarrera.setEditable(false);
         txtCarrera.setText("Selecciona tu carrera...");
-        
+
     }
 
     private void inicializarCombos() {
         cmbGenero.removeAllItems();
-        
 
         cmbGenero.addItem("Masculino");
         cmbGenero.addItem("Femenino");
@@ -53,8 +52,11 @@ public class RegistrarFrm extends javax.swing.JFrame {
         if (cmbGenero.getItemCount() > 0) {
             cmbGenero.setSelectedIndex(0);
         }
-
-        
+        btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCarreraActionPerformed(evt);
+            }
+        });
     }
 
     /**
@@ -120,7 +122,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
         txtCorreoInstituto = new presentacion.TextFieldRedondo();
         cmbGenero = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
-        botonCircular1 = new presentacion.botonCircular();
+        btnBuscarCarrera = new presentacion.botonCircular();
         txtCarrera = new presentacion.TextFieldRedondo();
 
         jLabel2.setText("jLabel2");
@@ -428,14 +430,19 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Genero:");
 
-        botonCircular1.setBackground(new java.awt.Color(30, 115, 179));
-        botonCircular1.setForeground(new java.awt.Color(255, 255, 255));
-        botonCircular1.setText("Seleccionar carrera");
-        botonCircular1.setBorderColor(new java.awt.Color(255, 255, 255));
-        botonCircular1.setColor(new java.awt.Color(30, 115, 179));
-        botonCircular1.setColorClick(new java.awt.Color(0, 204, 204));
-        botonCircular1.setColorOver(new java.awt.Color(30, 115, 179));
-        botonCircular1.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        btnBuscarCarrera.setBackground(new java.awt.Color(30, 115, 179));
+        btnBuscarCarrera.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarCarrera.setText("Seleccionar carrera");
+        btnBuscarCarrera.setBorderColor(new java.awt.Color(255, 255, 255));
+        btnBuscarCarrera.setColor(new java.awt.Color(30, 115, 179));
+        btnBuscarCarrera.setColorClick(new java.awt.Color(0, 204, 204));
+        btnBuscarCarrera.setColorOver(new java.awt.Color(30, 115, 179));
+        btnBuscarCarrera.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCarreraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnIniciarSesionLayout = new javax.swing.GroupLayout(btnIniciarSesion);
         btnIniciarSesion.setLayout(btnIniciarSesionLayout);
@@ -490,7 +497,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnBuscarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(panelRedondo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -541,7 +548,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
-                            .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBuscarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -616,7 +623,6 @@ public class RegistrarFrm extends javax.swing.JFrame {
                     : null;
 
             String carreraSeleccionada = txtCarrera.getText().trim();
-            
 
             if (nombre.isEmpty() || apPaterno.isEmpty() || correo.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nombre, Apellido Paterno, Correo y Contraseña son obligatorios.", "Validación", JOptionPane.WARNING_MESSAGE);
@@ -633,7 +639,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
                 return;
             }
 
-            if (carreraSeleccionada == null || carreraSeleccionada.isEmpty()) {
+            if (carreraSeleccionada == null || carreraSeleccionada.isEmpty() || carreraSeleccionada.equals("Selecciona tu carrera...")) {
                 JOptionPane.showMessageDialog(this, "Por favor, selecciona una carrera.", "Validación", JOptionPane.WARNING_MESSAGE);
                 return;
             }
@@ -705,7 +711,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error de conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
-
+    
     private void btnAgregarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFotoActionPerformed
         JFileChooser fileChooser = new JFileChooser();
 
@@ -734,6 +740,14 @@ public class RegistrarFrm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnAgregarFotoActionPerformed
+
+    private void btnBuscarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCarreraActionPerformed
+        DialogCarreras dialog = new DialogCarreras(this, (carreraSeleccionada) -> {
+            txtCarrera.setText(carreraSeleccionada);
+        });
+        
+        dialog.setVisible(true); // Muestra el dialogo
+    }//GEN-LAST:event_btnBuscarCarreraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -771,9 +785,9 @@ public class RegistrarFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private presentacion.botonCircular botonCircular1;
     private presentacion.botonCircular botonCircular2;
     private presentacion.botonCircular btnAgregarFoto;
+    private presentacion.botonCircular btnBuscarCarrera;
     private presentacion.botonCircular btnCrearCuenta;
     private javax.swing.JPanel btnIniciarSesion;
     private presentacion.botonCircular btnInicioSesion;

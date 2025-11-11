@@ -65,7 +65,7 @@ public class matchesFrm extends javax.swing.JFrame {
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
-                // Asumiendo que ConfigCliente.BASE_URL está definida en otra parte
+                
                 String url = ConfigCliente.BASE_URL + "/api/estudiantes/" + estudianteActual.getId() + "/matches";
 
                 HttpRequest request = HttpRequest.newBuilder()
@@ -79,11 +79,11 @@ public class matchesFrm extends javax.swing.JFrame {
                     List<MatchDTO> matches = objectMapper.readValue(response.body(), new TypeReference<List<MatchDTO>>() {
                     });
 
-                    // Guarda la lista completa para poder filtrarla después
+                    
                     this.listaCompletaDeMatches = matches;
 
                     SwingUtilities.invokeLater(() -> {
-                        // Muestra todos los matches la primera vez
+                        
                         mostrarMatches(matches);
                     });
                 } else {
@@ -97,37 +97,35 @@ public class matchesFrm extends javax.swing.JFrame {
     }
     
     private void filtrarYMostrarMatches() {
-        // 1. Obtiene el texto de búsqueda, lo limpia y lo pone en minúsculas.
+    
         String textoBusqueda = textFiedBuscarMatches.getText().trim().toLowerCase();
 
-        // 2. Filtra la lista COMPLETA usando streams de Java 8+
+       
         List<MatchDTO> matchesFiltrados = this.listaCompletaDeMatches.stream()
             .filter(match -> {
-                // 3. Encuentra al "otro" participante del match
+                
                 EstudianteDTO otro = match.getParticipantes().stream()
                     .filter(p -> !p.getId().equals(this.estudianteActual.getId()))
                     .findFirst()
                     .orElse(null); // Obtiene el otro participante o null
 
-                // Si no hay otro participante (extraño, pero por seguridad)
+                
                 if (otro == null) {
                     return false; 
                 }
 
-                // 4. Construye el nombre completo del otro participante
-                // (Manejo robusto por si algún campo es nulo)
+                
                 String nombre = (otro.getNombre() != null) ? otro.getNombre().toLowerCase() : "";
                 String apPaterno = (otro.getApPaterno() != null) ? otro.getApPaterno().toLowerCase() : "";
                 String apMaterno = (otro.getApMaterno() != null) ? otro.getApMaterno().toLowerCase() : "";
                 String nombreCompleto = nombre + " " + apPaterno + " " + apMaterno;
                 
-                // 5. Comprueba si el nombre completo contiene el texto de búsqueda
+                
                 return nombreCompleto.contains(textoBusqueda);
             })
-            .collect(Collectors.toList()); // Recolecta los resultados en una nueva lista
+            .collect(Collectors.toList());
 
-        // 6. Actualiza la UI con la lista filtrada
-        // (Se asume que esto se llama desde un evento de UI, que ya está en el EDT)
+        
         mostrarMatches(matchesFiltrados);
     }
 

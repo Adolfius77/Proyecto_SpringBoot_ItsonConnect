@@ -18,6 +18,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.function.Consumer;
+import javax.swing.SwingUtilities;
 import org.springframework.boot.SpringApplication;
 
 /**
@@ -102,6 +104,14 @@ public class DescubrirFrm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error: No se ha iniciado sesión.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        Consumer<PersonasFrm> funcionDeEliminacion = (tarjetaParaEliminar) -> {
+        // Asegúrate de que los cambios de UI se hagan en el hilo de Swing
+        SwingUtilities.invokeLater(() -> {
+            panelDinamico.remove(tarjetaParaEliminar); // Elimina la tarjeta del panel
+            panelDinamico.revalidate(); // Re-calcula el layout
+            panelDinamico.repaint();    // Re-dibuja el panel
+        });
+    };
 
         try {
             // 1. Crear cliente y petición HTTP
@@ -130,7 +140,11 @@ public class DescubrirFrm extends javax.swing.JFrame {
 
                 for (EstudianteDTO dto : estudiantes) {
                     // Crea una nueva tarjeta (PersonasFrm) por cada estudiante
-                    PersonasFrm card = new PersonasFrm(estudianteActual.getId(), dto);
+                    PersonasFrm card = new PersonasFrm(
+                            estudianteActual.getId(),
+                            dto,
+                            funcionDeEliminacion // <-- Aquí se la pasamos
+                    );
                     panelDinamico.add(card); // Añade la tarjeta al panel
                 }
 
@@ -218,7 +232,6 @@ public class DescubrirFrm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Descubre");
 
         panelDinamico.setLayout(new java.awt.GridLayout(1, 0));

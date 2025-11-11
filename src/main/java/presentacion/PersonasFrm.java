@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import java.util.function.Consumer;
+import static org.springframework.boot.util.LambdaSafe.callback;
 
 /**
  *
@@ -29,6 +31,7 @@ public class PersonasFrm extends javax.swing.JPanel {
     private Long emisorId;
     private Long receptorId;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PersonasFrm.class.getName());
+    private Consumer<PersonasFrm> alFinalizarAccion;//consumer
 
     /**
      * Creates new form PersonasFrm
@@ -37,7 +40,7 @@ public class PersonasFrm extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PersonasFrm(Long emisorId, EstudianteDTO receptorDto) {
+    public PersonasFrm(Long emisorId, EstudianteDTO receptorDto, Consumer<PersonasFrm> callback) {
 
         initComponents();
 
@@ -58,6 +61,7 @@ public class PersonasFrm extends javax.swing.JPanel {
 
         btnMegusta.addActionListener(e -> enviarInteraccion("LIKE"));
         btnNoMeInteresa.addActionListener(e -> enviarInteraccion("PASS"));
+        this.alFinalizarAccion = callback;
 
     }
 
@@ -128,11 +132,9 @@ public class PersonasFrm extends javax.swing.JPanel {
                             System.out.println(tipo + " enviado a " + this.receptorId);
 
                             // Oculta esta tarjeta después de interactuar
-                            javax.swing.SwingUtilities.invokeLater(() -> {
-                                this.setVisible(false);
-                                ((JPanel) this.getParent()).revalidate();
-                                ((JPanel) this.getParent()).repaint();
-                            });
+                           if (alFinalizarAccion != null) {
+                                alFinalizarAccion.accept(this);
+                            }
 
                         } else {
                             // Error (ej. 400 Bad Request, "Ya interactuaste")

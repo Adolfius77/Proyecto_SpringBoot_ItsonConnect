@@ -9,6 +9,6 @@ package presentacion;
  * @author USER
  */
 public class ConfigCliente {
-    public static final String BASE_URL ="http://192.168.1.68:8080";
+    public static final String BASE_URL ="http://192.168.0.109:8080";
     public static final String WS_URL = BASE_URL + "/itson-connect-ws";
 }

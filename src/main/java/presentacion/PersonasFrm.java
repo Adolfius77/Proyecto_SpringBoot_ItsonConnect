@@ -46,6 +46,7 @@ public class PersonasFrm extends javax.swing.JPanel {
         initComponents();
 
         this.emisorId = emisorId;
+        this.receptorId = receptorDto.getId();
 
         setFoto(receptorDto.getFotoBase64());
 

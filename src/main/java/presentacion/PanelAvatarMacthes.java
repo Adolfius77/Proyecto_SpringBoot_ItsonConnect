@@ -142,7 +142,6 @@ public class PanelAvatarMacthes extends javax.swing.JPanel {
                 abrirChat(); 
             }
         });
-        btnMensaje.addActionListener(e -> abrirChat());
     }
     
         private void abrirChat() {

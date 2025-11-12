@@ -632,26 +632,12 @@ public class RegistrarFrm extends javax.swing.JFrame {
                     : null;
 
             String carreraSeleccionada = txtCarrera.getText().trim();
-
-            if (nombre.isEmpty() || apPaterno.isEmpty() || correo.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Nombre, Apellido Paterno, Correo y Contraseña son obligatorios.", "Validación", JOptionPane.WARNING_MESSAGE);
+            
+            if(!password.equals(confirmPass)){
+                JOptionPane.showMessageDialog(this, "las contrasenas no coinciden, ingresala correctamente");
                 return;
             }
-
-            if (!password.equals(confirmPass)) {
-                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Validación", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            if (generoSeleccionado == null || generoSeleccionado.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, selecciona un género.", "Validación", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            if (carreraSeleccionada == null || carreraSeleccionada.isEmpty() || carreraSeleccionada.equals("Selecciona tu carrera...")) {
-                JOptionPane.showMessageDialog(this, "Por favor, selecciona una carrera.", "Validación", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+            
 
             Set<String> hobbiesSeleccionados = new HashSet<>();
             if (checkGaming.isSelected()) {

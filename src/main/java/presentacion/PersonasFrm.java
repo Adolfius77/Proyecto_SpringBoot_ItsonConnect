@@ -193,7 +193,8 @@ public class PersonasFrm extends javax.swing.JPanel {
         lblHobbys.setText("Hobbies");
 
         btnNoMeInteresa.setForeground(new java.awt.Color(153, 0, 0));
-        btnNoMeInteresa.setText("no me interesa");
+        btnNoMeInteresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/button_cancel.png"))); // NOI18N
+        btnNoMeInteresa.setText("No me interesa");
         btnNoMeInteresa.setBorderColor(new java.awt.Color(255, 255, 255));
         btnNoMeInteresa.setColor(new java.awt.Color(255, 204, 204));
         btnNoMeInteresa.setColorClick(new java.awt.Color(255, 51, 51));
@@ -202,6 +203,7 @@ public class PersonasFrm extends javax.swing.JPanel {
 
         btnMegusta.setBackground(new java.awt.Color(102, 204, 255));
         btnMegusta.setForeground(new java.awt.Color(255, 255, 255));
+        btnMegusta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/istockphoto-691856234-612x612-removebg-preview (2).png"))); // NOI18N
         btnMegusta.setText("Me gusta");
         btnMegusta.setBorderColor(new java.awt.Color(255, 255, 255));
         btnMegusta.setColor(new java.awt.Color(102, 204, 255));
@@ -221,15 +223,18 @@ public class PersonasFrm extends javax.swing.JPanel {
                 .addComponent(lblFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre)
-                    .addComponent(lblHobbys)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblCarrera)
-                    .addComponent(lblGenero))
-                .addGap(0, 69, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNombre)
+                            .addComponent(lblHobbys)
+                            .addComponent(lblCarrera)
+                            .addComponent(lblGenero))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(19, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

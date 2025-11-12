@@ -35,6 +35,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
     @Autowired
     private HobbyEstudianteRepository hobbyEstudianteRepository;
 
+    @Override
     public Estudiante login(String correo, String password) throws Exception {
 
         if (correo == null || correo.isBlank()) {
@@ -43,12 +44,13 @@ public class EstudianteServiceImpl implements IEstudianteService {
         if (password == null || password.isBlank()) {
             throw new Exception("La contraseña es obligatoria.");
         }
-
+        //checa si el correo existe en la base de datos
         Estudiante estudiante = estudianteRepository.findByCorreo(correo)
-                .orElseThrow(() -> new Exception("Correo o contraseña incorrectos"));
-
+                .orElseThrow(() -> new Exception("Correo incorrecto o no existe"));
+        
+      
         if (!estudiante.getPassword().equals(password)) {
-            throw new Exception("Correo o contraseña incorrectos");
+            throw new Exception("contraseña incorrecta");
         }
         return estudiante;
     }
@@ -62,6 +64,9 @@ public class EstudianteServiceImpl implements IEstudianteService {
         }
         if (estudiante.getApPaterno() == null || estudiante.getApPaterno().isBlank()) {
             throw new Exception("El apellido paterno es obligatorio.");
+        }
+        if (estudiante.getApMaterno() == null || estudiante.getApMaterno().isBlank()) {
+            throw new Exception("El apellido materno es obligatorio.");
         }
         if (estudiante.getCorreo() == null || estudiante.getCorreo().isBlank()) {
             throw new Exception("El correo es obligatorio.");
@@ -79,10 +84,6 @@ public class EstudianteServiceImpl implements IEstudianteService {
             throw new Exception("Debe ser un correo institucional (@potros.itson.edu.mx o @itson.mx).");
         }
 
-        if (estudiante.getPassword().length() < 8) {
-            throw new Exception("La contraseña debe tener al menos 8 caracteres.");
-        }
-
         if (estudianteRepository.findByCorreo(estudiante.getCorreo()).isPresent()) {
             throw new Exception("El correo '" + estudiante.getCorreo() + "' ya está registrado.");
         }
@@ -91,6 +92,9 @@ public class EstudianteServiceImpl implements IEstudianteService {
         }
         if (estudiante.getCarrera() == null || estudiante.getCarrera().isBlank() || estudiante.getCarrera().equals("Seleccione Carrera")) {
             throw new Exception("Debe seleccionar una carrera valida.");
+        }
+        if (estudiante.getGenero() == null || estudiante.getApPaterno().isBlank()) {
+            throw new Exception("El genero es obigatorio");
         }
 
         estudiante.setFechaRegistro(new Date());

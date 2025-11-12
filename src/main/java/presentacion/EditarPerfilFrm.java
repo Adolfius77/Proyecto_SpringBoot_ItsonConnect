@@ -69,6 +69,7 @@ public class EditarPerfilFrm extends JFrame {
     private final EstudianteDTO estudianteLogueado;
     private final JTextField majorField;
     private byte[] fotoBytes;
+    private final JTextArea area;
     
     public EditarPerfilFrm(EstudianteDTO estudianteLogueado) {
         
@@ -165,7 +166,7 @@ public class EditarPerfilFrm extends JFrame {
         mainPanel.add(bioLabel, c);
         
         //TextArea
-        JTextArea area = new JTextArea("Soy Luis Fernando", 3, 20); // 3 líneas visibles
+        area = new JTextArea("Soy Luis Fernando", 3, 20); // 3 líneas visibles
         area.setFont(new Font("SansSerif", Font.PLAIN, 13));
         area.setLineWrap(true);
         area.setWrapStyleWord(true);
@@ -308,57 +309,59 @@ public class EditarPerfilFrm extends JFrame {
     }
     
     private void saveChanges(SelectableButtonPanel panel) {
-        if (majorField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(
-            null,
+    if (majorField.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(
+            this,
             "El campo Major no puede estar vacío.",
             "Error",
             JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
-        
-        try {
-            
-            Long estudianteId = estudianteLogueado.getId(); // ← el ID del estudiante logueado
-            String apiUrl = "http://localhost:8080/estudiantes/" + estudianteId;
+        );
+        return;
+    }
 
-            estudianteLogueado.setHobbies(panel.getSelectedHobbies()); // ejemplo
+    try {
+        Long estudianteId = estudianteLogueado.getId();
+        String apiUrl = ConfigCliente.WS_URL + "/estudiantes/" + estudianteId;
+
+        // Actualizar datos del DTO
+        estudianteLogueado.setHobbies(panel.getSelectedHobbies()); 
+        if (fotoBytes != null) {
             estudianteLogueado.setFotoBase64(Base64.getEncoder().encodeToString(fotoBytes));
+        }
+        estudianteLogueado.setCarrera(majorField.getText());
 
-            // Convertir DTO a JSON
-            Gson gson = new Gson();
-            String jsonInput = gson.toJson(estudianteLogueado);
+        // Convertir DTO a JSON
+        Gson gson = new Gson();
+        String jsonInput = gson.toJson(estudianteLogueado);
 
-            HttpURLConnection conn = (HttpURLConnection) new URL(apiUrl).openConnection();
-            conn.setRequestMethod("PUT");
-            conn.setRequestProperty("Content-Type", "application/json; utf-8");
-            conn.setDoOutput(true);
+        HttpURLConnection conn = (HttpURLConnection) new URL(apiUrl).openConnection();
+        conn.setRequestMethod("PUT");
+        conn.setRequestProperty("Content-Type", "application/json; utf-8");
+        conn.setDoOutput(true);
 
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = jsonInput.getBytes("utf-8");
-                os.write(input, 0, input.length);
-            }
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = jsonInput.getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
 
-            int code = conn.getResponseCode();
-            if (code == 200) {
-                JOptionPane.showMessageDialog(null, "Perfil actualizado con éxito.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar el perfil. Código: " + code);
-            }
-            
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-            null,
-            "Error al trata de actualizar este perfil.",
+        int code = conn.getResponseCode();
+        if (code == HttpURLConnection.HTTP_OK) {
+            JOptionPane.showMessageDialog(this, "Perfil actualizado con éxito.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el perfil. Código: " + code,
+                                          "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al tratar de actualizar este perfil: " + e.getMessage(),
             "Error",
             JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
-        
+        );
     }
+}
+
     
 
     // Muestra imagen a partir de bytes con escalado manteniendo proporción
@@ -424,7 +427,7 @@ public class EditarPerfilFrm extends JFrame {
     
     private List<Hobby> obtenerHobbies() {
         try {
-            URL url = new URL("http://localhost:8080/hobbies");
+            URL url = new URL(ConfigCliente.WS_URL + "/hobbies");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");

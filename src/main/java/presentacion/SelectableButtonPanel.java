@@ -10,7 +10,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -27,7 +29,8 @@ public class SelectableButtonPanel extends JPanel {
     private final List<JToggleButton> buttons = new ArrayList<>();
     private final List<Hobby> hobbies = new ArrayList<>(); // guardamos la referencia a los hobbies originales
 
-    public SelectableButtonPanel(List<Hobby> hobbies, List<Hobby> preselected) {
+    // Ahora preselected es Set<String>
+    public SelectableButtonPanel(List<Hobby> hobbies, Set<String> preselected) {
         setLayout(new WrapLayout(FlowLayout.LEFT, 10, 8));
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(200, 300));
@@ -36,7 +39,8 @@ public class SelectableButtonPanel extends JPanel {
             JToggleButton btn = createStyledButton(hobby.getNombre());
             this.hobbies.add(hobby); // guardamos el objeto completo
 
-            if (preselected != null && preselected.contains(hobby)) {
+            // Si el nombre del hobby está en el set de seleccionados
+            if (preselected != null && preselected.contains(hobby.getNombre())) {
                 btn.setSelected(true);
                 updateButtonStyle(btn);
             }
@@ -50,21 +54,18 @@ public class SelectableButtonPanel extends JPanel {
         JToggleButton button = new JToggleButton(text);
         button.setFont(new Font("SansSerif", Font.PLAIN, 13));
         button.setFocusPainted(false);
-        button.setContentAreaFilled(false); // eliminamos el fondo por defecto
+        button.setContentAreaFilled(false);
         button.setOpaque(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.setForeground(Color.BLACK);
 
-        // márgenes internos (padding)
         button.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(200, 200, 200), 1, true), // borde redondeado
-                new EmptyBorder(6, 14, 6, 14) // top, left, bottom, right
+                new LineBorder(new Color(200, 200, 200), 1, true),
+                new EmptyBorder(6, 14, 6, 14)
         ));
 
-        // fondo redondeado con color dinámico
         button.setBackground(Color.WHITE);
 
-        // Efecto hover
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -85,17 +86,15 @@ public class SelectableButtonPanel extends JPanel {
             }
         });
 
-        // Acción de selección
         button.addActionListener(e -> updateButtonStyle(button));
 
         return button;
-}
-
+    }
 
     private void updateButtonStyle(JToggleButton button) {
         if (button.isSelected()) {
             button.setOpaque(true);
-            button.setBackground(new Color(210, 227, 252)); // azul muy claro
+            button.setBackground(new Color(210, 227, 252));
             button.setForeground(new Color(25, 103, 210));
             button.setBorder(BorderFactory.createCompoundBorder(
                     new LineBorder(new Color(138, 180, 248), 1, true),
@@ -111,16 +110,16 @@ public class SelectableButtonPanel extends JPanel {
             ));
         }
         button.repaint();
-}
-
-    public List<Hobby> getSelectedHobbies() {
-    List<Hobby> selected = new ArrayList<>();
-
-    for (int i = 0; i < buttons.size(); i++) {
-        if (buttons.get(i).isSelected()) {
-            selected.add(hobbies.get(i)); // hobbies es la lista paralela a buttons
-        }
     }
-    return selected;
+
+    public Set<String> getSelectedHobbies() {
+        Set<String> selectedNames = new HashSet<>();
+        for (int i = 0; i < buttons.size(); i++) {
+            if (buttons.get(i).isSelected()) {
+                selectedNames.add(hobbies.get(i).getNombre());
+            }
+        }
+        return selectedNames;
 }
+
 }

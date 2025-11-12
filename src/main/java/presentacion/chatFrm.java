@@ -4,10 +4,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.ChatMensajeDTO;
 import dto.EstudianteDTO;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.*;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -98,23 +104,90 @@ public class chatFrm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
     }
+    
+    private String obtenerIniciales(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            return "??";
+        }
+        String[] partes = nombre.trim().split("\\s+"); 
+        if (partes.length >= 2) {
+            //sepramos
+            return (partes[0].substring(0, 1) + partes[1].substring(0, 1)).toUpperCase();
+        }
+        // si solo hay un nombre tomas las 2 primeras letras
+        return nombre.substring(0, Math.min(2, nombre.length())).toUpperCase();
+    }
 
     private void setFoto(String fotoBase64) {
         ImageIcon icon;
+        int fotoSize = 100; // Define el tamaño de la foto/avatar aquí
+
         if (fotoBase64 != null && !fotoBase64.isEmpty()) {
             try {
+                // Intenta decodificar la foto
                 byte[] fotoBytes = Base64.getDecoder().decode(fotoBase64);
                 icon = new ImageIcon(fotoBytes);
+                // Escala la foto
+                Image img = icon.getImage().getScaledInstance(fotoSize, fotoSize, Image.SCALE_SMOOTH);
+                lblFoto.setIcon(new ImageIcon(img));
+
             } catch (Exception e) {
+                // Si la foto está corrupta o falla, usa las iniciales
                 logger.log(java.util.logging.Level.WARNING, "Error al decodificar foto", e);
-                icon = getPlaceholderIcon();
+                String iniciales = obtenerIniciales(this.nombreReceptor);
+                icon = crearAvatarCircular(fotoSize, iniciales);
+                lblFoto.setIcon(icon);
             }
-            Image img = icon.getImage().getScaledInstance(244, 182, Image.SCALE_SMOOTH);
-            lblFoto.setIcon(new ImageIcon(img));
-            lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
-            lblFoto.setText("");
+        } else {
+            // --- ¡AQUÍ ESTÁ EL CAMBIO! ---
+            // Si no hay foto, llama al método para crear el avatar con iniciales
+            String iniciales = obtenerIniciales(this.nombreReceptor);
+            icon = crearAvatarCircular(fotoSize, iniciales);
+            lblFoto.setIcon(icon);
         }
 
+        // Esto se aplica en ambos casos
+        lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+        lblFoto.setText("");
+    }
+    
+        public Color generarColorPorId(Long id) {
+            if (id == null) {
+                id = 0L;
+            }
+            Color[] colores = {
+                new Color(255, 212, 186), new Color(255, 228, 212),
+                new Color(255, 208, 200), new Color(255, 224, 216),
+                new Color(232, 216, 200), new Color(255, 220, 220)
+            };
+            return colores[(int) (id % colores.length)];
+        }
+    
+    private ImageIcon crearAvatarCircular(int size, String iniciales) {
+        BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = image.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        Long idReceptor = 0L; 
+        if (this.estudianteReceptor != null) {
+            idReceptor = this.estudianteReceptor.getId();
+        }
+        Color bgColor = generarColorPorId(idReceptor);
+        
+        g2.setColor(bgColor);
+        g2.fillOval(0, 0, size, size);
+
+        // Dibuja las iniciales
+        g2.setColor(Color.DARK_GRAY); // Color del texto
+        g2.setFont(new Font("SansSerif", Font.BOLD, size / 3)); // Tamaño de fuente
+        FontMetrics fm = g2.getFontMetrics();
+        int x = (size - fm.stringWidth(iniciales)) / 2;
+        int y = ((size - fm.getHeight()) / 2) + fm.getAscent();
+        g2.drawString(iniciales, x, y);
+
+        g2.dispose();
+        return new ImageIcon(image);
     }
 
     private ImageIcon getPlaceholderIcon() {
@@ -280,6 +353,10 @@ public class chatFrm extends javax.swing.JFrame {
         public void handleException(StompSession session, StompHeaders headers, Throwable exception) {
             logger.log(java.util.logging.Level.SEVERE, "Excepción en STOMP", exception);
         }
+        
+        
+
+        
 
         @Override
         public void handleTransportError(StompSession session, Throwable exception) {

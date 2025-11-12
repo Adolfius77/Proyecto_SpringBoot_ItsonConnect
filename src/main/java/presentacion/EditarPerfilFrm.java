@@ -269,7 +269,9 @@ public class EditarPerfilFrm extends JFrame {
         SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(hobbies, estudianteLogueado.getHobbies());
         JScrollPane scrollHobbies = new JScrollPane(hobbiesPanel);
         scrollHobbies.setBorder(null);
-        scrollHobbies.setPreferredSize(new Dimension(500, 300));
+        scrollHobbies.setPreferredSize(new Dimension(500, 75));
+        scrollHobbies.setMinimumSize(new Dimension(500, 75));
+        scrollHobbies.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         c.gridx = 0;
         c.gridy = 10;
         c.gridwidth = 2;
@@ -288,7 +290,7 @@ public class EditarPerfilFrm extends JFrame {
         c.gridy = 11;
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
-        c.insets = new Insets(0, 0, 20, 0);
+        c.insets = new Insets(10, 0, 20, 0);
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0;
         mainPanel.add(saveProfileButton, c);
@@ -379,7 +381,7 @@ public class EditarPerfilFrm extends JFrame {
         
         add(mainPanel);
         pack();
-        setSize(getWidth(), 850);
+        setSize(getWidth(), 1000);
         setLocationRelativeTo(null); // <-- Esto la centra en pantalla
         setVisible(true);
     }
@@ -545,7 +547,7 @@ public class EditarPerfilFrm extends JFrame {
     // Demo
     public static void main(String[] args) {
         Set<String> hobbies = new HashSet<>();
-        hobbies.add("Cocinar");
+        hobbies.add("Gaming");
         hobbies.add("Leer");
         hobbies.add("Tocar guitarra");
         EditarPerfilFrm frame = new EditarPerfilFrm(new EstudianteDTO(

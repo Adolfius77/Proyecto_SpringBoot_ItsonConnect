@@ -1,0 +1,71 @@
+Guía de Instalación del Proyecto (Cliente-Servidor Local)
+Esta guía explica cómo configurar el proyecto en dos computadoras: una como "Servidor" (que corre la aplicación de Spring Boot y la base de datos) y otra como "Cliente" (que corre la interfaz gráfica de Java Swing).
+
+1. Requisitos Previos
+Antes de empezar, asegúrate de tener instalado lo siguiente:
+En la Computadora 1 (Servidor):
+Java JDK (versión 21 o compatible).
+Un IDE (como NetBeans o IntelliJ).
+Servidor MySQL y MySQL Workbench.
+En la Computadora 2 (Cliente):
+Java JDK (versión 21 o compatible).
+Un IDE (como NetBeans o IntelliJ).
+
+2. Computadora 1: Pasos del Servidor y Base de Datos
+En esta máquina se ejecutará el backend y se almacenarán los datos.
+Paso 1: Configurar la Base de Datos
+Abre MySQL Workbench.
+Ejecuta las siguientes sentencias SQL para crear la base de datos:
+CREATE DATABASE ItsonConnectDB;
+USE ItsonConnectDB;
+
+Paso 2: Configurar el Proyecto (Backend)
+
+Abre el proyecto en tu IDE.
+Navega al archivo src/main/resources/application.properties.
+Modifica el usuario y la contraseña para que coincidan con tu configuración local de MySQL:
+spring.datasource.username=root
+spring.datasource.password=Itson
+
+Paso 3: Obtener la IP del Servidor
+
+Presiona las teclas Windows + R, escribe cmd y presiona Enter.
+En la terminal, escribe ipconfig y presiona Enter.
+Busca tu conexión activa (usualmente "Ethernet" o "Wi-Fi") y anota la Dirección IPv4. Ejemplo: 192.168.0.109
+
+Paso 4: Configurar el Firewall (¡Crucial!) El cliente necesita permiso para "entrar" a esta computadora.
+
+En la barra de búsqueda de Windows, escribe "Firewall" y abre "Windows Defender Firewall con seguridad avanzada".
+En el panel izquierdo, haz clic en "Reglas de entrada".
+En el panel derecho, haz clic en "Nueva regla...".
+Tipo de Regla: Selecciona Puerto y haz clic en "Siguiente".
+Protocolo y Puertos: Selecciona TCP. En "Puertos locales específicos", escribe: 8080, 3306 y haz clic en "Siguiente".
+Acción: Selecciona Permitir la conexión y haz clic en "Siguiente".
+Perfil: Deja las tres casillas (Dominio, Privado, Público) marcadas y haz clic en "Siguiente".
+Nombre: Dale un nombre fácil de recordar, como ItsonConnect Puertos.
+Haz clic en "Finalizar.
+
+3. Computadora 2: Pasos del Cliente
+
+Esta máquina solo ejecutará la interfaz gráfica. No necesita MySQL.
+Paso 1: Configurar el Proyecto (Frontend)
+Abre el proyecto en tu IDE.
+Navega a la clase src/main/java/presentacion/ConfigCliente.java.
+Modifica la variable BASE_URL y pon la Dirección IPv4 que obtuviste de la Computadora 1:
+
+// Reemplaza esta IP por la IP de tu Computadora 1 (Servidor)
+public static final String BASE_URL ="http://192.168.0.109:8080";
+public static final String WS_URL = BASE_URL + "/itson-connect-ws";
+
+4. Pasos de Ejecución
+
+Ahora que todo está configurado, sigue este orden:
+En ambas computadoras: Realiza un "Clean and Build" en el proyecto para asegurarte de que todas las dependencias estén descargadas y el código compile.
+En la Computadora 1 (Servidor):
+Busca la clase com.mycompany.itsonconnect.ItsonConnectApplication.
+Haz clic derecho y selecciona "Run File".
+Verás la consola de Spring Boot iniciarse. Deja esta consola abierta.
+En la Computadora 2 (Cliente):
+Busca la clase presentacion.Main.
+Haz clic derecho y selecciona "Run File".
+¡La aplicación de inicio de sesión debería aparecer y estar lista para conectarse al servidor!

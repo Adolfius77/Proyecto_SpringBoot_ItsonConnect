@@ -67,9 +67,9 @@ import service.impl.HobbyServiceImpl;
 public class EditarPerfilFrm extends JFrame {
     private final JLabel imageLabel;
     private final EstudianteDTO estudianteLogueado;
-    private final JTextField majorField;
     private byte[] fotoBytes;
     private final JTextArea area;
+    private final JButton btnCarrera;
     
     public EditarPerfilFrm(EstudianteDTO estudianteLogueado) {
         
@@ -197,18 +197,34 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 8);
         mainPanel.add(majorLabel, c);
 
-        // TextField major (columna 1, se expande horizontalmente)
-        majorField = createTextField("Software mega software");
-        int j = majorField.getPreferredSize().height;
-        majorField.setPreferredSize(new Dimension(200, j));
-        majorField.setMaximumSize(new Dimension(Integer.MAX_VALUE, j));
+        //ComboBox Major
+        btnCarrera = new JButton(estudianteLogueado.getCarrera() != null 
+                         ? estudianteLogueado.getCarrera() 
+                         : "Seleccionar carrera");
+        btnCarrera.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        btnCarrera.setFocusPainted(false);
+        btnCarrera.setBackground(new Color(230, 242, 255));
+        btnCarrera.setForeground(new Color(0, 102, 204));
+        btnCarrera.setPreferredSize(new Dimension(200, 36));
+        btnCarrera.addActionListener(e -> {
+            DialogCarreras dialog = new DialogCarreras(this); // pasas el frame como parent
+            dialog.setVisible(true);
+
+            String seleccion = dialog.getCarreraSeleccionada();
+            if (seleccion != null) {
+                btnCarrera.setText(seleccion); // actualizar el texto del botón
+                estudianteLogueado.setCarrera(seleccion); // guardar en el DTO
+            }
+        });
         c.gridx = 0;
         c.gridy = 8;
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1.0;               // permite que la columna de la derecha se expanda
+        c.weightx = 1.0;
         c.insets = new Insets(0, 0, 6, 8);
-        mainPanel.add(majorField, c);
+        mainPanel.add(btnCarrera, c);
+
+
         
         //Year 
         JLabel yearLabel = new JLabel("Year");
@@ -253,7 +269,7 @@ public class EditarPerfilFrm extends JFrame {
         SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(hobbies, estudianteLogueado.getHobbies());
         JScrollPane scrollHobbies = new JScrollPane(hobbiesPanel);
         scrollHobbies.setBorder(null);
-        scrollHobbies.setPreferredSize(new Dimension(500, 200));
+        scrollHobbies.setPreferredSize(new Dimension(500, 300));
         c.gridx = 0;
         c.gridy = 10;
         c.gridwidth = 2;
@@ -276,12 +292,87 @@ public class EditarPerfilFrm extends JFrame {
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0;
         mainPanel.add(saveProfileButton, c);
+        
+        // Label Email
+        JLabel emailLabel = new JLabel("Email");
+        emailLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
+        c.gridx = 0;
+        c.gridy = 12;
+        c.gridwidth = 1;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0;
+        c.insets = new Insets(0, 0, 6, 8);
+        mainPanel.add(emailLabel, c);
 
-        // Añadir un glue vertical simple (una fila adicional con peso vertical) para empujar contenido arriba
+        // Campo Email (no editable)
+        JTextField emailField = createTextField(estudianteLogueado.getCorreo());
+        emailField.setEditable(false);
+        c.gridx = 0;
+        c.gridy = 13;
+        c.gridwidth = 2;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
+        c.insets = new Insets(0, 0, 6, 0);
+        mainPanel.add(emailField, c);
+
+        // Label Fecha de Nacimiento
+        JLabel fechaLabel = new JLabel("Fecha de Registro");
+        fechaLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
+        c.gridx = 0;
+        c.gridy = 14;
+        c.gridwidth = 1;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0;
+        c.insets = new Insets(0, 0, 6, 8);
+        mainPanel.add(fechaLabel, c);
+
+        // Campo Fecha de Nacimiento (no editable)
+        JTextField fechaField = createTextField(estudianteLogueado.getFechaRegistro());
+        fechaField.setEditable(false);
         c.gridx = 0;
         c.gridy = 15;
         c.gridwidth = 2;
-        c.weighty = 1.0;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
+        c.insets = new Insets(0, 0, 6, 0);
+        mainPanel.add(fechaField, c);
+
+        // Label Género
+        JLabel generoLabel = new JLabel("Género");
+        generoLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
+        c.gridx = 0;
+        c.gridy = 16;
+        c.gridwidth = 1;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0;
+        c.insets = new Insets(0, 0, 6, 8);
+        mainPanel.add(generoLabel, c);
+
+        // Campo Género (no editable)
+        JTextField generoField = createTextField(estudianteLogueado.getGenero());
+        generoField.setEditable(false);
+        c.gridx = 0;
+        c.gridy = 17;
+        c.gridwidth = 2;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
+        c.insets = new Insets(0, 0, 6, 0);
+        mainPanel.add(generoField, c);
+
+
+
+
+        // Añadir un glue vertical simple (una fila adicional con peso vertical) para empujar contenido arriba
+        c.gridx = 0;
+        c.gridy = 18;
+        c.gridwidth = 2;
+        c.weighty = 0.1;
         c.fill = GridBagConstraints.VERTICAL;
         mainPanel.add(Box.createVerticalGlue(), c);
         
@@ -309,7 +400,7 @@ public class EditarPerfilFrm extends JFrame {
     }
     
     private void saveChanges(SelectableButtonPanel panel) {
-    if (majorField.getText().trim().isEmpty()) {
+    if (btnCarrera.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(
             this,
             "El campo Major no puede estar vacío.",
@@ -321,14 +412,15 @@ public class EditarPerfilFrm extends JFrame {
 
     try {
         Long estudianteId = estudianteLogueado.getId();
-        String apiUrl = ConfigCliente.WS_URL + "/estudiantes/" + estudianteId;
+        String apiUrl = ConfigCliente.BASE_URL + "/api/estudiantes/" + estudianteId;
 
         // Actualizar datos del DTO
-        estudianteLogueado.setHobbies(panel.getSelectedHobbies()); 
+        estudianteLogueado.setHobbies(panel.getSelectedHobbies());
+        estudianteLogueado.setCarrera(btnCarrera.getText());
         if (fotoBytes != null) {
             estudianteLogueado.setFotoBase64(Base64.getEncoder().encodeToString(fotoBytes));
         }
-        estudianteLogueado.setCarrera(majorField.getText());
+        estudianteLogueado.setCarrera(btnCarrera.getText());
 
         // Convertir DTO a JSON
         Gson gson = new Gson();
@@ -427,7 +519,7 @@ public class EditarPerfilFrm extends JFrame {
     
     private List<Hobby> obtenerHobbies() {
         try {
-            URL url = new URL(ConfigCliente.WS_URL + "/hobbies");
+            URL url = new URL(ConfigCliente.BASE_URL + "/api/hobbies?limit=100");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -437,6 +529,9 @@ public class EditarPerfilFrm extends JFrame {
                     String json = sc.useDelimiter("\\A").next();
                     Gson gson = new Gson();
                     Hobby[] hobbiesArr = gson.fromJson(json, Hobby[].class);
+                    for (Hobby h : hobbiesArr) {
+                        System.out.println("Hobby recibido: " + h.getNombre());
+                }
                     return Arrays.asList(hobbiesArr);
                 }
             }

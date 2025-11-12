@@ -36,8 +36,6 @@ public class DescubrirFrm extends javax.swing.JFrame {
     private static ConfigurableApplicationContext context;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DescubrirFrm.class.getName());
     private List<EstudianteDTO> listaCompletaEstudiantes = new ArrayList<>();
-    
-    
 
     /**
      * Creates new form DescubrirFrm
@@ -47,28 +45,45 @@ public class DescubrirFrm extends javax.swing.JFrame {
         this.context = context;
 
         initComponents();
-        
+
         configurarVentana();
         configurarComboBox();
         cargarEstudiantes();
-        
-        
+
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            jMenu2MouseClicked(evt);
-        }
-    });
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                irAPerfil();
+            }
+        });
     }
-    
+
+    private void irAPerfil() {
+        if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+
+        EditarPerfilFrm editFrame = new EditarPerfilFrm(this.estudianteActual);
+        editFrame.setVisible(true);
+        this.dispose();
+    }
+
     private void configurarComboBox() {
         if (cmbCarreras == null) {
             System.err.println("cmbCarreras es nulo.");
             return;
         }
-        
+
         // 1. Asegúrate de que esté vacío
         cmbCarreras.removeAllItems();
-        
+
         // 2. Añade la opción por defecto
         cmbCarreras.addItem("Todas las Carreras");
 
@@ -76,8 +91,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
         // (Esto ahora funcionará porque filtrarEstudiantes() ya existe)
         cmbCarreras.addActionListener(e -> filtrarEstudiantes());
     }
-    
-    
+
     private void filtrarEstudiantes() {
         String carreraSeleccionada = (String) cmbCarreras.getSelectedItem();
         List<EstudianteDTO> estudiantesFiltrados;
@@ -96,9 +110,9 @@ public class DescubrirFrm extends javax.swing.JFrame {
         }
         mostrarEstudiantes(estudiantesFiltrados);
     }
-    
+
     private void mostrarEstudiantes(List<EstudianteDTO> estudiantesAMostrar) {
-        
+
         // 1. Define la acción de eliminación (Callback)
         Consumer<PersonasFrm> funcionDeEliminacion = (tarjetaParaEliminar) -> {
             SwingUtilities.invokeLater(() -> {
@@ -106,7 +120,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
                 panelDinamico.remove(tarjetaParaEliminar);
                 panelDinamico.revalidate();
                 panelDinamico.repaint();
-                
+
                 // Opcional: También elimina de la lista en memoria
                 this.listaCompletaEstudiantes.remove(tarjetaParaEliminar.getEstudianteDTO()); // <-- Necesitarías un getter en PersonasFrm
             });
@@ -118,8 +132,8 @@ public class DescubrirFrm extends javax.swing.JFrame {
         // 3. Crea y añade las tarjetas filtradas
         for (EstudianteDTO dto : estudiantesAMostrar) {
             PersonasFrm card = new PersonasFrm(
-                    estudianteActual.getId(), 
-                    dto, 
+                    estudianteActual.getId(),
+                    dto,
                     funcionDeEliminacion
             );
             panelDinamico.add(card);
@@ -129,19 +143,19 @@ public class DescubrirFrm extends javax.swing.JFrame {
         panelDinamico.revalidate();
         panelDinamico.repaint();
     }
-    
-    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {                                      
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {
         if (this.estudianteActual == null) {
             JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
             new IniciarSesionFrm().setVisible(true);
             this.dispose();
             return;
         }
-        
+
         inicioConnectFrm inicioFrm = new inicioConnectFrm(this.estudianteActual);
-        
+
         inicioFrm.setVisible(true);
-        
+
         this.dispose();
     }
 
@@ -150,7 +164,6 @@ public class DescubrirFrm extends javax.swing.JFrame {
         configurarVentana();
 
     }
-    
 
     private void configurarVentana() {
         this.setTitle("Itson Connect - Descubrir");
@@ -417,11 +430,11 @@ public class DescubrirFrm extends javax.swing.JFrame {
             this.dispose();
             return;
         }
-        
+
         matchesFrm mensajes = new matchesFrm(this.estudianteActual);
-        
+
         mensajes.setVisible(true);
-        
+
         this.dispose();
     }//GEN-LAST:event_jMenu5MouseClicked
 

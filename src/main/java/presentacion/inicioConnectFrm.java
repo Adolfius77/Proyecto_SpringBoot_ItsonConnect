@@ -61,6 +61,19 @@ public class inicioConnectFrm extends javax.swing.JFrame {
 
     }
 
+    private void irAPerfil() {
+        if (this.estudianteLogueado == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+
+        EditarPerfilFrm editFrame = new EditarPerfilFrm(this.estudianteLogueado);
+        editFrame.setVisible(true);
+        this.dispose();
+    }
+
     private void cargarMatchesRecientes() {
         if (estudianteLogueado == null) {
             return;
@@ -129,6 +142,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular7 = new presentacion.botonCircular();
         botonCircular8 = new presentacion.botonCircular();
         jComboBox1 = new javax.swing.JComboBox<>();
+        botonCircular2 = new presentacion.botonCircular();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnBuscarEstudiantes = new presentacion.botonCircular();
@@ -146,7 +160,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         panelMatches1 = new presentacion.PanelRedondo();
         botonCircular1 = new presentacion.botonCircular();
-        botonCircular2 = new presentacion.botonCircular();
 
         jLabel1.setText("YA LO LOGRASTE");
 
@@ -159,7 +172,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular6.setColorOver(new java.awt.Color(51, 204, 255));
         botonCircular6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
 
-        btnMensajes.setForeground(new java.awt.Color(0, 0, 0));
         btnMensajes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mensajero.png"))); // NOI18N
         btnMensajes.setText("Mensajes");
         btnMensajes.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -185,7 +197,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             .addGap(0, 186, Short.MAX_VALUE)
         );
 
-        btnOpciones.setForeground(new java.awt.Color(0, 0, 0));
         btnOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/editar (2).png"))); // NOI18N
         btnOpciones.setText("Perfil");
         btnOpciones.setBorderColor(new java.awt.Color(255, 255, 255));
@@ -228,10 +239,22 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Opciones", "Cerrar Sesion" }));
+
+        botonCircular2.setBackground(new java.awt.Color(102, 204, 255));
+        botonCircular2.setForeground(new java.awt.Color(255, 255, 255));
+        botonCircular2.setText("Buscar Estudiante");
+        botonCircular2.setBorderColor(new java.awt.Color(255, 255, 255));
+        botonCircular2.setColor(new java.awt.Color(102, 204, 255));
+        botonCircular2.setColorClick(new java.awt.Color(102, 204, 255));
+        botonCircular2.setColorOver(new java.awt.Color(0, 153, 204));
+        botonCircular2.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        botonCircular2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular2ActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,7 +277,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
-        btnInicio.setForeground(new java.awt.Color(0, 0, 0));
         btnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hogar.png"))); // NOI18N
         btnInicio.setText("Inicio");
         btnInicio.setBorderColor(new java.awt.Color(204, 255, 255));
@@ -267,7 +289,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
-        btnMatches.setForeground(new java.awt.Color(0, 0, 0));
         btnMatches.setIcon(new javax.swing.ImageIcon(getClass().getResource("/amigos-felices.png"))); // NOI18N
         btnMatches.setText("Matches");
         btnMatches.setBorderColor(new java.awt.Color(204, 255, 255));
@@ -280,7 +301,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
-        btnPerfil.setForeground(new java.awt.Color(0, 0, 0));
         btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/editar (2).png"))); // NOI18N
         btnPerfil.setText("Perfil");
         btnPerfil.setBorderColor(new java.awt.Color(204, 255, 255));
@@ -297,10 +317,8 @@ public class inicioConnectFrm extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("SansSerif", 3, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre estudiante");
 
-        btnCerrarSesion.setForeground(new java.awt.Color(0, 0, 0));
         btnCerrarSesion.setText("Cerrar sesion");
         btnCerrarSesion.setBorderColor(new java.awt.Color(204, 255, 255));
         btnCerrarSesion.setColorClick(new java.awt.Color(102, 204, 255));
@@ -361,11 +379,9 @@ public class inicioConnectFrm extends javax.swing.JFrame {
 
         jLabel4.setBackground(new java.awt.Color(51, 51, 51));
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 25)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("!Bienvendio de vuelta!");
 
         lblNombreBienvenida.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
-        lblNombreBienvenida.setForeground(new java.awt.Color(0, 0, 0));
         lblNombreBienvenida.setText("jLabel5");
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 3, 20)); // NOI18N
@@ -373,7 +389,6 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         jLabel6.setText("Acciones Rapidas");
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Descrubre nuevas Personas");
 
         panelMatches1.setBackground(new java.awt.Color(255, 255, 255));
@@ -399,15 +414,11 @@ public class inicioConnectFrm extends javax.swing.JFrame {
         botonCircular1.setColorClick(new java.awt.Color(102, 204, 255));
         botonCircular1.setColorOver(new java.awt.Color(0, 153, 204));
         botonCircular1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-
-        botonCircular2.setBackground(new java.awt.Color(102, 204, 255));
-        botonCircular2.setForeground(new java.awt.Color(255, 255, 255));
-        botonCircular2.setText("Buscar Estudiante");
-        botonCircular2.setBorderColor(new java.awt.Color(255, 255, 255));
-        botonCircular2.setColor(new java.awt.Color(102, 204, 255));
-        botonCircular2.setColorClick(new java.awt.Color(102, 204, 255));
-        botonCircular2.setColorOver(new java.awt.Color(0, 153, 204));
-        botonCircular2.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        botonCircular1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCircular1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -419,12 +430,9 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -450,9 +458,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botonCircular2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botonCircular1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
@@ -481,15 +487,8 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMensajesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        if (this.estudianteLogueado == null) {
-            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
-            new IniciarSesionFrm().setVisible(true);
-            this.dispose();
-            return;
-        }
+        irAPerfil();
         
-        
-
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     private void botonCircular8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular8ActionPerformed
@@ -534,14 +533,22 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                 "Cerrar Sesión",
                 javax.swing.JOptionPane.YES_NO_OPTION
         );
-        if(confirm == javax.swing.JOptionPane.YES_OPTION){
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             this.estudianteLogueado = null;
-            
+
             Main mainFrame = new Main();
             mainFrame.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void botonCircular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular1ActionPerformed
+        irAPerfil();
+    }//GEN-LAST:event_botonCircular1ActionPerformed
+
+    private void botonCircular2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCircular2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCircular2ActionPerformed
 
     /**
      * @param args the command line arguments

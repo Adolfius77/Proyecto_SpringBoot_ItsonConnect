@@ -78,7 +78,7 @@ public class chatFrm extends javax.swing.JFrame {
         this.lblNombreInfo.setText(this.nombreReceptor);
         lblNombreInfo.setAlignmentX(CENTER_ALIGNMENT);
         lblHobbies.setAlignmentY(CENTER_ALIGNMENT);
-        
+
         setFoto(estudianteReceptor.getFotoBase64());
 
         Set<String> hobbies = estudianteReceptor.getHobbies();
@@ -101,20 +101,40 @@ public class chatFrm extends javax.swing.JFrame {
                 System.exit(0);
             }
         });
+        perfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                irAPerfil();
+            }
+        });
         setLocationRelativeTo(null);
 
     }
-    
+
+    private void irAPerfil() {
+        if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.desconectarWebSocket(); // Desconecta el chat antes de cerrar
+            this.dispose();
+            return;
+        }
+
+       
+        EditarPerfilFrm editFrame = new EditarPerfilFrm(this.estudianteActual);
+        editFrame.setVisible(true);
+        this.desconectarWebSocket(); 
+        this.dispose(); 
+    }
+
     private String obtenerIniciales(String nombre) {
         if (nombre == null || nombre.isEmpty()) {
             return "??";
         }
-        String[] partes = nombre.trim().split("\\s+"); 
+        String[] partes = nombre.trim().split("\\s+");
         if (partes.length >= 2) {
             //sepramos
             return (partes[0].substring(0, 1) + partes[1].substring(0, 1)).toUpperCase();
         }
-        // si solo hay un nombre tomas las 2 primeras letras
         return nombre.substring(0, Math.min(2, nombre.length())).toUpperCase();
     }
 
@@ -150,31 +170,31 @@ public class chatFrm extends javax.swing.JFrame {
         lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
         lblFoto.setText("");
     }
-    
-        public Color generarColorPorId(Long id) {
-            if (id == null) {
-                id = 0L;
-            }
-            Color[] colores = {
-                new Color(255, 212, 186), new Color(255, 228, 212),
-                new Color(255, 208, 200), new Color(255, 224, 216),
-                new Color(232, 216, 200), new Color(255, 220, 220)
-            };
-            return colores[(int) (id % colores.length)];
+
+    public Color generarColorPorId(Long id) {
+        if (id == null) {
+            id = 0L;
         }
-    
+        Color[] colores = {
+            new Color(255, 212, 186), new Color(255, 228, 212),
+            new Color(255, 208, 200), new Color(255, 224, 216),
+            new Color(232, 216, 200), new Color(255, 220, 220)
+        };
+        return colores[(int) (id % colores.length)];
+    }
+
     private ImageIcon crearAvatarCircular(int size, String iniciales) {
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = image.createGraphics();
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Long idReceptor = 0L; 
+        Long idReceptor = 0L;
         if (this.estudianteReceptor != null) {
             idReceptor = this.estudianteReceptor.getId();
         }
         Color bgColor = generarColorPorId(idReceptor);
-        
+
         g2.setColor(bgColor);
         g2.fillOval(0, 0, size, size);
 
@@ -353,10 +373,6 @@ public class chatFrm extends javax.swing.JFrame {
         public void handleException(StompSession session, StompHeaders headers, Throwable exception) {
             logger.log(java.util.logging.Level.SEVERE, "Excepción en STOMP", exception);
         }
-        
-        
-
-        
 
         @Override
         public void handleTransportError(StompSession session, Throwable exception) {

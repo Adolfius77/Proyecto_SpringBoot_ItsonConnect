@@ -98,7 +98,6 @@ public class EstudianteController {
         try {
             Estudiante e = toEntity(dto);
 
-          
             if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) {
                 try {
                     byte[] fotoBytes = Base64.getDecoder().decode(dto.getFotoBase64());
@@ -109,9 +108,9 @@ public class EstudianteController {
             }
 
             Estudiante estudianteGuardado = estudianteService.crearEstudiante(e, dto.getHobbies());
-            
+
             return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(estudianteGuardado));
-            
+
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
@@ -121,8 +120,21 @@ public class EstudianteController {
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody EstudianteDTO dto) {
         try {
             dto.setId(id);
-            Estudiante e = estudianteService.actualizarEstudiante(toEntity(dto), dto.getHobbies());
+            Estudiante estudianteParaActualizar = toEntity(dto); 
+
+            if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) { 
+                try {
+                    byte[] fotoBytes = Base64.getDecoder().decode(dto.getFotoBase64()); 
+                    estudianteParaActualizar.setFoto(fotoBytes); 
+                } catch (IllegalArgumentException ex) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Formato de foto Base64 invalido.");
+                }
+            }
+
+            Estudiante e = estudianteService.actualizarEstudiante(estudianteParaActualizar, dto.getHobbies()); 
+
             return ResponseEntity.ok(toDTO(e));
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -185,7 +197,6 @@ public class EstudianteController {
                                 .map(p -> toDTO(p.getEstudiante())) // Usa el toDTO completo
                                 .collect(Collectors.toList());
                         dto.setParticipantes(participantesDTO);
-                       
 
                         return dto;
                     })

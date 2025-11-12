@@ -65,7 +65,7 @@ public class matchesFrm extends javax.swing.JFrame {
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
-                
+
                 String url = ConfigCliente.BASE_URL + "/api/estudiantes/" + estudianteActual.getId() + "/matches";
 
                 HttpRequest request = HttpRequest.newBuilder()
@@ -79,11 +79,10 @@ public class matchesFrm extends javax.swing.JFrame {
                     List<MatchDTO> matches = objectMapper.readValue(response.body(), new TypeReference<List<MatchDTO>>() {
                     });
 
-                    
                     this.listaCompletaDeMatches = matches;
 
                     SwingUtilities.invokeLater(() -> {
-                        
+
                         mostrarMatches(matches);
                     });
                 } else {
@@ -95,37 +94,32 @@ public class matchesFrm extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void filtrarYMostrarMatches() {
-    
+
         String textoBusqueda = textFiedBuscarMatches.getText().trim().toLowerCase();
 
-       
         List<MatchDTO> matchesFiltrados = this.listaCompletaDeMatches.stream()
-            .filter(match -> {
-                
-                EstudianteDTO otro = match.getParticipantes().stream()
-                    .filter(p -> !p.getId().equals(this.estudianteActual.getId()))
-                    .findFirst()
-                    .orElse(null); // Obtiene el otro participante o null
+                .filter(match -> {
 
-                
-                if (otro == null) {
-                    return false; 
-                }
+                    EstudianteDTO otro = match.getParticipantes().stream()
+                            .filter(p -> !p.getId().equals(this.estudianteActual.getId()))
+                            .findFirst()
+                            .orElse(null); // Obtiene el otro participante o null
 
-                
-                String nombre = (otro.getNombre() != null) ? otro.getNombre().toLowerCase() : "";
-                String apPaterno = (otro.getApPaterno() != null) ? otro.getApPaterno().toLowerCase() : "";
-                String apMaterno = (otro.getApMaterno() != null) ? otro.getApMaterno().toLowerCase() : "";
-                String nombreCompleto = nombre + " " + apPaterno + " " + apMaterno;
-                
-                
-                return nombreCompleto.contains(textoBusqueda);
-            })
-            .collect(Collectors.toList());
+                    if (otro == null) {
+                        return false;
+                    }
 
-        
+                    String nombre = (otro.getNombre() != null) ? otro.getNombre().toLowerCase() : "";
+                    String apPaterno = (otro.getApPaterno() != null) ? otro.getApPaterno().toLowerCase() : "";
+                    String apMaterno = (otro.getApMaterno() != null) ? otro.getApMaterno().toLowerCase() : "";
+                    String nombreCompleto = nombre + " " + apPaterno + " " + apMaterno;
+
+                    return nombreCompleto.contains(textoBusqueda);
+                })
+                .collect(Collectors.toList());
+
         mostrarMatches(matchesFiltrados);
     }
 
@@ -484,7 +478,17 @@ public class matchesFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMensajes3ActionPerformed
 
     private void btnPerfil3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfil3ActionPerformed
-        // TODO add your handling code here:
+        if (this.estudianteLogueado == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+
+        EditarPerfilFrm editFrame = new EditarPerfilFrm(this.estudianteLogueado);
+        editFrame.setVisible(true);
+        this.dispose();
+
     }//GEN-LAST:event_btnPerfil3ActionPerformed
 
     private void btnPerfil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfil1ActionPerformed

@@ -1,11 +1,12 @@
 package presentacion;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.EstudianteDTO;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -33,7 +34,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox; 
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,21 +48,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import model.Hobby;
 
-/**
- * Formulario para que el usuario edite su información de perfil. Permite
- * cambiar la foto, la carrera y los hobbies.
- *
- * * @author luisb 
- */
 public class EditarPerfilFrm extends JFrame {
 
     private final JLabel imageLabel;
     private final EstudianteDTO estudianteLogueado;
-    private byte[] fotoBytes; 
+    private byte[] fotoBytes;
     private final JTextArea area;
     private final JButton btnCarrera;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public EditarPerfilFrm(EstudianteDTO estudianteLogueado) { 
+    public EditarPerfilFrm(EstudianteDTO estudianteLogueado) {
 
         this.estudianteLogueado = estudianteLogueado;
         if (this.estudianteLogueado.getFotoBase64() != null && !this.estudianteLogueado.getFotoBase64().isEmpty()) {
@@ -78,17 +74,15 @@ public class EditarPerfilFrm extends JFrame {
         GridBagConstraints c = new GridBagConstraints();
         mainPanel.setPreferredSize(new Dimension(600, 400));
 
-        // Título
         JLabel title = new JLabel("Editar Perfil");
         title.setFont(new Font("SansSerif", Font.BOLD, 22));
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 2; // Ocupa 2 columnas
+        c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         c.insets = new Insets(0, 0, 16, 0);
         mainPanel.add(title, c);
 
-        // Label para la imagen
         imageLabel = new JLabel("Cargar imagen", SwingConstants.CENTER);
         imageLabel.setPreferredSize(new Dimension(150, 150));
         imageLabel.setMinimumSize(new Dimension(150, 150));
@@ -102,12 +96,10 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 8, 0);
         mainPanel.add(imageLabel, c);
 
-        // Mostrar foto existente si la hay
         if (this.fotoBytes != null) {
             mostrarImagenDesdeBytes(this.fotoBytes);
         }
 
-        // Botón para cambiar foto
         JButton photoButton = new JButton("Cambiar Foto de Perfil");
         photoButton.addActionListener(e -> cargarNuevaImagen());
         photoButton.setBackground(new Color(230, 242, 255));
@@ -121,7 +113,6 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 20, 0);
         mainPanel.add(photoButton, c);
 
-        // Label Nombre
         JLabel nombreLabel = new JLabel("Nombre");
         nombreLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
         c.gridx = 0;
@@ -133,22 +124,20 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 8);
         mainPanel.add(nombreLabel, c);
 
-        // TextField Nombre (No editable)
-        JTextField nombreField = createTextField(estudianteLogueado.getNombre() + " " + estudianteLogueado.getApPaterno() + " " + estudianteLogueado.getApMaterno()); //
+        JTextField nombreField = createTextField(estudianteLogueado.getNombre() + " " + estudianteLogueado.getApPaterno() + " " + estudianteLogueado.getApMaterno());
         int h = nombreField.getPreferredSize().height;
         nombreField.setEditable(false);
         nombreField.setPreferredSize(new Dimension(200, h));
         nombreField.setMaximumSize(new Dimension(Integer.MAX_VALUE, h));
         c.gridx = 0;
         c.gridy = 4;
-        c.gridwidth = 2; 
+        c.gridwidth = 2;
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
         c.insets = new Insets(0, 0, 6, 0);
         mainPanel.add(nombreField, c);
 
-        //Label Bio (Descripción)
         JLabel bioLabel = new JLabel("Bio");
         bioLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
         c.gridx = 0;
@@ -160,8 +149,7 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 8);
         mainPanel.add(bioLabel, c);
 
-        //TextArea Bio
-        area = new JTextArea("Soy Luis Fernando", 3, 20); 
+        area = new JTextArea("Soy Luis Fernando", 3, 20);
         area.setFont(new Font("SansSerif", Font.PLAIN, 13));
         area.setLineWrap(true);
         area.setWrapStyleWord(true);
@@ -180,7 +168,6 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 0);
         mainPanel.add(area, c);
 
-        //Label Carrera 
         JLabel majorLabel = new JLabel("Carrera");
         majorLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
         c.gridx = 0;
@@ -192,9 +179,8 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 8);
         mainPanel.add(majorLabel, c);
 
-        
         btnCarrera = new JButton(estudianteLogueado.getCarrera() != null
-                ? estudianteLogueado.getCarrera() 
+                ? estudianteLogueado.getCarrera()
                 : "Seleccionar carrera");
         btnCarrera.setFont(new Font("SansSerif", Font.PLAIN, 13));
         btnCarrera.setFocusPainted(false);
@@ -202,14 +188,13 @@ public class EditarPerfilFrm extends JFrame {
         btnCarrera.setForeground(new Color(0, 102, 204));
         btnCarrera.setPreferredSize(new Dimension(200, 36));
         btnCarrera.addActionListener(e -> {
-            // Llama al JDialog que muestra la lista de carreras
-            DialogCarreras dialog = new DialogCarreras(this); 
+            DialogCarreras dialog = new DialogCarreras(this);
             dialog.setVisible(true);
 
             String seleccion = dialog.getCarreraSeleccionada();
             if (seleccion != null) {
                 btnCarrera.setText(seleccion);
-                estudianteLogueado.setCarrera(seleccion); 
+                estudianteLogueado.setCarrera(seleccion);
             }
         });
         c.gridx = 0;
@@ -218,10 +203,9 @@ public class EditarPerfilFrm extends JFrame {
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
-        c.insets = new Insets(0, 0, 6, 0); // Inset derecho es 0
+        c.insets = new Insets(0, 0, 6, 0);
         mainPanel.add(btnCarrera, c);
 
-        // Título Hobbies
         JLabel titleHobbies = new JLabel("Hobbies e Intereses");
         titleHobbies.setFont(new Font("SansSerif", Font.BOLD, 18));
         c.gridx = 0;
@@ -231,9 +215,8 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(10, 0, 0, 0);
         mainPanel.add(titleHobbies, c);
 
-        // Panel Hobbies
-        List<Hobby> hobbies = obtenerHobbies(); // Llama a la API para obtener hobbies
-        SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(hobbies, estudianteLogueado.getHobbies()); 
+        List<Hobby> hobbies = obtenerHobbies();
+        SelectableButtonPanel hobbiesPanel = new SelectableButtonPanel(hobbies, estudianteLogueado.getHobbies());
         JScrollPane scrollHobbies = new JScrollPane(hobbiesPanel);
         scrollHobbies.setBorder(null);
         scrollHobbies.setPreferredSize(new Dimension(500, 75));
@@ -247,14 +230,27 @@ public class EditarPerfilFrm extends JFrame {
         c.weighty = 1.0;
         mainPanel.add(scrollHobbies, c);
 
-        // Botón Guardar Cambios
+        JButton btnVolver = new JButton("Volver al Inicio");
+        btnVolver.addActionListener(e -> volverAlInicio());
+        btnVolver.setBackground(new Color(220, 220, 220));
+        btnVolver.setForeground(Color.BLACK);
+        btnVolver.setFocusPainted(false);
+        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnVolver.setPreferredSize(new Dimension(200, 40));
+
         JButton saveProfileButton = new JButton("Guardar Cambios");
-        saveProfileButton.addActionListener(e -> saveChanges(hobbiesPanel)); 
-        saveProfileButton.setBackground(new Color(0, 102, 204)); // Color mas fuerte
+        saveProfileButton.addActionListener(e -> saveChanges(hobbiesPanel));
+        saveProfileButton.setBackground(new Color(0, 102, 204));
         saveProfileButton.setForeground(Color.WHITE);
         saveProfileButton.setFocusPainted(false);
         saveProfileButton.setFont(new Font("SansSerif", Font.BOLD, 14));
         saveProfileButton.setPreferredSize(new Dimension(200, 40));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.add(btnVolver);
+        buttonPanel.add(saveProfileButton);
+
         c.gridx = 0;
         c.gridy = 11;
         c.gridwidth = 2;
@@ -262,10 +258,9 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(10, 0, 20, 0);
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0;
-        c.weighty = 0; // Resetear weighty
-        mainPanel.add(saveProfileButton, c);
+        c.weighty = 0;
+        mainPanel.add(buttonPanel, c);
 
-        // Label Email
         JLabel emailLabel = new JLabel("Email");
         emailLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
         c.gridx = 0;
@@ -277,8 +272,7 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 8);
         mainPanel.add(emailLabel, c);
 
-        // Campo Email (no editable)
-        JTextField emailField = createTextField(estudianteLogueado.getCorreo()); //
+        JTextField emailField = createTextField(estudianteLogueado.getCorreo());
         emailField.setEditable(false);
         c.gridx = 0;
         c.gridy = 13;
@@ -289,7 +283,6 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 0);
         mainPanel.add(emailField, c);
 
-        // Label Fecha de Registro
         JLabel fechaLabel = new JLabel("Fecha de Registro");
         fechaLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
         c.gridx = 0;
@@ -301,8 +294,7 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 8);
         mainPanel.add(fechaLabel, c);
 
-        // Campo Fecha de Registro (no editable)
-        JTextField fechaField = createTextField(estudianteLogueado.getFechaRegistro()); //
+        JTextField fechaField = createTextField(estudianteLogueado.getFechaRegistro());
         fechaField.setEditable(false);
         c.gridx = 0;
         c.gridy = 15;
@@ -313,7 +305,6 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 0);
         mainPanel.add(fechaField, c);
 
-        // Label Género
         JLabel generoLabel = new JLabel("Género");
         generoLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
         c.gridx = 0;
@@ -325,8 +316,7 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 8);
         mainPanel.add(generoLabel, c);
 
-        // Campo Género (no editable)
-        JTextField generoField = createTextField(estudianteLogueado.getGenero()); //
+        JTextField generoField = createTextField(estudianteLogueado.getGenero());
         generoField.setEditable(false);
         c.gridx = 0;
         c.gridy = 17;
@@ -337,24 +327,25 @@ public class EditarPerfilFrm extends JFrame {
         c.insets = new Insets(0, 0, 6, 0);
         mainPanel.add(generoField, c);
 
-        // Espacio flexible para empujar todo hacia arriba
         c.gridx = 0;
         c.gridy = 18;
         c.gridwidth = 2;
-        c.weighty = 0.1; // Da peso vertical a este componente
+        c.weighty = 0.1;
         c.fill = GridBagConstraints.VERTICAL;
         mainPanel.add(Box.createVerticalGlue(), c);
 
         add(mainPanel);
         pack();
-        setSize(getWidth(), 1000); // Ajusta la altura
+        setSize(getWidth(), 1000);
         setLocationRelativeTo(null);
         setVisible(true);
     }
+    
+    private void volverAlInicio() {
+        new inicioConnectFrm(this.estudianteLogueado).setVisible(true);
+        this.dispose();
+    }
 
-    /**
-     * Helper para crear un JTextField con estilo uniforme.
-     */
     private JTextField createTextField(String initialText) {
         JTextField field = new JTextField();
         field.setFont(new Font("SansSerif", Font.PLAIN, 13));
@@ -367,10 +358,6 @@ public class EditarPerfilFrm extends JFrame {
         return field;
     }
 
-    /**
-     * Guarda los cambios del perfil enviando una solicitud PUT al servidor.
-     * Recoge los hobbies seleccionados y la foto (si se cambió).
-     */
     private void saveChanges(SelectableButtonPanel panel) {
         if (btnCarrera.getText().trim().isEmpty() || btnCarrera.getText().equals("Seleccionar carrera")) {
             JOptionPane.showMessageDialog(
@@ -384,21 +371,16 @@ public class EditarPerfilFrm extends JFrame {
 
         try {
             Long estudianteId = estudianteLogueado.getId();
-            String apiUrl = ConfigCliente.BASE_URL + "/api/estudiantes/" + estudianteId; //
+            String apiUrl = ConfigCliente.BASE_URL + "/api/estudiantes/" + estudianteId;
 
-            // Actualizar datos del DTO
-            estudianteLogueado.setHobbies(panel.getSelectedHobbies()); //
+            estudianteLogueado.setHobbies(panel.getSelectedHobbies());
             estudianteLogueado.setCarrera(btnCarrera.getText());
             if (fotoBytes != null) {
-                estudianteLogueado.setFotoBase64(Base64.getEncoder().encodeToString(fotoBytes)); //
+                estudianteLogueado.setFotoBase64(Base64.getEncoder().encodeToString(fotoBytes));
             }
-            // Los campos no editables como nombre, correo, etc., ya están en el DTO.
 
-            // Convertir DTO a JSON
-            Gson gson = new Gson();
-            String jsonInput = gson.toJson(estudianteLogueado);
+            String jsonInput = objectMapper.writeValueAsString(estudianteLogueado);
 
-            // --- Envío con HttpURLConnection ---
             HttpURLConnection conn = (HttpURLConnection) new URL(apiUrl).openConnection();
             conn.setRequestMethod("PUT");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -412,11 +394,9 @@ public class EditarPerfilFrm extends JFrame {
             int code = conn.getResponseCode();
             if (code == HttpURLConnection.HTTP_OK) {
                 JOptionPane.showMessageDialog(this, "Perfil actualizado con éxito.");
-                // Regresar a la pantalla de inicio
                 new inicioConnectFrm(this.estudianteLogueado).setVisible(true);
                 this.dispose();
             } else {
-                // Leer respuesta de error del servidor
                 String errorResponse = "";
                 try (Scanner scanner = new Scanner(conn.getErrorStream(), "UTF-8")) {
                     errorResponse = scanner.useDelimiter("\\A").next();
@@ -435,10 +415,6 @@ public class EditarPerfilFrm extends JFrame {
         }
     }
 
-    /**
-     * Muestra una imagen (desde bytes) en el JLabel 'imageLabel', escalándola
-     * para que quepa en 150x150 manteniendo la proporción.
-     */
     private void mostrarImagenDesdeBytes(byte[] datos) {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(datos)) {
             BufferedImage img = ImageIO.read(bais);
@@ -475,10 +451,6 @@ public class EditarPerfilFrm extends JFrame {
         }
     }
 
-    /**
-     * Abre un JFileChooser para que el usuario seleccione una imagen. La imagen
-     * seleccionada se guarda en la variable 'fotoBytes'.
-     */
     private void cargarNuevaImagen() {
         JFileChooser chooser = new JFileChooser();
         int result = chooser.showOpenDialog(this);
@@ -487,12 +459,10 @@ public class EditarPerfilFrm extends JFrame {
             try {
                 BufferedImage img = ImageIO.read(f);
                 if (img != null) {
-                    // Convertir la imagen a bytes (usamos PNG para preservar transparencia)
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ImageIO.write(img, "png", baos);
                     this.fotoBytes = baos.toByteArray();
 
-                    // Mostrar la imagen recién cargada
                     mostrarImagenDesdeBytes(this.fotoBytes);
                 } else {
                     JOptionPane.showMessageDialog(this, "No se pudo leer la imagen seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -506,7 +476,7 @@ public class EditarPerfilFrm extends JFrame {
 
     private List<Hobby> obtenerHobbies() {
         try {
-            URL url = new URL(ConfigCliente.BASE_URL + "/api/hobbies?limit=100"); //
+            URL url = new URL(ConfigCliente.BASE_URL + "/api/hobbies?limit=100");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -514,8 +484,7 @@ public class EditarPerfilFrm extends JFrame {
             if (conn.getResponseCode() == 200) {
                 try (Scanner sc = new Scanner(conn.getInputStream())) {
                     String json = sc.useDelimiter("\\A").next();
-                    Gson gson = new Gson();
-                    Hobby[] hobbiesArr = gson.fromJson(json, Hobby[].class);
+                    Hobby[] hobbiesArr = objectMapper.readValue(json, Hobby[].class);
                     return Arrays.asList(hobbiesArr);
                 }
             }
@@ -523,7 +492,7 @@ public class EditarPerfilFrm extends JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "No se pudieron cargar los hobbies: " + e.getMessage(), "Error de Red", JOptionPane.ERROR_MESSAGE);
         }
-        return Collections.emptyList(); // Retorna lista vacía si falla
+        return Collections.emptyList();
     }
 
 }

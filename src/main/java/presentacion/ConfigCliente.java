@@ -1,14 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presentacion;
 
-/**
- *
- * @author USER
- */
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import javax.swing.JOptionPane;
+
 public class ConfigCliente {
-    public static final String BASE_URL ="http://192.168.56.1:8080";
-    public static final String WS_URL = BASE_URL + "/itson-connect-ws";
+    
+    public static String BASE_URL;
+    public static String WS_URL;
+
+    static {
+        Properties prop = new Properties();
+        String ip = "localhost";
+        String port = "8080";
+
+        try {
+         
+            prop.load(new FileInputStream("config.properties"));
+            ip = prop.getProperty("server.ip", "localhost");
+            port = prop.getProperty("server.port", "8080");
+        } catch (IOException ex) {
+            System.out.println("No se encontró config.properties, usando localhost.");
+        }
+        
+        BASE_URL = "http://" + ip + ":" + port;
+        WS_URL = BASE_URL + "/itson-connect-ws";
+        System.out.println("Conectando a: " + BASE_URL);
+    }
 }

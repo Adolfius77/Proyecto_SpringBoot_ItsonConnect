@@ -59,8 +59,8 @@ public class chatFrm extends javax.swing.JFrame {
     private StompSession stompSession;
     private WebSocketStompClient stompClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    
-    private EstudianteDTO estudianteLogueado;
+
+  
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(chatFrm.class.getName());
 
     public chatFrm(EstudianteDTO estudianteActual, Long matchId, String nombreReceptor, EstudianteDTO estudianteReceptor) {
@@ -72,14 +72,14 @@ public class chatFrm extends javax.swing.JFrame {
         this.nombreReceptor = estudianteReceptor.getNombre() + " " + estudianteReceptor.getApPaterno();
 
         initComponents();
-
+        setLocationRelativeTo(null);
         this.setTitle("Chat con " + this.nombreReceptor);
         this.jLabel2.setText(this.nombreReceptor);
 
         this.lblNombreInfo.setText(this.nombreReceptor);
         lblNombreInfo.setAlignmentX(CENTER_ALIGNMENT);
         lblHobbies.setAlignmentY(CENTER_ALIGNMENT);
-        lblNombre.setText(this.estudianteLogueado.getNombre()+ " " + this.estudianteLogueado.getApPaterno());
+        lblNombre.setText(this.estudianteActual.getNombre() + " " + this.estudianteActual.getApPaterno());
         setFoto(estudianteReceptor.getFotoBase64());
 
         Set<String> hobbies = estudianteReceptor.getHobbies();
@@ -102,7 +102,6 @@ public class chatFrm extends javax.swing.JFrame {
                 System.exit(0);
             }
         });
-        
 
     }
 
@@ -115,11 +114,10 @@ public class chatFrm extends javax.swing.JFrame {
             return;
         }
 
-       
         EditarPerfilFrm editFrame = new EditarPerfilFrm(this.estudianteActual);
         editFrame.setVisible(true);
-        this.desconectarWebSocket(); 
-        this.dispose(); 
+        this.desconectarWebSocket();
+        this.dispose();
     }
 
     private String obtenerIniciales(String nombre) {
@@ -398,11 +396,11 @@ public class chatFrm extends javax.swing.JFrame {
         txtMensaje = new presentacion.TextFieldRedondo();
         btnEnviarMensaje = new presentacion.botonCircular();
         jPanel3 = new javax.swing.JPanel();
-        lblHobbies = new javax.swing.JLabel();
         panelRedondo1 = new presentacion.PanelRedondo();
         lblFoto = new javax.swing.JLabel();
-        lblNombreInfo = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
+        lblNombreInfo = new javax.swing.JLabel();
+        lblHobbies = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -512,9 +510,6 @@ public class chatFrm extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblHobbies.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        lblHobbies.setToolTipText("");
-
         panelRedondo1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblNombreInfo.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
@@ -524,52 +519,54 @@ public class chatFrm extends javax.swing.JFrame {
         panelRedondo1Layout.setHorizontalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRedondo1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelRedondo1Layout.createSequentialGroup()
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panelRedondo1Layout.createSequentialGroup()
+                .addGroup(panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRedondo1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRedondo1Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelRedondo1Layout.setVerticalGroup(
             panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRedondo1Layout.createSequentialGroup()
-                .addGroup(panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelRedondo1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRedondo1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34)
+                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNombreInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
+
+        lblHobbies.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        lblHobbies.setToolTipText("");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(98, 98, 98)
                 .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblHobbies, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
@@ -704,12 +701,12 @@ public class chatFrm extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -742,32 +739,40 @@ public class chatFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviarMensajeActionPerformed
 
     private void txtMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMensajeActionPerformed
-        // TODO add your handling code here:
+       enviarMensaje();
     }//GEN-LAST:event_txtMensajeActionPerformed
 
     private void btnBuscarEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarEstudiantesActionPerformed
-        if (this.estudianteLogueado == null) {
+        if (this.estudianteActual == null) {
 
             JOptionPane.showMessageDialog(this, "Error, no se ha iniciado sesion.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        DescubrirFrm descu = new DescubrirFrm(this.estudianteLogueado, null);
+        DescubrirFrm descu = new DescubrirFrm(this.estudianteActual, null);
         descu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBuscarEstudiantesActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInicioActionPerformed
-
-    private void btnMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchesActionPerformed
-        if (this.estudianteLogueado == null) {
+        if (this.estudianteActual == null) {
             JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
             new IniciarSesionFrm().setVisible(true);
             this.dispose();
             return;
         }
-        matchesFrm matchesVentana = new matchesFrm(this.estudianteLogueado);
+        inicioConnectFrm inicio = new inicioConnectFrm(this.estudianteActual);
+        inicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnInicioActionPerformed
+
+    private void btnMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchesActionPerformed
+        if (this.estudianteActual == null) {
+            JOptionPane.showMessageDialog(this, "Error de sesion. Intente iniciar sesion de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            new IniciarSesionFrm().setVisible(true);
+            this.dispose();
+            return;
+        }
+        matchesFrm matchesVentana = new matchesFrm(this.estudianteActual);
         matchesVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMatchesActionPerformed
@@ -779,13 +784,13 @@ public class chatFrm extends javax.swing.JFrame {
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         int confirm = javax.swing.JOptionPane.showConfirmDialog(
-            this,
-            "¿Seguro que deseas cerrar sesion?",
-            "Cerrar Sesión",
-            javax.swing.JOptionPane.YES_NO_OPTION
+                this,
+                "¿Seguro que deseas cerrar sesion?",
+                "Cerrar Sesión",
+                javax.swing.JOptionPane.YES_NO_OPTION
         );
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            this.estudianteLogueado = null;
+            this.estudianteActual = null;
 
             Main mainFrame = new Main();
             mainFrame.setVisible(true);

@@ -33,7 +33,7 @@ public class SelectableButtonPanel extends JPanel {
     public SelectableButtonPanel(List<Hobby> hobbies, Set<String> preselected) {
         setLayout(new WrapLayout(FlowLayout.LEFT, 10, 8));
         setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(200, 300));
+        setPreferredSize(new Dimension(200, 50));
 
         for (Hobby hobby : hobbies) {
             JToggleButton btn = createStyledButton(hobby.getNombre());

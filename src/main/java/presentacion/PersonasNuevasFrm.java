@@ -24,6 +24,7 @@ import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -54,13 +55,17 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
     private void configurarEstiloTarjeta(){
         this.setOpaque(false);
         
-        jPanel1.setOpaque(true);
-        jPanel1.setBackground(Color.white);
+       
+        jPanel1.setOpaque(false); 
+        jPanel1.setBackground(new Color(0,0,0,0)); 
+
+      
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 15, 15));
         
-        jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-            new javax.swing.border.LineBorder(new Color(230, 230, 230), 1, true), 
-            javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15) 
-    ));
+        lblNombreEstudiante1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblCarrera.setHorizontalAlignment(SwingConstants.CENTER);
+        lblIntereseYhobies.setHorizontalAlignment(SwingConstants.CENTER);
+        lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
     }
     
 
@@ -70,23 +75,24 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
         Set<String> hobbies = estudianteReceptor.getHobbies();
 
         if (hobbies != null && !hobbies.isEmpty()) {
-            lblIntereseYhobies.setText("Intereses: " + String.join(", ", hobbies));
+            String textoHobbies = String.join(", ", hobbies);
+            if(textoHobbies.length() > 35) textoHobbies = textoHobbies.substring(0, 32) + "...";
+            lblIntereseYhobies.setText(textoHobbies);
         } else {
-            lblIntereseYhobies.setText("Sin intereses comunes visibles");
+            lblIntereseYhobies.setText("Sin intereses visibles");
         }
 
-       
         if (estudianteReceptor.getFotoBase64() != null && !estudianteReceptor.getFotoBase64().isEmpty()) {
             try {
                 byte[] fotoBytes = Base64.getDecoder().decode(estudianteReceptor.getFotoBase64());
                 ImageIcon icon = new ImageIcon(fotoBytes);
-                Image img = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                Image img = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
                 lblFoto.setIcon(new ImageIcon(img));
             } catch (Exception e) {
-                lblFoto.setIcon(crearAvatarCircular(60, obtenerIniciales(nombreEstudiante)));
+                lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
             }
         } else {
-            lblFoto.setIcon(crearAvatarCircular(60, obtenerIniciales(nombreEstudiante)));
+            lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
         }
     }
 
@@ -140,7 +146,25 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        int width = getWidth() - 1;
+        int height = getHeight() - 1;
+        int arc = 30; 
+        int shadowOffset = 5; 
+
+        g2.setColor(new Color(220, 220, 220));
+        g2.fillRoundRect(shadowOffset, shadowOffset, width - shadowOffset * 2, height - shadowOffset * 2, arc, arc);
+
+        g2.setColor(Color.WHITE);
+        g2.fillRoundRect(0, 0, width - shadowOffset * 2, height - shadowOffset * 2, arc, arc);
+
+        g2.setColor(new Color(240, 240, 240));
+        g2.setStroke(new BasicStroke(1));
+        g2.drawRoundRect(0, 0, width - shadowOffset * 2, height - shadowOffset * 2, arc, arc);
+
+        g2.dispose();
     }
 
     /**

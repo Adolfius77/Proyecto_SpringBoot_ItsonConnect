@@ -328,7 +328,9 @@ public class DescubrirFrm extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Descubre");
 
         panelDinamico.setLayout(new java.awt.GridLayout(1, 0));
@@ -373,6 +375,7 @@ public class DescubrirFrm extends javax.swing.JFrame {
         );
 
         jMenuBar1.setBackground(new java.awt.Color(30, 115, 179));
+        jMenuBar1.setForeground(new java.awt.Color(30, 115, 179));
 
         jMenu1.setBackground(new java.awt.Color(30, 115, 179));
         jMenu1.setForeground(new java.awt.Color(255, 255, 255));

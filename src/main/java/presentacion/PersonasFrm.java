@@ -183,13 +183,19 @@ public class PersonasFrm extends javax.swing.JPanel {
         btnMegusta = new presentacion.botonCircular();
         lblCarrera = new javax.swing.JLabel();
         lblGenero = new javax.swing.JLabel();
+        lblGenero1 = new javax.swing.JLabel();
+        lblCarrera1 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        lblNombre.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(0, 0, 0));
         lblNombre.setText("Nombre");
 
+        lblHobbys.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        lblHobbys.setForeground(new java.awt.Color(0, 0, 0));
         lblHobbys.setText("Hobbies");
 
         btnNoMeInteresa.setForeground(new java.awt.Color(153, 0, 0));
@@ -211,9 +217,21 @@ public class PersonasFrm extends javax.swing.JPanel {
         btnMegusta.setColorOver(new java.awt.Color(51, 153, 255));
         btnMegusta.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
 
-        lblCarrera.setText("Carrera");
+        lblCarrera.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        lblCarrera.setForeground(new java.awt.Color(0, 0, 0));
+        lblCarrera.setText("TextoCarrera");
 
-        lblGenero.setText("Genero");
+        lblGenero.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        lblGenero.setForeground(new java.awt.Color(0, 0, 0));
+        lblGenero.setText("TextoGenero");
+
+        lblGenero1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        lblGenero1.setForeground(new java.awt.Color(0, 0, 0));
+        lblGenero1.setText("Genero:");
+
+        lblCarrera1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        lblCarrera1.setForeground(new java.awt.Color(0, 0, 0));
+        lblCarrera1.setText("Carrera:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -224,35 +242,45 @@ public class PersonasFrm extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(13, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombre)
                             .addComponent(lblHobbys)
-                            .addComponent(lblCarrera)
-                            .addComponent(lblGenero))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(19, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblCarrera1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCarrera))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblGenero1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblGenero)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblFotoPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(24, 24, 24)
                 .addComponent(lblNombre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblHobbys)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblCarrera)
-                .addGap(12, 12, 12)
-                .addComponent(lblGenero)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCarrera1)
+                    .addComponent(lblCarrera))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGenero1)
+                    .addComponent(lblGenero))
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNoMeInteresa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMegusta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -274,8 +302,10 @@ public class PersonasFrm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCarrera;
+    private javax.swing.JLabel lblCarrera1;
     private javax.swing.JLabel lblFotoPerfil;
     private javax.swing.JLabel lblGenero;
+    private javax.swing.JLabel lblGenero1;
     private javax.swing.JLabel lblHobbys;
     private javax.swing.JLabel lblNombre;
     // End of variables declaration//GEN-END:variables

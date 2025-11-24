@@ -35,6 +35,11 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
     private String nombreEstudiante;
     private EstudianteDTO estudianteActual;
     private EstudianteDTO estudianteReceptor;
+    
+    private PanelFotoCircular panelFoto;
+    private JLabel lblNombre;
+    private JLabel lblCarrera;
+    private JLabel lblHobbies;
 
     
 
@@ -49,51 +54,93 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
         this.nombreEstudiante = estudianteReceptor.getNombre() + " " + estudianteReceptor.getApPaterno();
 
         initComponents();
-        configurarEstiloTarjeta();
+        configurarDiseñoTarjeta();
         cargarDatos();
     }
-    private void configurarEstiloTarjeta(){
-        this.setOpaque(false);
+    private void configurarDiseñoTarjeta(){
+        setLayout(new GridBagLayout());
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(400, 100)); // Altura fija para que se vea uniforme en la lista
         
-       
-        jPanel1.setOpaque(false); 
-        jPanel1.setBackground(new Color(0,0,0,0)); 
+        // Borde redondeado gris y margen interno
+        setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(240, 240, 240)), // Línea separadora abajo
+            BorderFactory.createEmptyBorder(10, 15, 10, 15) // Padding interno
+        ));
 
-      
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 15, 15));
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        // 2. FOTO CIRCULAR (Izquierda)
+        panelFoto = new PanelFotoCircular();
+        panelFoto.setPreferredSize(new Dimension(70, 70)); // Tamaño de la foto
+        panelFoto.setMinimumSize(new Dimension(70, 70));
         
-        lblNombreEstudiante1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCarrera.setHorizontalAlignment(SwingConstants.CENTER);
-        lblIntereseYhobies.setHorizontalAlignment(SwingConstants.CENTER);
-        lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = 3; // La foto abarca 3 filas de texto
+        gbc.insets = new Insets(0, 0, 0, 15); // Espacio a la derecha de la foto
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(panelFoto, gbc);
+
+        // 3. NOMBRE (Arriba derecha)
+        lblNombre = new JLabel("Nombre Estudiante");
+        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lblNombre.setForeground(new Color(33, 33, 33)); // Negro suave
+        
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        gbc.weightx = 1.0; // Ocupar el ancho restante
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 2, 0); // Pequeño espacio abajo
+        add(lblNombre, gbc);
+
+        // 4. CARRERA (Centro derecha)
+        lblCarrera = new JLabel("Carrera");
+        lblCarrera.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        lblCarrera.setForeground(new Color(100, 100, 100)); // Gris
+        
+        gbc.gridy = 1;
+        gbc.insets = new Insets(0, 0, 2, 0);
+        add(lblCarrera, gbc);
+
+        // 5. HOBBIES (Abajo derecha)
+        lblHobbies = new JLabel("Intereses...");
+        lblHobbies.setFont(new Font("SansSerif", Font.ITALIC, 11));
+        lblHobbies.setForeground(new Color(150, 150, 150)); // Gris claro
+        
+        gbc.gridy = 2;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        add(lblHobbies, gbc);
     }
     
 
     private void cargarDatos() {
-        lblNombreEstudiante1.setText(this.nombreEstudiante);
+        lblNombre.setText(this.nombreEstudiante);
         lblCarrera.setText(estudianteReceptor.getCarrera());
-        Set<String> hobbies = estudianteReceptor.getHobbies();
 
+        Set<String> hobbies = estudianteReceptor.getHobbies();
         if (hobbies != null && !hobbies.isEmpty()) {
             String textoHobbies = String.join(", ", hobbies);
-            if(textoHobbies.length() > 35) textoHobbies = textoHobbies.substring(0, 32) + "...";
-            lblIntereseYhobies.setText(textoHobbies);
+            if(textoHobbies.length() > 40) textoHobbies = textoHobbies.substring(0, 37) + "...";
+            lblHobbies.setText("Intereses: " + textoHobbies);
         } else {
-            lblIntereseYhobies.setText("Sin intereses visibles");
+            lblHobbies.setText("Sin intereses visibles");
         }
 
         if (estudianteReceptor.getFotoBase64() != null && !estudianteReceptor.getFotoBase64().isEmpty()) {
             try {
                 byte[] fotoBytes = Base64.getDecoder().decode(estudianteReceptor.getFotoBase64());
-                ImageIcon icon = new ImageIcon(fotoBytes);
-                Image img = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-                lblFoto.setIcon(new ImageIcon(img));
+                panelFoto.setImagenBytes(fotoBytes);
             } catch (Exception e) {
-                lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
+                ImageIcon icon = crearAvatarCircular(70, obtenerIniciales(nombreEstudiante));
+                panelFoto.setImagen(icon.getImage());
             }
         } else {
-            lblFoto.setIcon(crearAvatarCircular(80, obtenerIniciales(nombreEstudiante)));
+            ImageIcon icon = crearAvatarCircular(70, obtenerIniciales(nombreEstudiante));
+            panelFoto.setImagen(icon.getImage());
         }
+        panelFoto.repaint();
     }
 
     private ImageIcon crearAvatarCircular(int size, String iniciales) {
@@ -105,13 +152,8 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
         g2.setColor(bgColor);
         g2.fillOval(0, 0, size, size);
 
-        
-        g2.setColor(new Color(254, 44, 85));
-        g2.setStroke(new BasicStroke(2));
-        g2.drawOval(1, 1, size - 2, size - 2);
-
-        g2.setColor(Color.DARK_GRAY);
-        g2.setFont(new Font("Arial", Font.BOLD, (int) (size / 2.5)));
+        g2.setColor(Color.WHITE); 
+        g2.setFont(new Font("SansSerif", Font.BOLD, (int) (size / 2.5)));
         FontMetrics fm = g2.getFontMetrics();
         int x = (size - fm.stringWidth(iniciales)) / 2;
         int y = ((size - fm.getHeight()) / 2) + fm.getAscent();
@@ -137,9 +179,11 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
             id = 0L;
         }
         Color[] colores = {
-            new Color(255, 212, 186), new Color(255, 228, 212),
-            new Color(255, 208, 200), new Color(255, 224, 216),
-            new Color(232, 216, 200), new Color(255, 220, 220)
+            new Color(100, 181, 246), // Azul
+            new Color(129, 199, 132), // Verde
+            new Color(255, 183, 77),  // Naranja
+            new Color(229, 115, 115), // Rojo
+            new Color(186, 104, 200)  // Violeta
         };
         return colores[(int) (id % colores.length)];
     }
@@ -176,59 +220,30 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        lblFoto = new javax.swing.JLabel();
-        lblCarrera = new javax.swing.JLabel();
-        lblIntereseYhobies = new javax.swing.JLabel();
         lblNombreEstudiante1 = new javax.swing.JLabel();
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        lblCarrera.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
-        lblCarrera.setForeground(new java.awt.Color(0, 0, 0));
-        lblCarrera.setText("Carrera");
-
-        lblIntereseYhobies.setFont(new java.awt.Font("SansSerif", 3, 13)); // NOI18N
-        lblIntereseYhobies.setForeground(new java.awt.Color(0, 0, 0));
-        lblIntereseYhobies.setText("Intereses y hobbies");
+        lblIntereseYhobies = new javax.swing.JLabel();
+        lblFoto = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         lblNombreEstudiante1.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         lblNombreEstudiante1.setForeground(new java.awt.Color(0, 0, 0));
         lblNombreEstudiante1.setText("Nombre estudiante");
 
+        lblIntereseYhobies.setFont(new java.awt.Font("SansSerif", 3, 13)); // NOI18N
+        lblIntereseYhobies.setForeground(new java.awt.Color(0, 0, 0));
+        lblIntereseYhobies.setText("Intereses y hobbies");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(lblCarrera))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNombreEstudiante1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(lblIntereseYhobies)))))
-                .addContainerGap(33, Short.MAX_VALUE))
+            .addGap(0, 245, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblNombreEstudiante1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblIntereseYhobies)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCarrera)
-                .addContainerGap(19, Short.MAX_VALUE))
+            .addGap(0, 282, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -246,7 +261,6 @@ public class PersonasNuevasFrm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblIntereseYhobies;
     private javax.swing.JLabel lblNombreEstudiante1;

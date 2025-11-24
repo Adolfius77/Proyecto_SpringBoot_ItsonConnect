@@ -50,10 +50,10 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             jLabel3.setText(this.estudianteLogueado.getNombre() + " " + this.estudianteLogueado.getApPaterno());
             lblNombreBienvenida.setText(this.estudianteLogueado.getNombre() + " " + this.estudianteLogueado.getApPaterno());
         }
-        panelMatches1.setLayout(new GridLayout(0, 1, 0, 25));
-        panelMatches1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        panelMatches1.setLayout(new java.awt.GridLayout(0, 1, 0, 15));
+        panelMatches1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        panelMatches1.setBackground(new Color(255, 255, 255));
+        panelMatches1.setBackground(new Color(248, 249, 250));
 
         cargarMatchesRecientes();
         refreshTimer = new Timer(5000, e -> cargarMatchesRecientes());
@@ -485,12 +485,12 @@ public class inicioConnectFrm extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNombreBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblNombreBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel7)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );

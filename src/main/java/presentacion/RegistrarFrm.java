@@ -99,12 +99,14 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         panelRedondo2 = new presentacion.PanelRedondo();
         jLabel18 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
+        panelRedondo3 = new presentacion.PanelRedondo();
+        jLabel3 = new javax.swing.JLabel();
+        panelRedondo1 = new presentacion.PanelRedondo();
+        panelFotoCircular1 = new presentacion.PanelFotoCircular();
+        panelFotoCircular2 = new presentacion.PanelFotoCircular();
         btnIniciarSesion = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        panelRedondo1 = new presentacion.PanelRedondo();
-        jLabel3 = new javax.swing.JLabel();
-        panelRedondo3 = new presentacion.PanelRedondo();
-        lblImagen = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtNombre = new presentacion.TextFieldRedondo();
         jLabel5 = new javax.swing.JLabel();
@@ -138,6 +140,8 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        PanelFoto = new presentacion.PanelFotoCircular();
 
         jLabel2.setText("jLabel2");
 
@@ -199,7 +203,6 @@ public class RegistrarFrm extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/unnamed.jpg"))); // NOI18N
         jLabel10.setText("jLabel10");
 
         panelRedondo2.setBackground(new java.awt.Color(234, 231, 225));
@@ -218,6 +221,66 @@ public class RegistrarFrm extends javax.swing.JFrame {
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cosasa.jpg"))); // NOI18N
 
+        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ssss.jpg"))); // NOI18N
+
+        panelRedondo3.setBackground(new java.awt.Color(255, 255, 255));
+        panelRedondo3.setRadius(100);
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Foto de perfil");
+
+        javax.swing.GroupLayout panelRedondo3Layout = new javax.swing.GroupLayout(panelRedondo3);
+        panelRedondo3.setLayout(panelRedondo3Layout);
+        panelRedondo3Layout.setHorizontalGroup(
+            panelRedondo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo3Layout.createSequentialGroup()
+                .addContainerGap(70, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelRedondo3Layout.setVerticalGroup(
+            panelRedondo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRedondo3Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(0, 137, Short.MAX_VALUE))
+        );
+
+        panelRedondo1.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout panelRedondo1Layout = new javax.swing.GroupLayout(panelRedondo1);
+        panelRedondo1.setLayout(panelRedondo1Layout);
+        panelRedondo1Layout.setHorizontalGroup(
+            panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 171, Short.MAX_VALUE)
+        );
+        panelRedondo1Layout.setVerticalGroup(
+            panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 181, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout panelFotoCircular1Layout = new javax.swing.GroupLayout(panelFotoCircular1);
+        panelFotoCircular1.setLayout(panelFotoCircular1Layout);
+        panelFotoCircular1Layout.setHorizontalGroup(
+            panelFotoCircular1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        panelFotoCircular1Layout.setVerticalGroup(
+            panelFotoCircular1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout panelFotoCircular2Layout = new javax.swing.GroupLayout(panelFotoCircular2);
+        panelFotoCircular2.setLayout(panelFotoCircular2Layout);
+        panelFotoCircular2Layout.setHorizontalGroup(
+            panelFotoCircular2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        panelFotoCircular2Layout.setVerticalGroup(
+            panelFotoCircular2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnIniciarSesion.setBackground(new java.awt.Color(255, 255, 255));
@@ -225,56 +288,6 @@ public class RegistrarFrm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("SansSerif", 3, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(30, 115, 179));
         jLabel1.setText("ItsonConnect");
-
-        panelRedondo1.setBackground(new java.awt.Color(0, 0, 0));
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Foto de perfil");
-
-        panelRedondo3.setBackground(new java.awt.Color(255, 255, 255));
-        panelRedondo3.setRadius(100);
-
-        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ssss.jpg"))); // NOI18N
-
-        javax.swing.GroupLayout panelRedondo3Layout = new javax.swing.GroupLayout(panelRedondo3);
-        panelRedondo3.setLayout(panelRedondo3Layout);
-        panelRedondo3Layout.setHorizontalGroup(
-            panelRedondo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRedondo3Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-        panelRedondo3Layout.setVerticalGroup(
-            panelRedondo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout panelRedondo1Layout = new javax.swing.GroupLayout(panelRedondo1);
-        panelRedondo1.setLayout(panelRedondo1Layout);
-        panelRedondo1Layout.setHorizontalGroup(
-            panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRedondo1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelRedondo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        panelRedondo1Layout.setVerticalGroup(
-            panelRedondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRedondo1Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelRedondo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
 
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -413,7 +426,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
                 .addGroup(panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(checkMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(checkLectura, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(panelRedondo5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(checkCantar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(checkDeportes, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -490,6 +503,23 @@ public class RegistrarFrm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel20.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel20.setText("Foto De Perfil");
+
+        PanelFoto.setPreferredSize(new java.awt.Dimension(150, 150));
+
+        javax.swing.GroupLayout PanelFotoLayout = new javax.swing.GroupLayout(PanelFoto);
+        PanelFoto.setLayout(PanelFotoLayout);
+        PanelFotoLayout.setHorizontalGroup(
+            PanelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 171, Short.MAX_VALUE)
+        );
+        PanelFotoLayout.setVerticalGroup(
+            PanelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout btnIniciarSesionLayout = new javax.swing.GroupLayout(btnIniciarSesion);
         btnIniciarSesion.setLayout(btnIniciarSesionLayout);
         btnIniciarSesionLayout.setHorizontalGroup(
@@ -505,9 +535,13 @@ public class RegistrarFrm extends javax.swing.JFrame {
                     .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel13)
                         .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                            .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(panelRedondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAgregarFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnAgregarFoto, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                                    .addComponent(PanelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                                .addGroup(btnIniciarSesionLayout.createSequentialGroup()
+                                    .addGap(35, 35, 35)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGap(30, 30, 30)
                             .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -550,7 +584,6 @@ public class RegistrarFrm extends javax.swing.JFrame {
                                     .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnBuscarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         btnIniciarSesionLayout.setVerticalGroup(
@@ -561,11 +594,12 @@ public class RegistrarFrm extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelRedondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(btnIniciarSesionLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -575,16 +609,17 @@ public class RegistrarFrm extends javax.swing.JFrame {
                         .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(22, 22, 22)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCorreoInstituto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAgregarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel8)))))
+                        .addComponent(txtCorreoInstituto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PanelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAgregarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel8)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passContresena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -601,7 +636,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
                 .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(btnIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
@@ -761,13 +796,12 @@ public class RegistrarFrm extends javax.swing.JFrame {
 
                 this.fotoBytes = Files.readAllBytes(archivoSeleccionado.toPath());
 
-                ImageIcon icon = new ImageIcon(archivoSeleccionado.getAbsolutePath());
-
-                Image imagen = icon.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH);
-                lblImagen.setIcon(new ImageIcon(imagen));
-
+                ((PanelFotoCircular) PanelFoto).setImagenBytes(this.fotoBytes);
+                
+                PanelFoto.revalidate();
+                PanelFoto.repaint();
                 JOptionPane.showMessageDialog(this, "Foto cargada exitosamente.");
-
+                
             } catch (Exception e) {
                 logger.log(java.util.logging.Level.SEVERE, "Error al leer la imagen", e);
                 JOptionPane.showMessageDialog(this, "Error al cargar la foto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -825,6 +859,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelFoto;
     private presentacion.botonCircular botonCircular2;
     private presentacion.botonCircular btnAgregarFoto;
     private presentacion.botonCircular btnBuscarCarrera;
@@ -859,6 +894,7 @@ public class RegistrarFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -869,6 +905,8 @@ public class RegistrarFrm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblImagen;
+    private presentacion.PanelFotoCircular panelFotoCircular1;
+    private presentacion.PanelFotoCircular panelFotoCircular2;
     private presentacion.PanelRedondo panelRedondo1;
     private presentacion.PanelRedondo panelRedondo2;
     private presentacion.PanelRedondo panelRedondo3;

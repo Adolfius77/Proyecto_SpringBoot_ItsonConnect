@@ -37,6 +37,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     private EstudianteDTO estudianteLogueado;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private Timer refreshTimer;
+    private final java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newSingleThreadExecutor();
 
     public inicioConnectFrm() {
         initComponents();
@@ -66,12 +67,11 @@ public class inicioConnectFrm extends javax.swing.JFrame {
     private void cargarFotoEnPanel() {
         if (estudianteLogueado.getFotoBase64() != null && !estudianteLogueado.getFotoBase64().isEmpty()) {
             try {
-                
+
                 byte[] fotoBytes = java.util.Base64.getDecoder().decode(estudianteLogueado.getFotoBase64());
-                
-                
-                ((presentacion.PanelFotoCircular)panelFotoPerfil).setImagenBytes(fotoBytes);
-                
+
+                ((presentacion.PanelFotoCircular) panelFotoPerfil).setImagenBytes(fotoBytes);
+
             } catch (Exception e) {
                 System.out.println("Error al cargar la foto: " + e.getMessage());
             }
@@ -96,7 +96,7 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             return;
         }
 
-        Executors.newSingleThreadExecutor().submit(() -> {
+        executor.submit(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
                 String url = ConfigCliente.BASE_URL + "/api/estudiantes/descubrir?idActual=" + estudianteLogueado.getId() + "&limit=5";
@@ -119,6 +119,15 @@ public class inicioConnectFrm extends javax.swing.JFrame {
             }
         });
 
+    }
+
+    @Override
+    public void dispose() {
+        executor.shutdown();
+        if (refreshTimer != null) {
+            refreshTimer.stop();
+        }
+        super.dispose();
     }
 
     private void actualizarPanelDescubrir(List<EstudianteDTO> usuarios) {

@@ -18,6 +18,7 @@ public class ChatController {
     private SimpMessagingTemplate messagingTemplate; //este se usa para enviar los mensajes a los clientes
     @Autowired
     private IMensajeService mensajeService;
+    //mapper mensaje
     @Autowired
     private MensajeMapper mensajeMapper;
 

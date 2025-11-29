@@ -33,6 +33,7 @@ public class MatchController {
     //mapper Match
     @Autowired
     private MatchMapper matchMapper;
+    //mapper mensaje
     @Autowired
     private MensajeMapper mensajeMapper;
 

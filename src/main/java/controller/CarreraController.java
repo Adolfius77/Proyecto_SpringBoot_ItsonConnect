@@ -23,6 +23,7 @@ public class CarreraController {
 
     @Autowired
     private ICarreraService carreraService;
+    //mapper carrera
     @Autowired
     private CarreraMapper carreraMapper;
 

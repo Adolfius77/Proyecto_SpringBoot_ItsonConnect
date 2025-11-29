@@ -1,6 +1,7 @@
 package controller;
 
 import Mappers.MatchMapper;
+import Mappers.MensajeMapper;
 import dto.ChatMensajeDTO;
 import dto.EstudianteDTO;
 import dto.MatchDTO;
@@ -32,7 +33,8 @@ public class MatchController {
     //mapper Match
     @Autowired
     private MatchMapper matchMapper;
-
+    @Autowired
+    private MensajeMapper mensajeMapper;
 
     //Endpoints
     @GetMapping
@@ -89,26 +91,19 @@ public class MatchController {
     public ResponseEntity<?> obtenerHistorialMensajes(
             @PathVariable Long matchId,
             @RequestParam(defaultValue = "50") int limit) {
-        
+
         try {
             List<Mensaje> mensajes = mensajeService.listarMensajesPorMatch(matchId, limit);
 
             List<ChatMensajeDTO> dtos = mensajes.stream()
-                    .map(m -> {
-                        ChatMensajeDTO dto = new ChatMensajeDTO();
-                        dto.setContenido(m.getContenido());
-                        dto.setEmisorId(m.getEmisor() != null ? m.getEmisor().getId() : null);
-                        dto.setEmisorNombre(m.getEmisor() != null ? m.getEmisor().getNombre() : "Sistema");
-                        dto.setMatchId(m.getMatch() != null ? m.getMatch().getId() : null);
-                        return dto;
-                    })
+                    .map(mensajeMapper::toDTO)
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(dtos);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body("Error al obtener mensajes: " + e.getMessage());
+                    .body("Error al obtener mensajes: " + e.getMessage());
         }
     }
 }

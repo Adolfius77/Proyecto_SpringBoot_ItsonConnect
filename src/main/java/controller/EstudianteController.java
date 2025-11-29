@@ -1,6 +1,7 @@
 package controller;
 
 import Mappers.EstudianteMapper;
+import Mappers.MatchMapper;
 import dto.EstudianteDTO;
 import dto.MatchDTO;
 import java.util.Base64;
@@ -27,6 +28,8 @@ public class EstudianteController {
     private EstudianteMapper estudianteMapper;
     @Autowired
     private final EstudianteServiceImpl estudianteService;
+    @Autowired
+    private MatchMapper matchMapper;
 
     private final IMensajeService mensajeService;
 
@@ -58,20 +61,9 @@ public class EstudianteController {
     public ResponseEntity<?> registrar(@RequestBody EstudianteDTO dto) {
         try {
             Estudiante e = estudianteMapper.toEntity(dto);
-
-            if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) {
-                try {
-                    byte[] fotoBytes = Base64.getDecoder().decode(dto.getFotoBase64());
-                    e.setFoto(fotoBytes);
-                } catch (IllegalArgumentException ex) {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Formato de foto Base64 inválido.");
-                }
-            }
-
             Estudiante estudianteGuardado = estudianteService.crearEstudiante(e, dto.getHobbies());
 
             return ResponseEntity.status(HttpStatus.CREATED).body(estudianteMapper.toDTO(estudianteGuardado));
-
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
@@ -146,21 +138,8 @@ public class EstudianteController {
     public ResponseEntity<?> obtenerMatches(@PathVariable Long id) {
         try {
             List<model.Match> matches = estudianteService.obtenerMatchesPorEstudiante(id);
-
             List<MatchDTO> matchDTOs = matches.stream()
-                    .map(match -> {
-                        MatchDTO dto = new MatchDTO();
-                        dto.setId(match.getId());
-                        dto.setFecha(match.getFecha() != null ? match.getFecha().toString() : null);
-
-                        // Convertir los participantes de cada match a DTO
-                        List<EstudianteDTO> participantesDTO = match.getParticipantes().stream()
-                                .map(p -> estudianteMapper.toDTO(p.getEstudiante())) // Usa el toDTO completo
-                                .collect(Collectors.toList());
-                        dto.setParticipantes(participantesDTO);
-
-                        return dto;
-                    })
+                    .map(matchMapper::toDTO)
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(matchDTOs);

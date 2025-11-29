@@ -1,5 +1,6 @@
 package controller;
 
+import Mappers.HobbyMapper;
 import dto.HobbyDTO;
 import model.Hobby;
 import service.IHobbyService;
@@ -19,32 +20,16 @@ public class HobbyController {
     public HobbyController(IHobbyService hobbyService) {
         this.hobbyService = hobbyService;
     }
-
-    //Convertidores
-    private HobbyDTO toDTO(Hobby hobby) {
-        if (hobby == null) return null;
-        HobbyDTO dto = new HobbyDTO();
-        dto.setId(hobby.getId());
-        dto.setNombre(hobby.getNombre());
-        dto.setDescripcion(hobby.getDescripcion());
-        return dto;
-    }
-
-    private Hobby toEntity(HobbyDTO dto) {
-        if (dto == null) return null;
-        Hobby hobby = new Hobby();
-        hobby.setId(dto.getId());
-        hobby.setNombre(dto.getNombre());
-        hobby.setDescripcion(dto.getDescripcion());
-        return hobby;
-    }
+    //mapper de hobbies
+    @Autowired
+    private HobbyMapper hobbyMapper;
 
     //Endpoints
     @GetMapping
     public List<HobbyDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
         return hobbyService.listarHobbies(limit)
                 .stream()
-                .map(this::toDTO)
+                .map(hobbyMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -55,14 +40,14 @@ public class HobbyController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                                  .body("Hobby no encontrado con id: " + id);
         }
-        return ResponseEntity.ok(toDTO(hobby));
+        return ResponseEntity.ok(hobbyMapper.toDTO(hobby));
     }
 
     @PostMapping
     public ResponseEntity<?> registrar(@RequestBody HobbyDTO dto) {
         try {
-            Hobby hobby = hobbyService.crearHobby(toEntity(dto));
-            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(hobby));
+            Hobby hobby = hobbyService.crearHobby(hobbyMapper.toEntity(dto));
+            return ResponseEntity.status(HttpStatus.CREATED).body(hobbyMapper.toDTO(hobby));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -72,8 +57,8 @@ public class HobbyController {
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody HobbyDTO dto) {
         try {
             dto.setId(id);
-            Hobby hobby = hobbyService.actualizarHobby(toEntity(dto));
-            return ResponseEntity.ok(toDTO(hobby));
+            Hobby hobby = hobbyService.actualizarHobby(hobbyMapper.toEntity(dto));
+            return ResponseEntity.ok(hobbyMapper.toDTO(hobby));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

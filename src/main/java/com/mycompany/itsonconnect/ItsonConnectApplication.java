@@ -18,7 +18,8 @@ import service.ICarreraService;
     "com.mycompany.itsonconnect",
     "controller",
     "service",
-    "Config"
+    "Config",
+        "Mappers"
 })
 @EnableJpaRepositories(basePackages = "Repository")
 @EntityScan(basePackages = "model")

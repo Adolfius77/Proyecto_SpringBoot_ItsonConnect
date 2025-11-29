@@ -1,5 +1,6 @@
 package controller;
 
+import Mappers.MensajeMapper;
 import dto.ChatMensajeDTO;
 import model.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,16 @@ public class ChatController {
     private SimpMessagingTemplate messagingTemplate; //este se usa para enviar los mensajes a los clientes
     @Autowired
     private IMensajeService mensajeService;
+    @Autowired
+    private MensajeMapper mensajeMapper;
 
     @MessageMapping("/chat/{matchId}")
     public void handleChatMessage(@DestinationVariable Long matchId, @Payload ChatMensajeDTO chatMensajeDTO) {
         try {
             chatMensajeDTO.setMatchId(matchId);
             Mensaje mensajeGuardado = mensajeService.guardarMensaje(chatMensajeDTO);
+            ChatMensajeDTO respuestaDTO = mensajeMapper.toDTO(mensajeGuardado);
 
-            ChatMensajeDTO respuestaDTO = new ChatMensajeDTO();
             respuestaDTO.setContenido(mensajeGuardado.getContenido());
             respuestaDTO.setEmisorId(mensajeGuardado.getEmisor().getId());
             respuestaDTO.setEmisorNombre(mensajeGuardado.getEmisor().getNombre());

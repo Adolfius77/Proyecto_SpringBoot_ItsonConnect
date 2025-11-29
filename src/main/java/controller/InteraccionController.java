@@ -1,5 +1,6 @@
 package controller;
 
+import Mappers.InterracionMapper;
 import dto.InteraccionDTO;
 import java.util.Date;
 import java.util.List;
@@ -18,42 +19,17 @@ public class InteraccionController {
 
     @Autowired
     private IInteraccionService interaccionService;
+    //mapper interaccion
+    @Autowired
+    private InterracionMapper interracionMapper;
 
-    //Convertidores
-     private InteraccionDTO toDTO(Interaccion interaccion) {
-        if (interaccion == null) return null;
-        return new InteraccionDTO(
-                interaccion.getId(),
-                interaccion.getEmisor() != null ? interaccion.getEmisor().getId() : null,
-                interaccion.getReceptor() != null ? interaccion.getReceptor().getId() : null,
-                interaccion.getTipo() != null ? interaccion.getTipo().name() : null,
-                interaccion.getFechaHora()
-        );
-    }
-
-    private Interaccion toEntity(InteraccionDTO dto) {
-        if (dto == null) return null;
-        Interaccion interaccion = new Interaccion();
-        interaccion.setId(dto.getId());
-        if(dto.getEmisorId() != null) interaccion.setEmisor(new Estudiante(dto.getEmisorId()));
-        if(dto.getReceptorId() != null) interaccion.setReceptor(new Estudiante(dto.getReceptorId()));
-        if(dto.getTipo() != null) {
-             try {
-                 interaccion.setTipo(Interaccion.TipoInteraccion.valueOf(dto.getTipo().toUpperCase()));
-             } catch (IllegalArgumentException e) {
-                 System.err.println("Tipo de interacción invalido recibido: " + dto.getTipo());
-             }
-        }
-        interaccion.setFechaHora(dto.getFechaHora());
-        return interaccion;
-    }
 
     //Endpoints
     @GetMapping
     public List<InteraccionDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
         return interaccionService.listarInteracciones(limit)
                 .stream()
-                .map(this::toDTO)
+                .map(interracionMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -61,7 +37,7 @@ public class InteraccionController {
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
        try {
             Interaccion interaccion = interaccionService.obtenerInteraccion(id);
-            return ResponseEntity.ok(toDTO(interaccion));
+            return ResponseEntity.ok(interracionMapper.toDTO(interaccion));
         } catch (Exception e) {
              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -70,10 +46,10 @@ public class InteraccionController {
     @PostMapping
     public ResponseEntity<?> crear(@RequestBody InteraccionDTO dto) {
        try {
-            Interaccion interaccion = toEntity(dto);
+            Interaccion interaccion = interracionMapper.toEntity(dto);
             Interaccion creada = interaccionService.crearInteraccion(interaccion);
           
-            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(creada));
+            return ResponseEntity.status(HttpStatus.CREATED).body(interracionMapper.toDTO(creada));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -83,9 +59,9 @@ public class InteraccionController {
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody InteraccionDTO dto) {
         try {
             dto.setId(id);
-            Interaccion interaccion = toEntity(dto);
+            Interaccion interaccion = interracionMapper.toEntity(dto);
             Interaccion actualizada = interaccionService.actualizarInteraccion(interaccion);
-            return ResponseEntity.ok(toDTO(actualizada));
+            return ResponseEntity.ok(interracionMapper.toDTO(actualizada));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

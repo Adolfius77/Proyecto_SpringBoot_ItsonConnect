@@ -1,6 +1,7 @@
 package controller;
 
-import dto.CarreraDTO; 
+import Mappers.CarreraMapper;
+import dto.CarreraDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.Carrera;
@@ -22,13 +23,9 @@ public class CarreraController {
 
     @Autowired
     private ICarreraService carreraService;
+    @Autowired
+    private CarreraMapper carreraMapper;
 
-    private CarreraDTO toDTO(Carrera carrera) {
-        CarreraDTO dto = new CarreraDTO();
-        dto.setId(carrera.getId());
-        dto.setNombre(carrera.getNombre());
-        return dto;
-    }
 
     @GetMapping
     public ResponseEntity<Page<CarreraDTO>> obtenerCarreras(
@@ -37,7 +34,7 @@ public class CarreraController {
         
         Page<Carrera> paginaCarreras = carreraService.listarCarreras(nombre, pageable);
         
-        Page<CarreraDTO> paginaDTOs = paginaCarreras.map(this::toDTO);
+        Page<CarreraDTO> paginaDTOs = paginaCarreras.map(carreraMapper::toDTO);
         
         return ResponseEntity.ok(paginaDTOs);
     }

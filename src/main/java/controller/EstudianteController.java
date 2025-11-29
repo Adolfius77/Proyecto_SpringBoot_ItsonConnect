@@ -1,5 +1,6 @@
 package controller;
 
+import Mappers.EstudianteMapper;
 import dto.EstudianteDTO;
 import dto.MatchDTO;
 import java.util.Base64;
@@ -21,8 +22,12 @@ import service.impl.EstudianteServiceImpl;
 @RestController
 @RequestMapping("/api/estudiantes")
 public class EstudianteController {
-
+    //mapper de estudiantes
+    @Autowired
+    private EstudianteMapper estudianteMapper;
+    @Autowired
     private final EstudianteServiceImpl estudianteService;
+
     private final IMensajeService mensajeService;
 
     @Autowired
@@ -31,55 +36,11 @@ public class EstudianteController {
         this.mensajeService = mensajeService;
     }
 
-    private EstudianteDTO toDTO(Estudiante e) {
-        if (e == null) {
-            return null;
-        }
-        EstudianteDTO dto = new EstudianteDTO();
-        dto.setId(e.getId());
-        dto.setNombre(e.getNombre());
-        dto.setApPaterno(e.getApPaterno());
-        dto.setApMaterno(e.getApMaterno());
-        dto.setCorreo(e.getCorreo());
-        dto.setFechaRegistro(e.getFechaRegistro() != null ? e.getFechaRegistro().toString() : null);
-        dto.setCarrera(e.getCarrera());
-        dto.setGenero(e.getGenero());
-
-        if (e.getFoto() != null) {
-            dto.setFotoBase64(Base64.getEncoder().encodeToString(e.getFoto()));
-        }
-
-        if (e.getHobbies() != null) {
-            Set<String> hobbyNombres = e.getHobbies().stream()
-                    .map(hobbyEstudiante -> hobbyEstudiante.getHobby().getNombre())
-                    .collect(Collectors.toSet());
-            dto.setHobbies(hobbyNombres);
-        }
-
-        return dto;
-    }
-
-    private Estudiante toEntity(EstudianteDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-        Estudiante e = new Estudiante();
-        e.setId(dto.getId());
-        e.setNombre(dto.getNombre());
-        e.setApPaterno(dto.getApPaterno());
-        e.setApMaterno(dto.getApMaterno());
-        e.setCorreo(dto.getCorreo());
-        e.setPassword(dto.getPassword());
-        e.setCarrera(dto.getCarrera());
-        e.setGenero(dto.getGenero());
-        return e;
-    }
-
     @GetMapping
     public List<EstudianteDTO> obtenerTodos(@RequestParam(defaultValue = "100") int limit) {
         return estudianteService.listarEstudiantes(limit)
                 .stream()
-                .map(this::toDTO)
+                .map(estudianteMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -90,13 +51,13 @@ public class EstudianteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Estudiante no encontrado con id: " + id);
         }
-        return ResponseEntity.ok(toDTO(e));
+        return ResponseEntity.ok(estudianteMapper.toDTO(e));
     }
 
     @PostMapping
     public ResponseEntity<?> registrar(@RequestBody EstudianteDTO dto) {
         try {
-            Estudiante e = toEntity(dto);
+            Estudiante e = estudianteMapper.toEntity(dto);
 
             if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) {
                 try {
@@ -109,7 +70,7 @@ public class EstudianteController {
 
             Estudiante estudianteGuardado = estudianteService.crearEstudiante(e, dto.getHobbies());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(estudianteGuardado));
+            return ResponseEntity.status(HttpStatus.CREATED).body(estudianteMapper.toDTO(estudianteGuardado));
 
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
@@ -120,7 +81,7 @@ public class EstudianteController {
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody EstudianteDTO dto) {
         try {
             dto.setId(id);
-            Estudiante estudianteParaActualizar = toEntity(dto); 
+            Estudiante estudianteParaActualizar = estudianteMapper.toEntity(dto);
 
             if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) { 
                 try {
@@ -133,7 +94,7 @@ public class EstudianteController {
 
             Estudiante e = estudianteService.actualizarEstudiante(estudianteParaActualizar, dto.getHobbies()); 
 
-            return ResponseEntity.ok(toDTO(e));
+            return ResponseEntity.ok(estudianteMapper.toDTO(e));
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -154,7 +115,7 @@ public class EstudianteController {
     public ResponseEntity<?> login(@RequestBody EstudianteDTO dto) {
         try {
             Estudiante e = estudianteService.login(dto.getCorreo(), dto.getPassword());
-            return ResponseEntity.ok(toDTO(e));
+            return ResponseEntity.ok(estudianteMapper.toDTO(e));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
@@ -172,7 +133,7 @@ public class EstudianteController {
         try {
             List<Estudiante> estudiantes = estudianteService.descubrirEstudiantes(idActual, limit);
             List<EstudianteDTO> dtos = estudiantes.stream()
-                    .map(this::toDTO) // Usa el toDTO completo
+                    .map(estudianteMapper::toDTO) // Usa el toDTO completo
                     .collect(Collectors.toList());
             return ResponseEntity.ok(dtos);
         } catch (Exception e) {
@@ -194,7 +155,7 @@ public class EstudianteController {
 
                         // Convertir los participantes de cada match a DTO
                         List<EstudianteDTO> participantesDTO = match.getParticipantes().stream()
-                                .map(p -> toDTO(p.getEstudiante())) // Usa el toDTO completo
+                                .map(p -> estudianteMapper.toDTO(p.getEstudiante())) // Usa el toDTO completo
                                 .collect(Collectors.toList());
                         dto.setParticipantes(participantesDTO);
 

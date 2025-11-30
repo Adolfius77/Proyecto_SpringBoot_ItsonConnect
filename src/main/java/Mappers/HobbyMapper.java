@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HobbyMapper {
+
     public HobbyDTO toDTO(Hobby hobby) {
-        if (hobby == null) return null;
+        if (hobby == null) {
+            return null;
+        }
         HobbyDTO dto = new HobbyDTO();
         dto.setId(hobby.getId());
         dto.setNombre(hobby.getNombre());
@@ -16,7 +19,9 @@ public class HobbyMapper {
     }
 
     public Hobby toEntity(HobbyDTO dto) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
         Hobby hobby = new Hobby();
         hobby.setId(dto.getId());
         hobby.setNombre(dto.getNombre());

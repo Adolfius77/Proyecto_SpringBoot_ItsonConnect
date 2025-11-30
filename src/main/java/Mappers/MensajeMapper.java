@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 public class MensajeMapper {
 
     public ChatMensajeDTO toDTO(Mensaje entity) {
-        if (entity == null) return null;
+        if (entity == null) {
+            return null;
+        }
 
         ChatMensajeDTO dto = new ChatMensajeDTO();
         dto.setContenido(entity.getContenido());
@@ -28,7 +30,9 @@ public class MensajeMapper {
     }
 
     public Mensaje toEntity(ChatMensajeDTO dto) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
 
         Mensaje entity = new Mensaje();
         entity.setContenido(dto.getContenido());

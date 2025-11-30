@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class MatchMapper {
+
     @Autowired
     private EstudianteMapper estudianteMapper;
 
@@ -26,7 +27,7 @@ public class MatchMapper {
         dto.setId(entidad.getId());
         dto.setFecha(entidad.getFecha() != null ? entidad.getFecha().toString() : null);
 
-        if(entidad.getParticipantes() != null) {
+        if (entidad.getParticipantes() != null) {
             List<EstudianteDTO> participantesDTO = entidad.getParticipantes().stream()
                     .map(MatchEstudiante::getEstudiante)
                     .map(estudianteMapper::toDTO)

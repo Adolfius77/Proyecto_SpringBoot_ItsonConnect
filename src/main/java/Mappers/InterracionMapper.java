@@ -7,8 +7,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class InterracionMapper {
+
     public InteraccionDTO toDTO(Interaccion interaccion) {
-        if (interaccion == null) return null;
+        if (interaccion == null) {
+            return null;
+        }
         return new InteraccionDTO(
                 interaccion.getId(),
                 interaccion.getEmisor() != null ? interaccion.getEmisor().getId() : null,
@@ -19,15 +22,21 @@ public class InterracionMapper {
     }
 
     public Interaccion toEntity(InteraccionDTO dto) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
 
         Interaccion interaccion = new Interaccion();
         interaccion.setId(dto.getId());
 
-        if(dto.getEmisorId() != null) interaccion.setEmisor(new Estudiante(dto.getEmisorId()));
-        if(dto.getReceptorId() != null) interaccion.setReceptor(new Estudiante(dto.getReceptorId()));
+        if (dto.getEmisorId() != null) {
+            interaccion.setEmisor(new Estudiante(dto.getEmisorId()));
+        }
+        if (dto.getReceptorId() != null) {
+            interaccion.setReceptor(new Estudiante(dto.getReceptorId()));
+        }
 
-        if(dto.getTipo() != null) {
+        if (dto.getTipo() != null) {
             try {
                 interaccion.setTipo(Interaccion.TipoInteraccion.valueOf(dto.getTipo().toUpperCase()));
             } catch (IllegalArgumentException e) {

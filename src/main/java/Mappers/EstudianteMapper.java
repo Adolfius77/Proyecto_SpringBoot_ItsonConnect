@@ -9,7 +9,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public  class EstudianteMapper{
+public class EstudianteMapper {
+
     public EstudianteDTO toDTO(Estudiante e) {
         if (e == null) {
             return null;
@@ -52,11 +53,11 @@ public  class EstudianteMapper{
         e.setCarrera(dto.getCarrera());
         e.setGenero(dto.getGenero());
 
-        if(dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()){
-            try{
+        if (dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()) {
+            try {
                 byte[] fotoBytes = Base64.getDecoder().decode(dto.getFotoBase64());
                 e.setFoto(fotoBytes);
-            }catch (IllegalArgumentException ex){
+            } catch (IllegalArgumentException ex) {
                 System.err.println("error decodificando la foto we" + ex.getMessage());
                 e.setFoto(null);
             }

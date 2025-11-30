@@ -42,12 +42,12 @@ public class RegistrarFrm extends javax.swing.JFrame {
 
         this.getRootPane().setDefaultButton(btnCrearCuenta);
 
-        btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarCarreraActionPerformed(evt);
-            }
-        });
+//        btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
+//            @Override
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                btnBuscarCarreraActionPerformed(evt);
+//            }
+//        });
 
     }
 
@@ -61,11 +61,11 @@ public class RegistrarFrm extends javax.swing.JFrame {
         if (cmbGenero.getItemCount() > 0) {
             cmbGenero.setSelectedIndex(0);
         }
-        btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarCarreraActionPerformed(evt);
-            }
-        });
+//        btnBuscarCarrera.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                btnBuscarCarreraActionPerformed(evt);
+//            }
+//        });
     }
 
     /**

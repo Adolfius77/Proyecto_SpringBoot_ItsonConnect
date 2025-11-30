@@ -99,8 +99,9 @@ public class EstudianteServiceImpl implements IEstudianteService {
         if (estudiante.getGenero() == null || estudiante.getApPaterno().isBlank()) {
             throw new Exception("El genero es obigatorio");
         }
-        String contrasenaEncriptada = passwordEncoder.encode(estudiante.getPassword());
-        estudiante.setPassword(contrasenaEncriptada);
+
+        String passEncriptada = passwordEncoder.encode(estudiante.getPassword());
+        estudiante.setPassword(passEncriptada);
 
         estudiante.setFechaRegistro(new Date());
         Estudiante estudianteGuardado = estudianteRepository.save(estudiante);

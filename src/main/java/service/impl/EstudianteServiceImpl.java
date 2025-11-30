@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.IEstudianteService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class EstudianteServiceImpl implements IEstudianteService {
@@ -34,6 +35,8 @@ public class EstudianteServiceImpl implements IEstudianteService {
 
     @Autowired
     private HobbyEstudianteRepository hobbyEstudianteRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Estudiante login(String correo, String password) throws Exception {
@@ -49,7 +52,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
                 .orElseThrow(() -> new Exception("Correo incorrecto o no existe"));
         
       
-        if (!estudiante.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, estudiante.getPassword())) {
             throw new Exception("contraseña incorrecta");
         }
         return estudiante;
@@ -96,6 +99,8 @@ public class EstudianteServiceImpl implements IEstudianteService {
         if (estudiante.getGenero() == null || estudiante.getApPaterno().isBlank()) {
             throw new Exception("El genero es obigatorio");
         }
+        String contrasenaEncriptada = passwordEncoder.encode(estudiante.getPassword());
+        estudiante.setPassword(contrasenaEncriptada);
 
         estudiante.setFechaRegistro(new Date());
         Estudiante estudianteGuardado = estudianteRepository.save(estudiante);

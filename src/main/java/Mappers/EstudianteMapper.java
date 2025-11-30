@@ -51,11 +51,13 @@ public  class EstudianteMapper{
         e.setPassword(dto.getPassword());
         e.setCarrera(dto.getCarrera());
         e.setGenero(dto.getGenero());
+
         if(dto.getFotoBase64() != null && !dto.getFotoBase64().isEmpty()){
             try{
-                e.setFoto(Base64.getDecoder().decode(dto.getFotoBase64()));
-
+                byte[] fotoBytes = Base64.getDecoder().decode(dto.getFotoBase64());
+                e.setFoto(fotoBytes);
             }catch (IllegalArgumentException ex){
+                System.err.println("error decodificando la foto we" + ex.getMessage());
                 e.setFoto(null);
             }
         }

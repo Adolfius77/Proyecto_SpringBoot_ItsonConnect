@@ -564,9 +564,9 @@ Este proyecto fue desarrollado como parte de un proyecto académico del ITSON.
 ## 👥 Autores
 
 Desarrollado por estudiantes del **Instituto Tecnológico de Sonora (ITSON)**.
-JOSE ADOLFO ORTEGA RUIZ
-JORGE ALEJANDRO BRINGAS RABAGO
-LUIS FERNANDO BAUTISTA LUNA
+- JOSE ADOLFO ORTEGA RUIZ
+- JORGE ALEJANDRO BRINGAS RABAGO
+- LUIS FERNANDO BAUTISTA LUNA
 
 
 ---

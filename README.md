@@ -539,6 +539,24 @@ Al iniciar la aplicación, se cargan automáticamente los siguientes hobbies:
 
 ## 📄 Licencia
 
+Este proyecto está licenciado bajo la **MIT License** - mira el archivo [LICENSE](LICENSE) para más detalles.
+
+### ¿Qué significa esto?
+
+✅ **Puedes:**
+- Usar el código comercialmente
+- Modificar el código
+- Distribuir el código
+- Usar el código de forma privada
+
+📋 **Debes:**
+- Incluir el aviso de copyright y la licencia en todas las copias o porciones sustanciales del código
+
+❌ **No puedes:**
+- Responsabilizar a los autores por daños o problemas
+
+---
+
 Este proyecto fue desarrollado como parte de un proyecto académico del ITSON.
 
 ---

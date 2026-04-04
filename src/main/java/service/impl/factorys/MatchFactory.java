@@ -4,10 +4,11 @@ import dto.EstudianteDTO;
 import model.Estudiante;
 import model.Match;
 import model.MatchEstudiante;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashSet;
-
+@Component
 public class MatchFactory {
     public Match construirMatchVacio(){
          Match match = new Match();

@@ -4,14 +4,16 @@ import Repository.HobbyRepository;
 import java.util.Arrays;
 import java.util.List;
 import model.Hobby;
-import org.springframework.boot.CommandLineRunner;S
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import service.ICarreraService;
+import presentacion.Main;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
@@ -20,19 +22,26 @@ import service.ICarreraService;
         "controller",
         "service",
         "Config",
-        "Mappers"
+        "Mappers",
+        "factory"
 })
 @EnableJpaRepositories(basePackages = "Repository")
 @EntityScan(basePackages = "model")
 public class ItsonConnectApplication {
 
     public static void main(String[] args) {
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(ItsonConnectApplication.class)
+                .headless(false)
+                .run(args);
 
-        SpringApplication.run(ItsonConnectApplication.class, args);
+            java.awt.EventQueue.invokeLater(() -> {
+            Main mainFrame = new Main();
+            mainFrame.setVisible(true);
+        });
     }
 
     @Bean
-    public CommandLineRunner initData(HobbyRepository hobbyRepository,ICarreraService carreraService) {
+    public CommandLineRunner initData(HobbyRepository hobbyRepository, ICarreraService carreraService) {
         return (args) -> {
             List<String> hobbiesIniciales = Arrays.asList(
                     "Gaming",
@@ -50,11 +59,9 @@ public class ItsonConnectApplication {
                     hobby.setDescripcion("Interes en : " + nombreHobby);
                     hobbyRepository.save(hobby);
                     System.out.println("hobby precargado " + nombreHobby);
-
                 }
             }
             carreraService.precargarCarreras();
         };
     }
-
 }

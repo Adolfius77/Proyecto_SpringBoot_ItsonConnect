@@ -1,6 +1,6 @@
 package com.example.ProyectoTinderr; 
 
-import com.mycompany.itsonconnect.ItsonConnectApplication; 
+import Servidor.ItsonConnectApplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

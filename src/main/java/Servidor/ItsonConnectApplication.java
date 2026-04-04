@@ -1,10 +1,10 @@
-package com.mycompany.itsonconnect;
+package Servidor;
 
 import Repository.HobbyRepository;
 import java.util.Arrays;
 import java.util.List;
 import model.Hobby;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.CommandLineRunner;S
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -15,10 +15,11 @@ import service.ICarreraService;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-    "com.mycompany.itsonconnect",
-    "controller",
-    "service",
-    "Config",
+        "Servidor",
+        "Servidor.ItsonConnect",
+        "controller",
+        "service",
+        "Config",
         "Mappers"
 })
 @EnableJpaRepositories(basePackages = "Repository")

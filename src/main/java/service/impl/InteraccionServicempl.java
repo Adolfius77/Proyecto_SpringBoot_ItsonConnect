@@ -76,15 +76,17 @@ public class InteraccionServicempl implements IInteraccionService {
                 // Verificar si ya existe un match entre ellos para no duplicarlo
                 Optional<Match> matchExistente = matchRepository.buscarMatchExistente(emisor, receptor);
                 if (matchExistente.isEmpty()) {
+                    //dependencia de match
                     Match nuevoMatch = new Match();
                     nuevoMatch.setFecha(new Date()); // Fecha actual del match
                     Match matchGuardado = matchRepository.save(nuevoMatch);
 
                     // Crear las relaciones MatchEstudiante
+                    //dependencia de matchEstudiante
                     MatchEstudiante me1 = new MatchEstudiante();
                     me1.setEstudiante(emisor);
                     me1.setMatch(matchGuardado);
-
+                    //dependecia de matchEstiante
                     MatchEstudiante me2 = new MatchEstudiante();
                     me2.setEstudiante(receptor);
                     me2.setMatch(matchGuardado);

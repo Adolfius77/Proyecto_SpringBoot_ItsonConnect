@@ -4,6 +4,7 @@
  */
 package service.impl;
 
+import Repository.EstudianteRepository;
 import Repository.MatchRepository;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import service.IMatchService;
+import service.impl.factorys.MatchFactory;
 
 /**
  *
@@ -25,6 +27,18 @@ import service.IMatchService;
 public class MatchServiceImpl implements IMatchService{
     @Autowired
     MatchRepository matchRepository;
+
+
+    private final EstudianteRepository estudianteRepository;
+    private final MatchFactory matchFactory;
+
+    @Autowired
+    public  MatchServiceImpl(MatchRepository matchRepository, EstudianteRepository estudianteRepository, MatchFactory matchFactory) {
+        this.matchRepository = matchRepository;
+        this.estudianteRepository = estudianteRepository;
+        this.matchFactory = matchFactory;
+
+    }
     
     @Override
     public Match crearMatch(Match match) throws Exception {

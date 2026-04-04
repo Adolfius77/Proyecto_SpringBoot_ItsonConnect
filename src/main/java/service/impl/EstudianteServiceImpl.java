@@ -111,6 +111,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
                 Hobby hobby = hobbyRepository.findByNombre(nombreHobby).orElse(null);
 
                 if (hobby != null) {
+                    //aqui hay una dependencia de hobbyEstudiante
                     HobbyEstudiante hobbyEstudiante = new HobbyEstudiante();
                     hobbyEstudiante.setEstudiante(estudianteGuardado);
                     hobbyEstudiante.setHobby(hobby);
@@ -156,6 +157,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
             for (String nombreHobby : nombreHobbies) {
                 model.Hobby hobby = hobbyRepository.findByNombre(nombreHobby).orElse(null);
                 if (hobby != null) {
+                    //aqui tambien hay dependencia
                     model.HobbyEstudiante nuevoHobby = new model.HobbyEstudiante();
                     nuevoHobby.setEstudiante(existente);
                     nuevoHobby.setHobby(hobby);

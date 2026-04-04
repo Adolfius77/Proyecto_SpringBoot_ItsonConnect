@@ -62,7 +62,7 @@ public static final String WS_URL = BASE_URL + "/itson-connect-ws";
 Ahora que todo está configurado, sigue este orden:
 En ambas computadoras: Realiza un "Clean and Build" en el proyecto para asegurarte de que todas las dependencias estén descargadas y el código compile.
 En la Computadora 1 (Servidor):
-Busca la clase com.mycompany.itsonconnect.ItsonConnectApplication.
+Busca la clase Servidor.ItsonConnectApplication.
 Haz clic derecho y selecciona "Run File".
 Verás la consola de Spring Boot iniciarse. Deja esta consola abierta.
 En la Computadora 2 (Cliente):

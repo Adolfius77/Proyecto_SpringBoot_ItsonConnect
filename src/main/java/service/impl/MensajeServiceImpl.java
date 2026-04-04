@@ -40,6 +40,7 @@ public class MensajeServiceImpl implements IMensajeService {
                 .orElseThrow(() -> new Exception("match no econtrado"));
 
         //aqui se crea el mensaje completo plebes
+        //dependencia de mensaje
         Mensaje mensaje = new Mensaje();
         mensaje.setContenido(dto.getContenido());
         mensaje.setEmisor(emisor);
@@ -65,6 +66,7 @@ public class MensajeServiceImpl implements IMensajeService {
 
     @Override
     public List<Mensaje> listarMensajesPorMatch(Long idMatch, int limit) {
+        //dependencia hacia match
         Match match = new Match();
         match.setId(idMatch);
         return mensajeRepository.findByMatchOrderByFechaHoraAsc(match, PageRequest.of(0, limit));

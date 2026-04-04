@@ -132,7 +132,69 @@ Antes de comenzar, asegúrate de tener instalado:
 
 ## 🚀 Instalación y Configuración
 
-### **Opción 1: Ejecución Local**
+### **Arquitectura del Proyecto**
+
+Este proyecto utiliza una arquitectura **Frontend-Backend separada**:
+
+```
+📁 Proyecto_SpringBoot_ItsonConnect/
+├── 📁 backend (src/)           # Spring Boot API REST + WebSocket
+├── 📁 frontend/                # React aplicación web
+└── 📄 README.md               # Este archivo
+```
+
+### **Opción 1: Ejecución con Frontend React (Recomendado)**
+
+#### **Requisitos:**
+- Java JDK 21
+- Maven 3.9+
+- MySQL 8.0+
+- Node.js 16+ y npm
+
+#### **Paso 1: Configurar y ejecutar el Backend**
+
+```bash
+# 1. Crear base de datos
+mysql -u root -p
+CREATE DATABASE ItsonConnectDB;
+exit;
+
+# 2. Configurar application.properties
+# Edita: src/main/resources/application.properties
+spring.datasource.username=root
+spring.datasource.password=TU_PASSWORD
+
+# 3. Ejecutar backend
+mvnw clean install
+mvnw spring-boot:run
+```
+
+✅ Backend corriendo en: **http://localhost:8080**
+
+#### **Paso 2: Configurar y ejecutar el Frontend**
+
+```bash
+# 1. Navegar a la carpeta frontend
+cd frontend
+
+# 2. Instalar dependencias (solo la primera vez)
+npm install
+
+# 3. Iniciar servidor de desarrollo
+npm start
+```
+
+✅ Frontend corriendo en: **http://localhost:3000**
+
+#### **Paso 3: Usar la aplicación**
+
+Abre tu navegador en **http://localhost:3000** y comienza a programar tus componentes.
+
+📖 **Lee la guía completa:** `frontend/LEEME_PRIMERO.md`
+
+---
+
+### **Opción 2: Ejecución Local (Solo Backend + Swing)
 
 #### **1️⃣ Configurar la Base de Datos**
 

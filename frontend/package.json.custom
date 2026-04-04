@@ -1,0 +1,13 @@
+{
+  "name": "itsonconnect-frontend",
+  "version": "1.0.0",
+  "description": "Frontend React para ItsonConnect - Plataforma de conexión social para estudiantes ITSON",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:8080"
+}
